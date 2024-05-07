@@ -11,7 +11,11 @@ public class FaceTo : MonoBehaviour
         {
             //Vector3 cameraPos = GetCameraPos();
             //transform.LookAt(cameraPos);
-            transform.LookAt(playerPos);
+            Vector3 directionToPlayer = playerPos.position - transform.position;
+            Quaternion targetRotation = Quaternion.LookRotation(directionToPlayer);
+            Quaternion reversedRotation = targetRotation * Quaternion.Euler(0f, 180f, 0f);
+            transform.rotation = reversedRotation;
+            //transform.LookAt(playerPos);
         }
     }
 
