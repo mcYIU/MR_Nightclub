@@ -8,17 +8,19 @@ public class DialogueManager_D3 : MonoBehaviour
     [SerializeField] private Canvas canvas;
     [SerializeField] private TextMeshProUGUI dialogueText;
     [SerializeField] private TextMeshProUGUI nameTag;
-    [SerializeField] private float typeSpeed;
-
     [SerializeField] GameObject player;
-    [SerializeField] float maxRotationAngle;
+
+    public float typeSpeed;
+    public float dialogueTime;
+    float dialogueTimer = 0f;
+
+    public float maxRotationAngle;
     float rotationY;
 
-    [SerializeField] float dialogueTime;
     private Queue<string> dialogueQueue;
     bool isTyped = false;
     bool dialogueShown = false;
-    float dialogueTimer = 0f;
+
 
     private void Start()
     {
@@ -43,10 +45,8 @@ public class DialogueManager_D3 : MonoBehaviour
         if (dialogueShown)
         {
             dialogueTimer += Time.deltaTime;
-            Debug.Log(dialogueTimer);
             if (dialogueTimer >= dialogueTime)
             {
-                Debug.Log("Next");
                 NextSentence();
                 dialogueTimer = 0f;
             }
@@ -62,7 +62,6 @@ public class DialogueManager_D3 : MonoBehaviour
         {
             nameTag.text = dialogue.name;
             dialogueQueue.Enqueue(sentence);
-            //Debug.Log(dialogueQueue.Count);
         }
 
         NextSentence();
@@ -74,11 +73,9 @@ public class DialogueManager_D3 : MonoBehaviour
         if (dialogueQueue.Count == 0)
         {
             EndDialogue();
-            //return;
         }
         else
         {
-            Debug.Log(dialogueQueue.Count);
             string sentence = dialogueQueue.Dequeue();
             StopAllCoroutines();
             StartCoroutine(Type(sentence));
