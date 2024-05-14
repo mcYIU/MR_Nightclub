@@ -5,22 +5,23 @@ using UnityEngine;
 
 public class DialogueManager_D3 : MonoBehaviour
 {
+    [Header("Dialogue UI")]
     [SerializeField] private Canvas canvas;
     [SerializeField] private TextMeshProUGUI dialogueText;
     [SerializeField] private TextMeshProUGUI nameTag;
-    [SerializeField] GameObject player;
+    [SerializeField] private GameObject player;
+    [SerializeField] private float maxRotationAngle;
+    private float rotationY;
 
-    public float typeSpeed;
-    public float dialogueTime;
+    [Header("Reading Time")]
+    [SerializeField] private float typeSpeed;
+    [SerializeField] private float dialogueTime;
     float dialogueTimer = 0f;
 
-    public float maxRotationAngle;
-    float rotationY;
-
     private Queue<string> dialogueQueue;
-    bool isTyped = false;
-    bool dialogueShown = false;
 
+    bool isTyped = false;
+    bool isDialogueShown = false;
 
     private void Start()
     {
@@ -42,7 +43,7 @@ public class DialogueManager_D3 : MonoBehaviour
             }
         }
 
-        if (dialogueShown)
+        if (isDialogueShown)
         {
             dialogueTimer += Time.deltaTime;
             if (dialogueTimer >= dialogueTime)
@@ -69,7 +70,7 @@ public class DialogueManager_D3 : MonoBehaviour
 
     public void NextSentence()
     {
-        dialogueShown = false;
+        isDialogueShown = false;
         if (dialogueQueue.Count == 0)
         {
             EndDialogue();
@@ -86,19 +87,22 @@ public class DialogueManager_D3 : MonoBehaviour
     {
         dialogueText.text = "";
         canvas.enabled = true;
-        isTyped = true;
 
-        foreach (char c in sentence.ToCharArray())
+        yield return new WaitForSeconds(0.0f);
+        dialogueText.text += sentence;
+        //isTyped = true;
+
+        /*foreach (char c in sentence.ToCharArray())
         {
             dialogueText.text += c;
             yield return new WaitForSeconds(typeSpeed);
         }
-
-        isTyped = false;
-        dialogueShown = true;
+        */
+        //isTyped = false;
+        isDialogueShown = true;
     }
 
-    void EndDialogue()
+    public void EndDialogue()
     {
         StopAllCoroutines();
         dialogueQueue.Clear();
@@ -108,6 +112,6 @@ public class DialogueManager_D3 : MonoBehaviour
 
         dialogueTimer = 0f;
         isTyped = false;
-        dialogueShown = false;
+        isDialogueShown = false;
     }
 }

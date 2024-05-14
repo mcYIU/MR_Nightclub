@@ -22,7 +22,6 @@ public class Fracture : MonoBehaviour
             && rightGrabber.IsGrabbing == this.gameObject)
         {
             isGrabbed = true;
-            //print(isGrabbed);
 
             float leftRotation = Quaternion.Angle(leftHandRot, leftGrabber.transform.rotation);
             float rightRotation = Quaternion.Angle(rightHandRot, rightGrabber.transform.rotation);
@@ -55,7 +54,7 @@ public class Fracture : MonoBehaviour
         {
             GameObject fracturedMatch = Instantiate(fracturedObjectPrefab, transform.position, transform.rotation);
 
-            Destroy(gameObject);
+            Destroy(this.gameObject);
         }
     }
 }
