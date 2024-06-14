@@ -12,6 +12,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Explode_Red Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 103296, guid: 2c3a83cc92802a44eb5031d2271e391d, type: 3}
+      propertyPath: m_TagString
+      value: Interactable
+      objectReference: {fileID: 0}
     - target: {fileID: 162370, guid: 2c3a83cc92802a44eb5031d2271e391d, type: 3}
       propertyPath: m_IsActive
       value: 1
