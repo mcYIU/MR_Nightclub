@@ -6,8 +6,8 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Scene_16May.unity
-    guid: 8f506743a2255f54d9d9dbd65180823f
+    path: Assets/Scenes/NightClub_S1.unity
+    guid: 391ef83db806fec4ca9f2046672c42f2
   m_configObjects:
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: 4aa015eb5aeb3e24d903fb7befbce817,
       type: 2}

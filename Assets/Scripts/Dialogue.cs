@@ -2,5 +2,4 @@
 public class Dialogue 
 {
    public string[] sentences;
-   public string name; 
 }

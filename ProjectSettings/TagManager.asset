@@ -4,7 +4,9 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Match
+  - Table
+  - Interactable
+  - Environment
   layers:
   - Default
   - TransparentFX
