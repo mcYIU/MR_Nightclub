@@ -3,7 +3,52 @@ guid: 7c61b0d8f417c6e4fa728caddcefcd49
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Black_wood_Chair
+    second: {fileID: 2100000, guid: 1f2a6da4e98911c4d946e550a4033295, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Black_wood_desk_big
+    second: {fileID: 2100000, guid: 4067f4e068692444ca2babf0b0c72adf, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: CreavenAbox
+    second: {fileID: 2100000, guid: b3fc1d757dbacaa4ca3736bbd596f716, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Desk_Cloth
+    second: {fileID: 2100000, guid: 21d6973151532664d9a0a63f09b679a1, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Glass_1
+    second: {fileID: 2100000, guid: 878dafb94bb556245bdc5eddb04ff080, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Whiskey_bottle
+    second: {fileID: 2100000, guid: a92f91082771143488f60debf2d0ce77, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Whiskey_cap
+    second: {fileID: 2100000, guid: 21dec34e45adc5b40b623318e1d774a7, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Whiskey_label
+    second: {fileID: 2100000, guid: eff904b9c69f921449ac498bf33d0d16, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: whiskey_liquid
+    second: {fileID: 2100000, guid: 367354b212bc0554a9a9654067704062, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

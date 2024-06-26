@@ -4,19 +4,19 @@ using System.Collections;
 
 public class LightingManager: MonoBehaviour
 {
-    public Light[] targetLights;
-    public Light sceneLight;
-    public float targetIntensity;
+    public Light[] spotLights;
+    public Light directionalLight;
+    public float spotLightIntensity = 50f;
+    public float directionalLightIntensity = 2f;
 
     private float initialIntensity = 0f;
-    private float sceneIntensity = 1f;
     private float transitionDuration = 2f;
 
     private void Start()
     {
-        for (int i = 0; i < targetLights.Length; i++)
+        for (int i = 0; i < spotLights.Length; i++)
         {
-            targetLights[i].intensity = initialIntensity;
+            spotLights[i].intensity = initialIntensity;
         }
     }
 
@@ -33,38 +33,40 @@ public class LightingManager: MonoBehaviour
     private IEnumerator SwitchOnOverTime(string npc)
     {
         float elapsedTime = 0f;
-        Light _targetLight = Array.Find(targetLights, l => l.name == npc);
+        Light targetLight = Array.Find(spotLights, l => l.name == npc);
 
-        float intensity_sceneLight = sceneLight.intensity;
-
-        while (elapsedTime < transitionDuration)
+        if(targetLight.intensity != spotLightIntensity)
         {
-            elapsedTime += Time.deltaTime;
-            float t = Mathf.Clamp01(elapsedTime / transitionDuration);
-            _targetLight.intensity = Mathf.Lerp(initialIntensity, targetIntensity, t);
-            sceneLight.intensity = Mathf.Lerp(sceneIntensity, 0f, t);
-            yield return null;
-        }
-
-        _targetLight.intensity = targetIntensity;
-        sceneLight.intensity = 0f;
+            while (elapsedTime < transitionDuration)
+            {
+                elapsedTime += Time.deltaTime;
+                float t = Mathf.Clamp01(elapsedTime / transitionDuration);
+                targetLight.intensity = Mathf.Lerp(initialIntensity, spotLightIntensity, t);
+                directionalLight.intensity = Mathf.Lerp(directionalLightIntensity, 0f, t);
+                yield return null;
+            }
+            directionalLight.intensity = 0f;
+            targetLight.intensity = spotLightIntensity;
+        }   
     }
 
     private IEnumerator SwitchOffOverTime(string npc)
     {
         float elapsedTime = 0f;
-        Light _targetLight = Array.Find(targetLights, l => l.name == npc);
+        Light targetLight = Array.Find(spotLights, l => l.name == npc);
 
-        while (elapsedTime < transitionDuration)
+        if(targetLight.intensity != initialIntensity)
         {
-            elapsedTime += Time.deltaTime;
-            float t = Mathf.Clamp01(elapsedTime / transitionDuration);
-            _targetLight.intensity = Mathf.Lerp(targetIntensity, initialIntensity, t);
-            sceneLight.intensity = Mathf.Lerp(0f, sceneIntensity, t);
-            yield return null;
+            while (elapsedTime < transitionDuration)
+            {
+                elapsedTime += Time.deltaTime;
+                float t = Mathf.Clamp01(elapsedTime / transitionDuration);
+                targetLight.intensity = Mathf.Lerp(spotLightIntensity, initialIntensity, t);
+                directionalLight.intensity = Mathf.Lerp(0f, directionalLightIntensity, t);
+                yield return null;
+            }
+            directionalLight.intensity = directionalLightIntensity;
+            targetLight.intensity = initialIntensity;
         }
-
-        _targetLight.intensity = initialIntensity;
-        sceneLight.intensity = sceneIntensity;
     }
 }
