@@ -7,6 +7,7 @@ using UnityEngine;
 public class Grip : MonoBehaviour
 {
     public Animator animator;
+    public InteractionManager manager;
     HandGrabInteractable interactable;
 
     private void Start()
@@ -19,6 +20,7 @@ public class Grip : MonoBehaviour
         if(interactable.Interactors.Count > 1)
         {
             animator.SetBool("IsGripped", true);
+            manager.ChangeLevelIndex(gameObject.name);
         }
     }
 }
