@@ -1,10 +1,14 @@
+using TMPro;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
     public InteractionManager[] interactionManagers;
-
+    public string startNotice;
+    public Canvas noticeCanvas;
+    public TextMeshProUGUI notice;
     private DialogueTrigger[] dialogueTriggers;
+
 
     private void Awake()
     {
@@ -24,7 +28,7 @@ public class GameManager : MonoBehaviour
         int completedLevelCount = 0;
         for (int i = 0; i < interactionManagers.Length; i++)
         {
-            if (interactionManagers[i].levelIndex == interactionManagers[i].ineteractionLayerCount)
+            if (interactionManagers[i].LevelIndex == interactionManagers[i].ineteractionLayerCount)
             {
                 completedLevelCount++;
                 if (completedLevelCount == interactionManagers.Length)
@@ -43,7 +47,7 @@ public class GameManager : MonoBehaviour
     {
         for (int i = 0;i < dialogueTriggers.Length; i++)
         {
-            dialogueTriggers[i].StartDialogue(interactionManagers[i].levelIndex);
+            dialogueTriggers[i].StartDialogue(interactionManagers[i].LevelIndex);
         }
     }
 }

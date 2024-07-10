@@ -23,20 +23,43 @@ public class InteractionManager : MonoBehaviour
     public int ineteractionLayerCount = 2;
     public AudioSource audioSource;
     public AudioClip[] VO;
-    [HideInInspector] public int levelIndex = 0;
-    public static IntEvent LevelChangedEvent = new IntEvent();
+    [HideInInspector] public bool isNoticeShown = false;
 
+    //public static IntEvent LevelChangedEvent;
+    private int levelIndex = 0;
     private List<string> name_interactables_One = new List<string>();
     private readonly int index_One = 1;
     private List<string> name_interactables_Two = new List<string>();
     private readonly int index_Two = 2;
 
     GameManager gameManager;
+    DialogueTrigger dialogueTrigger;
 
+    public int LevelIndex
+    {
+        get { return levelIndex; }
+        set
+        {
+            if (levelIndex != value) 
+            {
+                levelIndex = value;
+                if (value < ineteractionLayerCount)
+                {
+                    dialogueTrigger.StartDialogue(levelIndex);
+                }
+                else
+                {
+                    dialogueTrigger.EndDialogue();
+                    gameManager.CheckGameState();
+                }
+            }
+        }
+    }
 
     void Start()
     {
         gameManager = FindAnyObjectByType<GameManager>();
+        dialogueTrigger = GetComponent<DialogueTrigger>();
 
         ResetInteraction();
     }
@@ -44,19 +67,20 @@ public class InteractionManager : MonoBehaviour
     public void ChangeLevelIndex(string obj_name)
     {
         notice.text = "";
+        isNoticeShown = false;
 
         if (name_interactables_One.Contains(obj_name))
         {
-            levelIndex = index_One;
+            LevelIndex = index_One;
             Debug.Log(levelIndex);
         }
         else if (name_interactables_Two.Contains(obj_name))
         {
-            levelIndex = index_Two;
+            LevelIndex = index_Two;
             Debug.Log(levelIndex);
         }
 
-        if (levelIndex < ineteractionLayerCount)
+        /*if (levelIndex < ineteractionLayerCount)
         {
             DialogueTrigger trigger = GetComponent<DialogueTrigger>();
             trigger.StartDialogue(levelIndex);
@@ -64,7 +88,7 @@ public class InteractionManager : MonoBehaviour
         else
         {
             gameManager.CheckGameState();
-        }
+        }*/
     }
 
     public void PlayAudio()
@@ -117,51 +141,46 @@ public class InteractionManager : MonoBehaviour
     {
         noticeCanvas.enabled = true;
         notice.text = noticeText;
+        isNoticeShown = true;
 
         yield return new WaitForSeconds(noticeDuration);
         noticeCanvas.enabled = false;
         notice.text = "";
     }
 
-    private void ResetInteraction()
+    public void CleanNotice()
     {
+        StopAllCoroutines();
         noticeCanvas.enabled = false;
         notice.text = "";
+    }
+
+    public void ResetInteraction()
+    {
+        StopAllCoroutines();
 
         for (int i = 0; i < grabInteractables_One.Length; i++)
         {
-            if (grabInteractables_One[i] != null)
-            {
-                grabInteractables_One[i].enabled = false;
-                name_interactables_One.Add(grabInteractables_One[i].name);
-            }
+            grabInteractables_One[i].enabled = false;
+            name_interactables_One.Add(grabInteractables_One[i].name);
         }
 
         for (int i = 0; i < pokeInteractables_One.Length; i++)
         {
-            if (pokeInteractables_One[i] != null)
-            {
-                pokeInteractables_One[i].enabled = false;
-                name_interactables_One.Add(pokeInteractables_One[i].name);
-            }
+            pokeInteractables_One[i].enabled = false;
+            name_interactables_One.Add(pokeInteractables_One[i].name);
         }
 
         for (int i = 0; i < grabInteractables_Two.Length; i++)
         {
-            if (grabInteractables_Two[i] != null)
-            {
-                grabInteractables_Two[i].enabled = false;
-                name_interactables_Two.Add(grabInteractables_Two[i].name);
-            }
+            grabInteractables_Two[i].enabled = false;
+            name_interactables_Two.Add(grabInteractables_Two[i].name);
         }
 
         for (int i = 0; i < pokeInteractables_Two.Length; i++)
         {
-            if (pokeInteractables_Two[i] != null)
-            {
-                pokeInteractables_Two[i].enabled = false;
-                name_interactables_Two.Add(pokeInteractables_Two[i].name);
-            }
+            pokeInteractables_Two[i].enabled = false;
+            name_interactables_Two.Add(pokeInteractables_Two[i].name);
         }
     }
 }

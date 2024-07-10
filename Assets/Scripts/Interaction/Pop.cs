@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class Pop : MonoBehaviour
@@ -10,6 +11,12 @@ public class Pop : MonoBehaviour
         Destroy(gameObject);
         Instantiate(explosionVFX, transform.position, Quaternion.identity);
 
+        StartCoroutine(ChangeLevelIndex());
+    }
+
+    IEnumerator ChangeLevelIndex()
+    {
+        yield return new WaitForSeconds(1f);
         interactionManager.ChangeLevelIndex(gameObject.name);
     }
 }

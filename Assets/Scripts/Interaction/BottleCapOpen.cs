@@ -7,7 +7,6 @@ public class BottleCapOpen : MonoBehaviour
     public GameObject attachPoint;
     public GameObject pouringVFX;
     public float pushForce;
-    public float pouringTime;
     public InteractionManager interactionManager;
 
     private Rigidbody rb;
@@ -40,13 +39,13 @@ public class BottleCapOpen : MonoBehaviour
     {
         if(isOpened)
         {
+            transform.SetParent(null);
             rb.isKinematic = false;
+            rb.useGravity = true;
             handGrab.enabled = false;
 
-            rb.AddForce(attachPoint.transform.up * pushForce, ForceMode.Impulse);
-            rb.AddForce(Physics.gravity, ForceMode.Acceleration);
-
-            transform.SetParent(null);
+            rb.AddForce(gameObject.transform.up * pushForce, ForceMode.Impulse);
+            //rb.AddForce(Physics.gravity, ForceMode.Acceleration);
 
             if (!isPouring)
                 StartCoroutine(Pouring());
@@ -60,9 +59,8 @@ public class BottleCapOpen : MonoBehaviour
         GameObject vfx = Instantiate(pouringVFX, attachPoint.transform.position, Quaternion.identity);
         vfx.transform.SetParent(attachPoint.transform, true);
 
+        float pouringTime = vfx.GetComponent<ParticleSystem>().time;
         yield return new WaitForSeconds(pouringTime);
-
-        vfx.SetActive(false);
 
         interactionManager.ChangeLevelIndex(gameObject.name);
     }
