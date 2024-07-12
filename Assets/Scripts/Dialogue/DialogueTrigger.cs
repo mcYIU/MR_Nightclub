@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using TMPro;
+using UnityEngine;
 
 public class DialogueTrigger : MonoBehaviour
 {
@@ -7,6 +8,7 @@ public class DialogueTrigger : MonoBehaviour
 
     public GameObject dialogueNoticeUI;
     public GameObject dialogueCanvas;
+    //public TextMeshProUGUI dialogueText;
     public Transform player;
     public float triggerDistance;
 
@@ -23,6 +25,7 @@ public class DialogueTrigger : MonoBehaviour
 
         dialogueManager = FindAnyObjectByType<DialogueManager>();
         dialogueCanvas.SetActive(false);
+        //dialogueText.text = "";
         dialogueNoticeUI.SetActive(true);
     }
 
@@ -53,13 +56,13 @@ public class DialogueTrigger : MonoBehaviour
     private void Update()
     {
         float distance = Vector3.Distance(player.position, gameObject.transform.position);
-        if (distance < triggerDistance && interactionManager.levelIndex < interactionManager.ineteractionLayerCount)
+        if (distance < triggerDistance && interactionManager.LevelIndex < interactionManager.ineteractionLayerCount)
         {
-            if (!dialogueManager.isDialogueShowing && !isPlayerStaying)
+            if (!isPlayerStaying)
             {
                 isPlayerStaying = true;
                 lightingManager.LightSwitch_Enter(gameObject.name);
-                StartDialogue(interactionManager.levelIndex);
+                StartDialogue(interactionManager.LevelIndex);
             }
         }
         else
@@ -68,7 +71,10 @@ public class DialogueTrigger : MonoBehaviour
             {
                 lightingManager.LightSwitch_Exit(gameObject.name);
                 EndDialogue();
-                isPlayerStaying = false;
+                interactionManager.CleanNotice();
+                StopAllCoroutines();
+
+                isPlayerStaying = false;               
             }
         }
     }
@@ -87,28 +93,14 @@ public class DialogueTrigger : MonoBehaviour
 
     }
 
-    private void EndDialogue()
+    public void EndDialogue()
     {
-        if (interactionManager.levelIndex < interactionManager.ineteractionLayerCount)
+        if (interactionManager.LevelIndex < interactionManager.ineteractionLayerCount)
         {
             dialogueNoticeUI.SetActive(true);
             dialogueManager.EndDialogue();
         }
     }
-
-    /*private void OnEnable() => InteractionManager.LevelChangedEvent.AddListener(OnLevelChanged);
-
-    private void OnDisable() => InteractionManager.LevelChangedEvent.RemoveListener(OnLevelChanged);
-
-    private void OnLevelChanged(int levelIndex)
-    {
-        if (!dialogueManager.isDialogueShowing && isPlayerStaying)
-        {
-            Debug.Log("NextLevel");
-            StartDialogue(levelIndex);
-        }
-    }*/
-
 }
 
 

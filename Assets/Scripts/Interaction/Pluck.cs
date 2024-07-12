@@ -3,29 +3,26 @@ using UnityEngine;
 
 public class Pluck : MonoBehaviour
 {
-    public delegate void BoolChanged(bool newValue);
-    public static event BoolChanged OnBoolChanged;
+    public float detachDistance;
+    Rose rose;
+    Transform parentTransform;
 
-    private bool isPlucked = false;
-
-    private void OnCollisionEnter(Collision collision)
+    private void Start()
     {
-        if(collision.gameObject.TryGetComponent<HandGrabInteractor>(out HandGrabInteractor interactor))
-            if(interactor.Interactable == gameObject)
-            {
-                Rigidbody rb = GetComponent<Rigidbody>();
-                rb.isKinematic = false;
-                rb.useGravity = true;
-                transform.SetParent(null, false);
-            }
+        parentTransform = transform.parent.transform;
+        rose = GetComponentInParent<Rose>();
     }
 
-    private void OnCollisionExit(Collision collision)
+    private void Update()
     {
-        if (collision.gameObject.GetComponent<HandGrabInteractor>())
+        if(Vector3.Distance(transform.position, parentTransform.position) > detachDistance)
         {
-            isPlucked = true;
-            OnBoolChanged?.Invoke(isPlucked);
+            transform.parent = null;
+            Rigidbody rb = GetComponent<Rigidbody>();
+            rb.isKinematic = false;
+            rb.useGravity = true;
+
+            rose.AddIndex();
         }
     }
 }

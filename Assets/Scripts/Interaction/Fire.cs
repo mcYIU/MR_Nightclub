@@ -2,39 +2,18 @@ using UnityEngine;
 
 public class Fire : MonoBehaviour
 {
-    public GameObject matchBox;
-    public GameObject firePrefab;
-    public bool isFired = false;
+    public GameObject fireVFX;
+    public GameObject firePoint;
+    private bool isLighted = false;
 
-    private GameObject fireInstance;
-
-    private void Update()
+    private void OnTriggerEnter(Collider other)
     {
-        if (CheckCollision(gameObject, matchBox))
-        {
-            if (!isFired)
+        if (other.gameObject.TryGetComponent<LightFire>(out LightFire fire))
+            if (fire.isFired && !isLighted)
             {
-                fireInstance = Instantiate(firePrefab, transform.position, Quaternion.identity);
-                isFired = true;
+                Instantiate(fireVFX, firePoint.transform);
+                isLighted = true;
+                fire.ChangeLevelIndex();
             }
-        }
-
-        if (fireInstance != null)
-        {
-            fireInstance.transform.position = transform.position;
-        }
-    }
-
-    private bool CheckCollision(GameObject obj1, GameObject obj2)
-    {
-        Collider collider1 = obj1.GetComponent<Collider>();
-        Collider collider2 = obj2.GetComponent<Collider>();
-
-        if (collider1 != null && collider2 != null)
-        {
-            return collider1.bounds.Intersects(collider2.bounds);
-        }
-
-        return false;
     }
 }
