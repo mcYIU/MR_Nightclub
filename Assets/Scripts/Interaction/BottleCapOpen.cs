@@ -5,8 +5,9 @@ using UnityEngine;
 public class BottleCapOpen : MonoBehaviour
 {
     public GameObject attachPoint;
-    public GameObject pouringVFX;
+    public ParticleSystem pouringVFX;
     public float pushForce;
+    public float pouringThreadhold = 6f;
     public InteractionManager interactionManager;
 
     private Rigidbody rb;
@@ -56,11 +57,15 @@ public class BottleCapOpen : MonoBehaviour
     {
         isPouring = true;
 
-        GameObject vfx = Instantiate(pouringVFX, attachPoint.transform.position, Quaternion.identity);
-        vfx.transform.SetParent(attachPoint.transform, true);
+        //GameObject vfx = Instantiate(pouringVFX, attachPoint.transform.position, Quaternion.identity);
+        //vfx.transform.SetParent(attachPoint.transform, true);
 
-        float pouringTime = vfx.GetComponent<ParticleSystem>().time;
-        yield return new WaitForSeconds(pouringTime);
+        //float pouringTime = vfx.GetComponent<ParticleSystem>().time;
+        
+        pouringVFX.Play();
+
+        yield return new WaitForSeconds(pouringThreadhold);
+        pouringVFX.Stop();
 
         interactionManager.ChangeLevelIndex(gameObject.name);
     }
