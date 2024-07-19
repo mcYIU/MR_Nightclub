@@ -1,4 +1,5 @@
 using Oculus.Interaction.HandGrab;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Throw : MonoBehaviour
@@ -7,11 +8,6 @@ public class Throw : MonoBehaviour
     private bool isGrabbed = false;
 
     HandGrabInteractable grab;
-
-    private void Start()
-    {
-        grab = GetComponent<HandGrabInteractable>();
-    }
 
     private void OnCollisionEnter(Collision collision)
     {
@@ -28,6 +24,5 @@ public class Throw : MonoBehaviour
             {
                 isGrabbed = true;
             }
-
     }
 }

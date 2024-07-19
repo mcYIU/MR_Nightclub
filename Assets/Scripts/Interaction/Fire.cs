@@ -1,19 +1,36 @@
+using System.Collections;
 using UnityEngine;
 
 public class Fire : MonoBehaviour
 {
-    public GameObject fireVFX;
-    public GameObject firePoint;
+    public ParticleSystem fireVFX;
+    public Material burntMaterial;
     private bool isLighted = false;
+
+    private void Start()
+    {
+        fireVFX.Stop();
+    }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.TryGetComponent<LightFire>(out LightFire fire))
             if (fire.isFired && !isLighted)
             {
-                Instantiate(fireVFX, firePoint.transform);
+                StartCoroutine(Burn(fire));
                 isLighted = true;
-                fire.ChangeLevelIndex();
             }
+    }
+
+    IEnumerator Burn(LightFire fire)
+    {
+        fireVFX.Play();
+        
+        yield return new WaitForSeconds(4f);
+        fireVFX.Stop();
+        MeshRenderer renderer = GetComponentInParent<MeshRenderer>();
+        renderer.material = burntMaterial;
+
+        fire.ChangeLevelIndex();
     }
 }
