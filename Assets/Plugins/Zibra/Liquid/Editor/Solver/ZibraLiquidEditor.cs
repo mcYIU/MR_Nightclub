@@ -14,6 +14,7 @@ using System.Collections.Generic;
 #if UNITY_PIPELINE_URP
 using System.Reflection;
 using UnityEngine.Rendering.Universal;
+using System.Collections.Generic;
 #endif
 
 namespace com.zibra.liquid.Editor.Solver
