@@ -8,10 +8,10 @@ public class FluidColorizer : MonoBehaviour
 {
     public Color color;
 	public float tintSpeed = 5;
-	public ObiCollider collider;
+	public ObiCollider _collider;
 
     void Awake()
     {
-		collider = GetComponent<ObiCollider>();
+		_collider = GetComponent<ObiCollider>();
     }
 }

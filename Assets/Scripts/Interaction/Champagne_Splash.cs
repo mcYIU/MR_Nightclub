@@ -2,7 +2,7 @@ using Oculus.Interaction.HandGrab;
 using System.Collections;
 using UnityEngine;
 
-public class BottleCapOpen : MonoBehaviour
+public class Champagne_Splash : MonoBehaviour
 {
     public GameObject attachPoint;
     public ParticleSystem pouringVFX;

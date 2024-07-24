@@ -1,10 +1,7 @@
-using Oculus.Interaction;
 using Oculus.Interaction.HandGrab;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class Grip : MonoBehaviour
+public class Photo_Grip : MonoBehaviour
 {
     public Animator animator;
     public InteractionManager manager;

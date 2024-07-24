@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class LightFire : MonoBehaviour
+public class Match_Fire : MonoBehaviour
 {
     public GameObject matchBox;
     public GameObject firePrefab;

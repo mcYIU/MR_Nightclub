@@ -25,7 +25,6 @@ public class InteractionManager : MonoBehaviour
     public AudioClip[] VO;
     [HideInInspector] public bool isNoticeShown = false;
 
-    //public static IntEvent LevelChangedEvent;
     private int levelIndex = 0;
     private List<string> name_interactables_One = new List<string>();
     private readonly int index_One = 1;

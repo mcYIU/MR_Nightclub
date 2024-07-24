@@ -1,7 +1,6 @@
-using System.Collections;
 using UnityEngine;
 
-public class Pop : MonoBehaviour
+public class Balloon_Pop : MonoBehaviour
 { 
     public GameObject explosionVFX;
     public InteractionManager interactionManager;

@@ -30,7 +30,7 @@ Material:
   - _SURFACE_TYPE_TRANSPARENT
   m_LightmapFlags: 2
   m_EnableInstancingVariants: 1
-  m_DoubleSidedGI: 0
+  m_DoubleSidedGI: 1
   m_CustomRenderQueue: -1
   stringTagMap: {}
   disabledShaderPasses: []
@@ -71,33 +71,33 @@ Material:
     - _MaxCutoff: 0
     - _MaxDist: 250
     - _MaxWaveDist: 250
-    - _NormalStrength: 2
+    - _NormalStrength: 1
     - _Normal_Strength: 0.1
     - _Offset: 0.9
     - _QueueControl: 0
     - _QueueOffset: 0
     - _ReceiveShadows: 1
     - _ScreenSpaceReflections: 1
-    - _Speed: 0.2
+    - _Speed: 0.001
     - _SrcBlend: 5
     - _Surface: 1
-    - _Tiling: 0.2
-    - _Transparency: 0.9
+    - _Tiling: 1
+    - _Transparency: 0.8
     - _UseFoam: 1
     - _Use_Foam: 1
-    - _WaveDist: 5
-    - _WaveFrequency: 3
-    - _WaveSpeed: 1
+    - _WaveDist: 1
+    - _WaveFrequency: 10
+    - _WaveSpeed: 0.002
     - _Wave_Speed: 2
     - _WorkflowMode: 1
     - _ZTest: 4
     - _ZWrite: 1
     - _ZWriteControl: 1
     m_Colors:
-    - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _EdgeColor: {r: 0.8396226, g: 0.7881363, b: 0.7881363, a: 1}
+    - _Color: {r: 1, g: 0.6039734, b: 0, a: 1}
+    - _EdgeColor: {r: 0.9528302, g: 0.67161936, b: 0, a: 1}
     - _Edge_Color: {r: 0.2507565, g: 0.3301887, b: 0.28799033, a: 1}
-    - _FoamColor: {r: 16, g: 16, b: 16, a: 1}
+    - _FoamColor: {r: 10.680627, g: 10.680627, b: 10.680627, a: 1}
     - _Foam_Color: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []
 --- !u!114 &684404215947078111

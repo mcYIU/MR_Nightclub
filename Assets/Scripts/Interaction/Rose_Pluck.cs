@@ -1,21 +1,18 @@
-using Oculus.Interaction.HandGrab;
 using UnityEngine;
 
-public class Pluck : MonoBehaviour
+public class Rose_Pluck : MonoBehaviour
 {
     public float detachDistance;
-    Rose rose;
-    Transform parentTransform;
+    private Rose rose;
 
     private void Start()
     {
-        parentTransform = transform.parent.transform;
         rose = GetComponentInParent<Rose>();
     }
 
     private void Update()
     {
-        if(Vector3.Distance(transform.position, parentTransform.position) > detachDistance)
+        if(Vector3.Distance(transform.position, transform.parent.position) > detachDistance)
         {
             transform.parent = null;
             Rigidbody rb = GetComponent<Rigidbody>();

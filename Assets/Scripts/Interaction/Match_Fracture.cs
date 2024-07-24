@@ -1,7 +1,7 @@
 using Oculus.Interaction.HandGrab;
 using UnityEngine;
 
-public class Fracture : MonoBehaviour
+public class Match_Fracture : MonoBehaviour
 {
     public HandGrabInteractor leftInteractor;
     public HandGrabInteractor rightInteractor;

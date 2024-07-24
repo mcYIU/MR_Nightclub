@@ -1,12 +1,10 @@
-using Obi;
-using System.Collections;
 using UnityEngine;
 
-public class WhiskeyPour : MonoBehaviour
+public class Whiskey_Pour : MonoBehaviour
 {
     public GameObject attachPoint;
     public ParticleSystem fluid;
-    public float pourThreadhold = 70f;
+    public float pouringAngle = 70f;
     public InteractionManager interactionManager;
 
     private Rigidbody rb;
@@ -15,6 +13,7 @@ public class WhiskeyPour : MonoBehaviour
 
     private bool isOpened = false;
     private bool isPouring = false;
+
 
     void Start()
     {
@@ -33,7 +32,7 @@ public class WhiskeyPour : MonoBehaviour
 
         if (isOpened)
         {
-            bool pourCheck = CalculatePourAngle() > pourThreadhold;
+            bool pourCheck = CalculatePourAngle() > pouringAngle;
             if (isPouring != pourCheck)
             {
                 isPouring = pourCheck;
