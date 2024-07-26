@@ -47,6 +47,6 @@ public class Dice_Throw : MonoBehaviour
         rb.isKinematic = false;
         rb.useGravity = true;
         rb.interpolation = RigidbodyInterpolation.Interpolate;
-        //rb.AddForce(transform.forward * 0.001f, ForceMode.Impulse);
+        rb.AddForce(transform.forward * 0.001f, ForceMode.Impulse);
     }
 }

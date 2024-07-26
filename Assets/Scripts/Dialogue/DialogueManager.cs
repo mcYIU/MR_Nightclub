@@ -24,10 +24,9 @@ public class DialogueManager : MonoBehaviour
 
     public void StartDialogue(Dialogue dialogue, GameObject canvas, AudioClip clip, InteractionManager manager)
     {
-        VO.Stop();
-        CleanText();
-        if(manager != null && manager.isNoticeShown)
+        if(!isDialogueShowing && manager.isNoticed)
         {
+            manager.DisplayNotice(manager.noticeText[manager.LevelIndex]);
             return;
         }
         else
@@ -35,7 +34,7 @@ public class DialogueManager : MonoBehaviour
             interactionManager = manager;
 
             VO.clip = clip;
-            VOPlayer();
+            PlayVoiceOver();
 
             foreach (string sentence in dialogue.sentences)
             {
@@ -53,6 +52,7 @@ public class DialogueManager : MonoBehaviour
         {
             EndDialogue();
             interactionManager.PlayAudio();
+            isDialogueShowing = false;
         }
         else
         {
@@ -71,7 +71,7 @@ public class DialogueManager : MonoBehaviour
             dialogueCanvas.SetActive(true);
             isDialogueShowing = true;
 
-            dialogueText.text += "<rotate=90>" + sentence;
+            dialogueText.text += sentence;
         }
 
         yield return new WaitForSeconds(dialogueTime);
@@ -82,7 +82,7 @@ public class DialogueManager : MonoBehaviour
     {
         CleanText();
 
-        VOPlayer();
+        PlayVoiceOver();
     }
 
     private void CleanText()
@@ -94,12 +94,11 @@ public class DialogueManager : MonoBehaviour
             dialogueCanvas.SetActive(false);
             dialogueText.text = "";
         }
-        isDialogueShowing = false;
     }
 
-    private void VOPlayer()
+    private void PlayVoiceOver()
     {
-        if (!VO.isPlaying && !isAudioPlaying && !interactionManager.isNoticeShown)
+        if (!VO.isPlaying && !isAudioPlaying && !interactionManager.isNoticed)
         {
             isAudioPlaying = true;
             VO.Play();

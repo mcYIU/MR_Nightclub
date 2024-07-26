@@ -11,19 +11,22 @@ public class IntEvent : UnityEvent<int> { }
 
 public class InteractionManager : MonoBehaviour
 {
-    public HandGrabInteractable[] grabInteractables_One;
-    public PokeInteractable[] pokeInteractables_One;
-    public string notice_One;
-    public HandGrabInteractable[] grabInteractables_Two;
-    public PokeInteractable[] pokeInteractables_Two;
-    public string notice_Two;
-    public Canvas noticeCanvas;
+    [Header("Interactables")]
+    public HandGrabInteractable[] grabInteractables_LV1;
+    public PokeInteractable[] pokeInteractables_LV1;
+    public HandGrabInteractable[] grabInteractables_LV2;
+    public PokeInteractable[] pokeInteractables_LV2;
+
+    [Header("Notice")]
+    public string[] noticeText;
     public TextMeshProUGUI notice;
-    public float noticeDuration = 7f;
+    public float noticeDuration;
     public int ineteractionLayerCount = 2;
+    [HideInInspector] public bool isNoticed = false;
+
+    [Header("Voiceover")]
     public AudioSource audioSource;
-    public AudioClip[] VO;
-    [HideInInspector] public bool isNoticeShown = false;
+    public AudioClip[] audioClips;
 
     private int levelIndex = 0;
     private List<string> name_interactables_One = new List<string>();
@@ -61,12 +64,13 @@ public class InteractionManager : MonoBehaviour
         dialogueTrigger = GetComponent<DialogueTrigger>();
 
         ResetInteraction();
+        notice.text = "";
     }
 
     public void ChangeLevelIndex(string obj_name)
     {
         notice.text = "";
-        isNoticeShown = false;
+        isNoticed = false;
 
         if (name_interactables_One.Contains(obj_name))
         {
@@ -92,42 +96,40 @@ public class InteractionManager : MonoBehaviour
 
     public void PlayAudio()
     {
-        audioSource.clip = VO[levelIndex];
-        float playTime = VO[levelIndex].length;
+        audioSource.clip = audioClips[levelIndex];
+        float playTime = audioClips[levelIndex].length;
         audioSource.Play();
 
         StartCoroutine(EnableInteraction(playTime));
     }
 
-    private IEnumerator EnableInteraction(float waitDuration)
+    private IEnumerator EnableInteraction(float intervalDuration)
     {
-        yield return new WaitForSeconds(waitDuration);
+        yield return new WaitForSeconds(intervalDuration) ;
 
+        DisplayNotice(noticeText[levelIndex]);
         switch (levelIndex)
         {
             case 0:
-                for (int i = 0; i < grabInteractables_One.Length; i++)
+                for (int i = 0; i < grabInteractables_LV1.Length; i++)
                 {
-                    grabInteractables_One[i].enabled = true;
-                    StartCoroutine(DisplayNotice(notice_One));
+                    grabInteractables_LV1[i].enabled = true;
+
                 }
-                for (int i = 0; i < pokeInteractables_One.Length; i++)
+                for (int i = 0; i < pokeInteractables_LV1.Length; i++)
                 {
-                    pokeInteractables_One[i].enabled = true;
-                    StartCoroutine(DisplayNotice(notice_One));
+                    pokeInteractables_LV1[i].enabled = true;
                 }
                 break;
             case 1:
-                for (int i = 0; i < grabInteractables_Two.Length; i++)
+                for (int i = 0; i < grabInteractables_LV2.Length; i++)
                 {
-                    grabInteractables_Two[i].enabled = true;
-                    StartCoroutine(DisplayNotice(notice_Two));
+                    grabInteractables_LV2[i].enabled = true;
 
                 }
-                for (int i = 0; i < pokeInteractables_Two.Length; i++)
+                for (int i = 0; i < pokeInteractables_LV2.Length; i++)
                 {
-                    pokeInteractables_Two[i].enabled = true;
-                    StartCoroutine(DisplayNotice(notice_Two));
+                    pokeInteractables_LV2[i].enabled = true;
                 }
                 break;
             default:
@@ -136,21 +138,23 @@ public class InteractionManager : MonoBehaviour
         }
     }
 
-    private IEnumerator DisplayNotice(string noticeText)
+    public void DisplayNotice(string noticeText)
     {
-        noticeCanvas.enabled = true;
+        StartCoroutine(Notice(noticeText));
+    }
+
+    private IEnumerator Notice(string noticeText)
+    {
         notice.text = noticeText;
-        isNoticeShown = true;
+        isNoticed = true;
 
         yield return new WaitForSeconds(noticeDuration);
-        noticeCanvas.enabled = false;
         notice.text = "";
     }
 
     public void CleanNotice()
     {
         StopAllCoroutines();
-        noticeCanvas.enabled = false;
         notice.text = "";
     }
 
@@ -158,28 +162,28 @@ public class InteractionManager : MonoBehaviour
     {
         StopAllCoroutines();
 
-        for (int i = 0; i < grabInteractables_One.Length; i++)
+        for (int i = 0; i < grabInteractables_LV1.Length; i++)
         {
-            grabInteractables_One[i].enabled = false;
-            name_interactables_One.Add(grabInteractables_One[i].name);
+            grabInteractables_LV1[i].enabled = false;
+            name_interactables_One.Add(grabInteractables_LV1[i].name);
         }
 
-        for (int i = 0; i < pokeInteractables_One.Length; i++)
+        for (int i = 0; i < pokeInteractables_LV1.Length; i++)
         {
-            pokeInteractables_One[i].enabled = false;
-            name_interactables_One.Add(pokeInteractables_One[i].name);
+            pokeInteractables_LV1[i].enabled = false;
+            name_interactables_One.Add(pokeInteractables_LV1[i].name);
         }
 
-        for (int i = 0; i < grabInteractables_Two.Length; i++)
+        for (int i = 0; i < grabInteractables_LV2.Length; i++)
         {
-            grabInteractables_Two[i].enabled = false;
-            name_interactables_Two.Add(grabInteractables_Two[i].name);
+            grabInteractables_LV2[i].enabled = false;
+            name_interactables_Two.Add(grabInteractables_LV2[i].name);
         }
 
-        for (int i = 0; i < pokeInteractables_Two.Length; i++)
+        for (int i = 0; i < pokeInteractables_LV2.Length; i++)
         {
-            pokeInteractables_Two[i].enabled = false;
-            name_interactables_Two.Add(pokeInteractables_Two[i].name);
+            pokeInteractables_LV2[i].enabled = false;
+            name_interactables_Two.Add(pokeInteractables_LV2[i].name);
         }
     }
 }

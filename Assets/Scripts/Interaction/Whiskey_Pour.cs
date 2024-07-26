@@ -38,7 +38,7 @@ public class Whiskey_Pour : MonoBehaviour
                 isPouring = pourCheck;
                 if (isPouring)
                 {
-                    fluid.Play();
+                    fluid.Play();                  
                 }
                 else
                 {

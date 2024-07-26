@@ -19,7 +19,10 @@ public class Whiskey_InGlass : MonoBehaviour
 
     private void OnParticleCollision(GameObject other)
     {
-        isPoured = true;
+        if(!isPoured)
+        {
+            isPoured = true;
+        }
     }
 
     private void OnParticleSystemStopped()
@@ -40,7 +43,6 @@ public class Whiskey_InGlass : MonoBehaviour
             if(currentHeight == maxHeight)
             {
                 whiskeyPour.ChangeLevelIndex();
-                whiskeyPour.fluid = null;
             }
         }
     }

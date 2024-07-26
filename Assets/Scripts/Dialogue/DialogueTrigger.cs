@@ -61,6 +61,7 @@ public class DialogueTrigger : MonoBehaviour
             if (!isPlayerStaying)
             {
                 isPlayerStaying = true;
+
                 lightingManager.LightSwitch_Enter(gameObject.name);
                 StartDialogue(interactionManager.LevelIndex);
             }
