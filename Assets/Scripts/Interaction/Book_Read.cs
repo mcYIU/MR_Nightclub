@@ -1,6 +1,5 @@
 using System.Collections;
 using TMPro;
-using UnityEditor.Rendering;
 using UnityEngine;
 
 public class Book_Read : MonoBehaviour
@@ -11,7 +10,7 @@ public class Book_Read : MonoBehaviour
     public string[] sentences;
     public float typeInterval;
     public float readingDuration;
-    public AudioSource sFx_Flip;
+    public AudioSource sFx_TurnPage;
 
     private Animator animator;
 
@@ -35,8 +34,6 @@ public class Book_Read : MonoBehaviour
         yield return new WaitForSeconds(animationDurationOffset);
         for(int i = 0; i < sentences.Length; i++)
         {
-            sFx_Flip.Play();
-
             string textBuffer = null;
             foreach (char c in sentences[i])
             {
@@ -51,6 +48,7 @@ public class Book_Read : MonoBehaviour
             }
 
             yield return new WaitForSeconds(readingDuration);
+            sFx_TurnPage.Play();
             textBuffer = null;
             bookText.text = "";
         }

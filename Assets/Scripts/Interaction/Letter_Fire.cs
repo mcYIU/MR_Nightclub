@@ -8,6 +8,7 @@ public class Letter_Fire : MonoBehaviour
     public float burningDuration = 5.0f;
     public string alphaClipPropertyName = "_Cutoff";
     public float targetAlphaThreshold = 0.8f;
+    public AudioSource fireSFX;
 
     private Renderer objectRenderer;
     private Rigidbody rb;
@@ -73,10 +74,12 @@ public class Letter_Fire : MonoBehaviour
         interactable.enabled = false;
 
         fireVFX.Play();
+        fireSFX.Play();
         StartCoroutine(FadeToAsh());
 
         yield return new WaitForSeconds(burningDuration);
         fireVFX.Stop();
+        fireSFX.Stop();
 
         fire.ChangeLevelIndex();
     }

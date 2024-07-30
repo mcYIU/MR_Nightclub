@@ -136,20 +136,15 @@ public class InteractionManager : MonoBehaviour
                 ResetInteraction();
                 break;
         }
+
+        yield return new WaitForSeconds(noticeDuration);
+        CleanNotice();
     }
 
     public void DisplayNotice(string noticeText)
     {
-        StartCoroutine(Notice(noticeText));
-    }
-
-    private IEnumerator Notice(string noticeText)
-    {
         notice.text = noticeText;
         isNoticed = true;
-
-        yield return new WaitForSeconds(noticeDuration);
-        notice.text = "";
     }
 
     public void CleanNotice()
@@ -185,5 +180,12 @@ public class InteractionManager : MonoBehaviour
             pokeInteractables_LV2[i].enabled = false;
             name_interactables_Two.Add(pokeInteractables_LV2[i].name);
         }
+    }
+
+    public void Test()
+    {
+        levelIndex = 2;
+
+        gameManager.CheckGameState();
     }
 }

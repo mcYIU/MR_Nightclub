@@ -6,6 +6,7 @@ public class Candle_Blow : MonoBehaviour
     public SkinnedMeshRenderer face;
     public int blendshapeIndex;
     public float triggerFloat;
+    public AudioSource audioSource;
     public InteractionManager interactionManager;
 
     private void OnTriggerStay(Collider other)
@@ -16,6 +17,7 @@ public class Candle_Blow : MonoBehaviour
             float weightIndex = face.GetBlendShapeWeight(blendshapeIndex);
             if (weightIndex > triggerFloat)
             {
+                audioSource.Play();
                 interactionManager.ChangeLevelIndex(transform.parent.name);
                 gameObject.SetActive(false);
             }

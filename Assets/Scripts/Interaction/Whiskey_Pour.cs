@@ -7,6 +7,10 @@ public class Whiskey_Pour : MonoBehaviour
     public float pouringAngle = 70f;
     public InteractionManager interactionManager;
 
+    public AudioSource AS_Pour;
+    public AudioSource AS_OpenCap;
+    public AudioSource AS_DropCap;
+
     private Rigidbody rb;
     private Transform bottle;
     private Quaternion bottle_InitialRotation;
@@ -25,11 +29,6 @@ public class Whiskey_Pour : MonoBehaviour
 
     private void Update()
     {
-        if (!isOpened && Vector3.Distance(transform.position, attachPoint.transform.position) > 0.001f)
-        {
-            isOpened = true;
-        }
-
         if (isOpened)
         {
             bool pourCheck = CalculatePourAngle() > pouringAngle;
@@ -38,24 +37,35 @@ public class Whiskey_Pour : MonoBehaviour
                 isPouring = pourCheck;
                 if (isPouring)
                 {
-                    fluid.Play();                  
+                    fluid.Play();
+                    AS_Pour.Play();
                 }
                 else
                 {
                     fluid.Stop();
+                    AS_Pour.Stop();
                 }
             }
         }     
     }
 
-    private void FixedUpdate()
+    private void OnCollisionEnter(Collision collision)
     {
-        if (isOpened)
+        if (collision.collider.gameObject.CompareTag("Environment"))
         {
-            rb.isKinematic = false;
-            rb.useGravity = true;
-            transform.SetParent(null);
+            AS_DropCap.Play();
         }
+    }
+
+    public void CapPhysics()
+    {
+        isOpened = true ;
+
+        AS_OpenCap.Play();
+
+        rb.isKinematic = false;
+        rb.useGravity = true;
+        transform.SetParent(null);
     }
 
     private float CalculatePourAngle()

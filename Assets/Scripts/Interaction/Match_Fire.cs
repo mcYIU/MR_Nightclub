@@ -5,6 +5,7 @@ public class Match_Fire : MonoBehaviour
 {
     public GameObject matchBox;
     public GameObject firePrefab;
+    public AudioSource soundEffect;
     public InteractionManager interactionManager;
     [HideInInspector] public bool isFired = false;
 
@@ -16,6 +17,7 @@ public class Match_Fire : MonoBehaviour
         {
             if (!isFired)
             {
+                soundEffect.Play();
                 fireInstance = Instantiate(firePrefab, transform.position, Quaternion.identity);
                 isFired = true;
             }

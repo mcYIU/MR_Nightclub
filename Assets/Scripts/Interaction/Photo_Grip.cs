@@ -14,10 +14,11 @@ public class Photo_Grip : MonoBehaviour
 
     void Update()
     {
-        if(interactable.Interactors.Count > 1)
-        {
-            animator.SetBool("IsGripped", true);
-            manager.ChangeLevelIndex(gameObject.name);
-        }
+        if (interactable.enabled)
+            if (interactable.Interactors.Count > 1)
+            {
+                animator.SetBool("IsGripped", true);
+                manager.ChangeLevelIndex(gameObject.name);
+            }
     }
 }

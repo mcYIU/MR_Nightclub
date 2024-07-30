@@ -6,9 +6,7 @@ using UnityEngine;
 public class DialogueManager : MonoBehaviour
 {
     public AudioSource VO;
-    //public AudioSource endingSound;
-    [HideInInspector] public bool isDialogueShowing = false;
-    [HideInInspector] public bool isAudioPlaying = false;
+    [HideInInspector] public bool isPlayCompleted = false;
 
     private float dialogueTime;
     private Queue<string> dialogueQueue;
@@ -24,7 +22,7 @@ public class DialogueManager : MonoBehaviour
 
     public void StartDialogue(Dialogue dialogue, GameObject canvas, AudioClip clip, InteractionManager manager)
     {
-        if(!isDialogueShowing && manager.isNoticed)
+        if(manager.isNoticed)
         {
             manager.DisplayNotice(manager.noticeText[manager.LevelIndex]);
             return;
@@ -33,6 +31,7 @@ public class DialogueManager : MonoBehaviour
         {
             interactionManager = manager;
 
+            isPlayCompleted = false;
             VO.clip = clip;
             PlayVoiceOver();
 
@@ -50,9 +49,12 @@ public class DialogueManager : MonoBehaviour
     {
         if (dialogueQueue.Count == 0)
         {
+            isPlayCompleted = true;
             EndDialogue();
-            interactionManager.PlayAudio();
-            isDialogueShowing = false;
+            if (interactionManager.LevelIndex < interactionManager.ineteractionLayerCount)
+            {
+                interactionManager.PlayAudio();
+            }
         }
         else
         {
@@ -69,7 +71,6 @@ public class DialogueManager : MonoBehaviour
             dialogueText = dialogueCanvas.GetComponentInChildren<TextMeshProUGUI>();
             dialogueText.text = "";
             dialogueCanvas.SetActive(true);
-            isDialogueShowing = true;
 
             dialogueText.text += sentence;
         }
@@ -97,17 +98,14 @@ public class DialogueManager : MonoBehaviour
     }
 
     private void PlayVoiceOver()
-    {
-        if (!VO.isPlaying && !isAudioPlaying && !interactionManager.isNoticed)
+    {       
+        if (!VO.isPlaying && !isPlayCompleted)
         {
-            isAudioPlaying = true;
             VO.Play();
         }
         else
         {
             VO.Stop();
-            VO.clip = null;
-            isAudioPlaying = false;
         }
     }
 }
