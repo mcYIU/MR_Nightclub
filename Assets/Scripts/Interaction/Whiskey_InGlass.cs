@@ -4,6 +4,7 @@ public class Whiskey_InGlass : MonoBehaviour
 {
     public float fillSpeed = 0.1f;
     public Whiskey_Pour whiskeyPour;
+    public AudioSource AS_Pour;
     [HideInInspector] public bool isPoured = false;
 
     private Renderer sphereRenderer;
@@ -22,6 +23,7 @@ public class Whiskey_InGlass : MonoBehaviour
         if(!isPoured)
         {
             isPoured = true;
+            AS_Pour.Play();
         }
     }
 
@@ -43,6 +45,7 @@ public class Whiskey_InGlass : MonoBehaviour
             if(currentHeight == maxHeight)
             {
                 whiskeyPour.ChangeLevelIndex();
+                isPoured = false;
             }
         }
     }

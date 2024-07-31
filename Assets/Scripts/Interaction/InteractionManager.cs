@@ -45,6 +45,10 @@ public class InteractionManager : MonoBehaviour
             if (levelIndex != value) 
             {
                 levelIndex = value;
+
+                CleanNotice();
+                isNoticed = false;
+
                 if (value < ineteractionLayerCount)
                 {
                     dialogueTrigger.StartDialogue(levelIndex);
@@ -69,9 +73,6 @@ public class InteractionManager : MonoBehaviour
 
     public void ChangeLevelIndex(string obj_name)
     {
-        notice.text = "";
-        isNoticed = false;
-
         if (name_interactables_One.Contains(obj_name))
         {
             LevelIndex = index_One;
@@ -133,35 +134,25 @@ public class InteractionManager : MonoBehaviour
                 }
                 break;
             default:
-                ResetInteraction();
+                //ResetInteraction();
                 break;
         }
     }
 
     public void DisplayNotice(string noticeText)
     {
-        StartCoroutine(Notice(noticeText));
-    }
-
-    private IEnumerator Notice(string noticeText)
-    {
         notice.text = noticeText;
         isNoticed = true;
-
-        yield return new WaitForSeconds(noticeDuration);
-        notice.text = "";
     }
 
     public void CleanNotice()
     {
-        StopAllCoroutines();
         notice.text = "";
+        StopAllCoroutines();
     }
 
     public void ResetInteraction()
     {
-        StopAllCoroutines();
-
         for (int i = 0; i < grabInteractables_LV1.Length; i++)
         {
             grabInteractables_LV1[i].enabled = false;
@@ -185,5 +176,12 @@ public class InteractionManager : MonoBehaviour
             pokeInteractables_LV2[i].enabled = false;
             name_interactables_Two.Add(pokeInteractables_LV2[i].name);
         }
+    }
+
+    public void Test()
+    {
+        levelIndex = 2;
+
+        gameManager.CheckGameState();
     }
 }

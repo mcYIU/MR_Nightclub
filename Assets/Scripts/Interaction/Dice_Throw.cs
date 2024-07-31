@@ -4,15 +4,19 @@ using UnityEngine;
 public class Dice_Throw : MonoBehaviour
 {
     public InteractionManager interactionManager;
+    public AudioClip[] diceSound;
 
     private bool isGrabbed = false;
     private HandGrabInteractable grab;
     private Rigidbody rb;
+    private AudioSource audioSource;
 
     private void Start()
     {
         grab = GetComponent<HandGrabInteractable>();
         rb = GetComponent<Rigidbody>();
+
+        audioSource = GetComponentInChildren<AudioSource>();
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -20,6 +24,9 @@ public class Dice_Throw : MonoBehaviour
         if (isGrabbed)
             if (collision.collider.gameObject.CompareTag("Environment"))
             {
+                int soundIndex = Random.Range(0, diceSound.Length);
+                audioSource.PlayOneShot(diceSound[soundIndex]);
+
                 interactionManager.ChangeLevelIndex(gameObject.name);
             }
     }

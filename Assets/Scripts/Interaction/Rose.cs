@@ -1,24 +1,18 @@
-using System.Collections;
 using UnityEngine;
 
 public class Rose : MonoBehaviour
 {
     public InteractionManager interactionManager;
-    int interactionIndex = 0;
-    readonly int maxInteractionIndex = 2;
+    public  int maxInteractionIndex = 2;
+
+    private int interactionIndex = 0;
     
     public void AddIndex()
     {
         interactionIndex++;
         if (interactionIndex == maxInteractionIndex)
         {
-            StartCoroutine(ChangeLevelIndex());
+            interactionManager.ChangeLevelIndex(gameObject.name);
         }
-    }
-
-    IEnumerator ChangeLevelIndex()
-    {
-        yield return new WaitForSeconds(1f);
-        interactionManager.ChangeLevelIndex(gameObject.name);
     }
 }

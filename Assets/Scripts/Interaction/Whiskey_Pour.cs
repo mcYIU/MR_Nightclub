@@ -7,12 +7,16 @@ public class Whiskey_Pour : MonoBehaviour
     public float pouringAngle = 70f;
     public InteractionManager interactionManager;
 
+    public AudioSource AS_OpenCap;
+    public AudioSource AS_DropCap;
+
     private Rigidbody rb;
     private Transform bottle;
     private Quaternion bottle_InitialRotation;
 
     private bool isOpened = false;
     private bool isPouring = false;
+    private bool isBottleHeld = false;
 
 
     void Start()
@@ -25,20 +29,15 @@ public class Whiskey_Pour : MonoBehaviour
 
     private void Update()
     {
-        if (!isOpened && Vector3.Distance(transform.position, attachPoint.transform.position) > 0.001f)
-        {
-            isOpened = true;
-        }
-
         if (isOpened)
         {
             bool pourCheck = CalculatePourAngle() > pouringAngle;
             if (isPouring != pourCheck)
             {
                 isPouring = pourCheck;
-                if (isPouring)
+                if (isPouring && isBottleHeld)
                 {
-                    fluid.Play();                  
+                    fluid.Play();
                 }
                 else
                 {
@@ -48,14 +47,35 @@ public class Whiskey_Pour : MonoBehaviour
         }     
     }
 
-    private void FixedUpdate()
+    private void OnCollisionEnter(Collision collision)
     {
-        if (isOpened)
+        if (collision.collider.gameObject.CompareTag("Environment"))
         {
-            rb.isKinematic = false;
-            rb.useGravity = true;
-            transform.SetParent(null);
+            AS_DropCap.Play();
         }
+    }
+
+    public void HoldBottle()
+    {
+        if (!isBottleHeld)
+        {
+            isBottleHeld = true;
+        }
+        else
+        {
+            isBottleHeld = false;
+        }
+    }
+
+    public void CapPhysics()
+    {
+        isOpened = true ;
+
+        AS_OpenCap.Play();
+
+        rb.isKinematic = false;
+        rb.useGravity = true;
+        transform.SetParent(null);
     }
 
     private float CalculatePourAngle()
