@@ -7,7 +7,6 @@ public class Whiskey_Pour : MonoBehaviour
     public float pouringAngle = 70f;
     public InteractionManager interactionManager;
 
-    public AudioSource AS_Pour;
     public AudioSource AS_OpenCap;
     public AudioSource AS_DropCap;
 
@@ -17,6 +16,7 @@ public class Whiskey_Pour : MonoBehaviour
 
     private bool isOpened = false;
     private bool isPouring = false;
+    private bool isBottleHeld = false;
 
 
     void Start()
@@ -35,15 +35,13 @@ public class Whiskey_Pour : MonoBehaviour
             if (isPouring != pourCheck)
             {
                 isPouring = pourCheck;
-                if (isPouring)
+                if (isPouring && isBottleHeld)
                 {
                     fluid.Play();
-                    AS_Pour.Play();
                 }
                 else
                 {
                     fluid.Stop();
-                    AS_Pour.Stop();
                 }
             }
         }     
@@ -54,6 +52,18 @@ public class Whiskey_Pour : MonoBehaviour
         if (collision.collider.gameObject.CompareTag("Environment"))
         {
             AS_DropCap.Play();
+        }
+    }
+
+    public void HoldBottle()
+    {
+        if (!isBottleHeld)
+        {
+            isBottleHeld = true;
+        }
+        else
+        {
+            isBottleHeld = false;
         }
     }
 

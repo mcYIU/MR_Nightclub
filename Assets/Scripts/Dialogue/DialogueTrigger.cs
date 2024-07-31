@@ -102,6 +102,7 @@ public class DialogueTrigger : MonoBehaviour
         else
         {
             dialogueNoticeUI.SetActive(false);
+            dialogueManager.EndDialogue();
             lightingManager.LightSwitch_Exit(gameObject.name);
         }
     }

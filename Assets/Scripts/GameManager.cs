@@ -12,6 +12,10 @@ public class GameManager : MonoBehaviour
     public AudioSource AS_Shot;
     public float triggerInterval = 2.0f;
 
+    [Header("Pass Through")]
+    public OVRPassthroughLayer passthroughLayers;
+    public float passThroughFadeDuration = 5.0f;
+
     [Header("Notice")]
     public string[] endingText;
     public TextMeshProUGUI notice;
@@ -60,26 +64,30 @@ public class GameManager : MonoBehaviour
         lightingManager.QuickSwitchOffAll();
         AS_Clock.Play();
 
+        dialogueManager.EndDialogue();
+
         StartCoroutine(TriggerFinalDialogue());
     }
+
 
     IEnumerator TriggerFinalDialogue()
     {
         lightingManager.QuickSwitchOffAll();
-
-        yield return new WaitForSeconds(triggerInterval);
-        isTyping = true;
+        StartCoroutine(ChangeOpacity());
         StartCoroutine(TypeText());
 
         for (int i = 0; i < dialogueTriggers.Length; i++)
         {
             yield return new WaitForSeconds(triggerInterval);
 
-            lightingManager.QuickSwitchOn(dialogueTriggers[i].gameObject.name);
-            dialogueTriggers[i].StartDialogue(interactionManagers[i].LevelIndex);
+            if (dialogueTriggers[i].VO_Audio[interactionManagers[i].LevelIndex] != null)
+            {
+                lightingManager.QuickSwitchOn(dialogueTriggers[i].gameObject.name);
+                dialogueTriggers[i].StartDialogue(interactionManagers[i].LevelIndex);
 
-            yield return new WaitForSeconds(dialogueManager.VO.clip.length);
-            lightingManager.QuickSwitchOffAll();
+                yield return new WaitForSeconds(dialogueTriggers[i].VO_Audio[interactionManagers[i].LevelIndex].length);
+                lightingManager.QuickSwitchOffAll();
+            }
         }
 
         isTyping = false;
@@ -92,8 +100,28 @@ public class GameManager : MonoBehaviour
         StartCoroutine(ChangeScene());
     }
 
+    IEnumerator ChangeOpacity()
+    {
+        float elapsedTime = 0f;
+        float startValue = passthroughLayers.textureOpacity;
+        float endValue = 0f;
+
+        while (elapsedTime < passThroughFadeDuration)
+        {
+            passthroughLayers.textureOpacity = Mathf.Lerp(startValue, endValue, elapsedTime / passThroughFadeDuration);
+
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        passthroughLayers.textureOpacity = endValue;
+    }
+
     IEnumerator TypeText()
     {
+        yield return new WaitForSeconds(triggerInterval);
+        isTyping = true;
+
         while (isTyping)
         {
             for (int i = 0; i < endingText.Length; i++)

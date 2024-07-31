@@ -27,6 +27,10 @@ public class DialogueManager : MonoBehaviour
             manager.DisplayNotice(manager.noticeText[manager.LevelIndex]);
             return;
         }
+        if(dialogue == null)
+        {
+            return;
+        }
         else
         {
             interactionManager = manager;
@@ -90,7 +94,7 @@ public class DialogueManager : MonoBehaviour
     {
         StopAllCoroutines();
         dialogueQueue.Clear();
-        if (dialogueCanvas != null)
+        if (dialogueCanvas.activeSelf)
         {
             dialogueCanvas.SetActive(false);
             dialogueText.text = "";

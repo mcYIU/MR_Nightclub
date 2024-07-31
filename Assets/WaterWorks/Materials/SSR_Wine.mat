@@ -62,8 +62,8 @@ Material:
     - _Cutoff: 0
     - _CutoffSpeed: -0.4
     - _Displacement_Amount: 0
-    - _Displacement_Scale: 1
-    - _Displacement_Speed: 0.1
+    - _Displacement_Scale: 2
+    - _Displacement_Speed: 1
     - _DstBlend: 10
     - _Edge_Offset: 20
     - _Foam_Cutoff: 0.6
@@ -77,12 +77,12 @@ Material:
     - _QueueControl: 0
     - _QueueOffset: 0
     - _ReceiveShadows: 1
-    - _ScreenSpaceReflections: 1
-    - _Speed: 0.001
+    - _ScreenSpaceReflections: 0
+    - _Speed: 0
     - _SrcBlend: 5
     - _Surface: 1
     - _Tiling: 1
-    - _Transparency: 0.8
+    - _Transparency: 1
     - _UseFoam: 1
     - _Use_Foam: 1
     - _WaveDist: 1
@@ -95,9 +95,9 @@ Material:
     - _ZWriteControl: 1
     m_Colors:
     - _Color: {r: 1, g: 0.6039734, b: 0, a: 1}
-    - _EdgeColor: {r: 0.9528302, g: 0.67161936, b: 0, a: 1}
+    - _EdgeColor: {r: 1, g: 0.72162414, b: 0.2971698, a: 1}
     - _Edge_Color: {r: 0.2507565, g: 0.3301887, b: 0.28799033, a: 1}
-    - _FoamColor: {r: 10.680627, g: 10.680627, b: 10.680627, a: 1}
+    - _FoamColor: {r: 1, g: 0.32314324, b: 0, a: 1}
     - _Foam_Color: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []
 --- !u!114 &684404215947078111

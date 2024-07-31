@@ -45,6 +45,10 @@ public class InteractionManager : MonoBehaviour
             if (levelIndex != value) 
             {
                 levelIndex = value;
+
+                CleanNotice();
+                isNoticed = false;
+
                 if (value < ineteractionLayerCount)
                 {
                     dialogueTrigger.StartDialogue(levelIndex);
@@ -69,9 +73,6 @@ public class InteractionManager : MonoBehaviour
 
     public void ChangeLevelIndex(string obj_name)
     {
-        notice.text = "";
-        isNoticed = false;
-
         if (name_interactables_One.Contains(obj_name))
         {
             LevelIndex = index_One;
@@ -133,12 +134,9 @@ public class InteractionManager : MonoBehaviour
                 }
                 break;
             default:
-                ResetInteraction();
+                //ResetInteraction();
                 break;
         }
-
-        yield return new WaitForSeconds(noticeDuration);
-        CleanNotice();
     }
 
     public void DisplayNotice(string noticeText)
@@ -149,14 +147,12 @@ public class InteractionManager : MonoBehaviour
 
     public void CleanNotice()
     {
-        StopAllCoroutines();
         notice.text = "";
+        StopAllCoroutines();
     }
 
     public void ResetInteraction()
     {
-        StopAllCoroutines();
-
         for (int i = 0; i < grabInteractables_LV1.Length; i++)
         {
             grabInteractables_LV1[i].enabled = false;
