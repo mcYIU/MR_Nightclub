@@ -140,14 +140,14 @@ Material:
     - _GlossMapScale: 1
     - _Glossiness: 1
     - _GlossyReflections: 1
-    - _Metallic: 0.82
+    - _Metallic: 0.8
     - _Mode: 1
     - _OcclusionStrength: 1
     - _Parallax: 0.02
     - _QueueOffset: 0
     - _ReceiveShadows: 1
     - _Refraction: 2.3
-    - _Smoothness: 0.78
+    - _Smoothness: 0.9
     - _SmoothnessTextureChannel: 0
     - _SoftParticlesEnabled: 0
     - _SoftParticlesFarFadeDistance: 1
@@ -162,10 +162,10 @@ Material:
     - _ZWrite: 0
     - __dirty: 1
     m_Colors:
-    - _BaseColor: {r: 0.79716986, g: 0.963425, b: 1, a: 0.2901961}
+    - _BaseColor: {r: 0.78653437, g: 0.91587555, b: 0.9528302, a: 0.2901961}
     - _BaseColorAddSubDiff: {r: -1, g: 1, b: 0, a: 0}
     - _CameraFadeParams: {r: 0, g: Infinity, b: 0, a: 0}
-    - _Color: {r: 0.79716986, g: 0.963425, b: 1, a: 0.2901961}
+    - _Color: {r: 0.78653437, g: 0.91587555, b: 0.95283014, a: 0.2901961}
     - _EmissionColor: {r: 0.16509432, g: 0.1565281, b: 0.1565281, a: 1}
     - _FresnelColor: {r: 1, g: 1, b: 1, a: 1}
     - _SoftParticleFadeParams: {r: 0, g: 0, b: 0, a: 0}

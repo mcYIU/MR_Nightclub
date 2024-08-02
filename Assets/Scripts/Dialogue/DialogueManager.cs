@@ -6,6 +6,7 @@ using UnityEngine;
 public class DialogueManager : MonoBehaviour
 {
     public AudioSource VO;
+    public TextMeshProUGUI finalText;
     [HideInInspector] public bool isPlayCompleted = false;
 
     private float dialogueTime;
@@ -18,6 +19,8 @@ public class DialogueManager : MonoBehaviour
     private void Start()
     {
         dialogueQueue = new Queue<string>();
+
+        finalText.text = "";
     }
 
     public void StartDialogue(Dialogue dialogue, GameObject canvas, AudioClip clip, InteractionManager manager)
@@ -49,6 +52,22 @@ public class DialogueManager : MonoBehaviour
         }
     }
 
+    public void StartFinalText(Dialogue dialogue, AudioClip clip, InteractionManager manager)
+    {
+        interactionManager = manager;
+
+        isPlayCompleted = false;
+        VO.clip = clip;
+        PlayVoiceOver();
+
+        foreach (string sentence in dialogue.sentences)
+        {
+            dialogueQueue.Enqueue(sentence);
+        }
+        dialogueTime = clip.length / dialogue.sentences.Length;
+        NextSentence();
+    }
+
     public void NextSentence()
     {
         if (dialogueQueue.Count == 0)
@@ -58,6 +77,10 @@ public class DialogueManager : MonoBehaviour
             if (interactionManager.LevelIndex < interactionManager.ineteractionLayerCount)
             {
                 interactionManager.PlayAudio();
+            }
+            else
+            {
+                finalText.text = "";
             }
         }
         else
@@ -78,6 +101,13 @@ public class DialogueManager : MonoBehaviour
 
             dialogueText.text += sentence;
         }
+        else
+        {
+            if(interactionManager.LevelIndex >= interactionManager.ineteractionLayerCount)
+            {
+                finalText.text = sentence;
+            }
+        }
 
         yield return new WaitForSeconds(dialogueTime);
         NextSentence();
@@ -94,10 +124,15 @@ public class DialogueManager : MonoBehaviour
     {
         StopAllCoroutines();
         dialogueQueue.Clear();
-        if (dialogueCanvas.activeSelf)
+        if (dialogueCanvas != null)
         {
             dialogueCanvas.SetActive(false);
+            dialogueCanvas = null;
             dialogueText.text = "";
+        }
+        else
+        {
+            finalText.text = "";
         }
     }
 

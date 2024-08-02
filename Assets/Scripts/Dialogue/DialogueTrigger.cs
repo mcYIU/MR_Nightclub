@@ -10,7 +10,6 @@ public class DialogueTrigger : MonoBehaviour
     public GameObject dialogueCanvas;
     public Transform player;
     public float triggerDistance;
-
     public InteractionManager interactionManager;
 
     DialogueManager dialogueManager;
@@ -90,6 +89,11 @@ public class DialogueTrigger : MonoBehaviour
     {
         dialogueNoticeUI.SetActive(false);
         dialogueManager.StartDialogue(VO_Text[index], dialogueCanvas, VO_Audio[index], interactionManager);
+    }
+
+    public void StartFinalDialogue(int index)
+    {
+        dialogueManager.StartFinalText(VO_Text[index], VO_Audio[index], interactionManager);
     }
 
     public void EndDialogue()

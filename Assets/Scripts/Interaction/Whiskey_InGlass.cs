@@ -20,22 +20,17 @@ public class Whiskey_InGlass : MonoBehaviour
 
     private void OnParticleCollision(GameObject other)
     {
-        if(!isPoured)
+        if(!isPoured && currentHeight != maxHeight)
         {
-            isPoured = true;
             AS_Pour.Play();
+            isPoured = true;
         }
-    }
-
-    private void OnParticleSystemStopped()
-    {
-        isPoured = false;
     }
 
     private void Update()
     {
         if (isPoured)
-        {
+        {         
             currentHeight += fillSpeed * Time.deltaTime;
             currentHeight = Mathf.Clamp(currentHeight, 0.0f, maxHeight);
             transform.localScale = new Vector3(transform.localScale.x, currentHeight, transform.localScale.z);
@@ -45,6 +40,7 @@ public class Whiskey_InGlass : MonoBehaviour
             if(currentHeight == maxHeight)
             {
                 whiskeyPour.ChangeLevelIndex();
+                AS_Pour.Stop();
                 isPoured = false;
             }
         }

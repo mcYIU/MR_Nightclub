@@ -69,9 +69,9 @@ public class Letter_Fire : MonoBehaviour
 
     private IEnumerator Burn(Match_Fire fire)
     {
-        rb.isKinematic = true;
-        rb.useGravity = false;
-        interactable.enabled = false;
+        //rb.isKinematic = true;
+        //rb.useGravity = false;
+        //interactable.enabled = false;
 
         fireVFX.Play();
         fireSFX.Play();

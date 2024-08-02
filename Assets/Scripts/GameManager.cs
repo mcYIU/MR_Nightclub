@@ -36,7 +36,7 @@ public class GameManager : MonoBehaviour
         lightingManager = FindAnyObjectByType<LightingManager>();
         dialogueManager = FindAnyObjectByType<DialogueManager>();
 
-        notice.text = "";
+        //notice.text = "";
     }
 
     public void CheckGameState()
@@ -74,16 +74,17 @@ public class GameManager : MonoBehaviour
     {
         lightingManager.QuickSwitchOffAll();
         StartCoroutine(ChangeOpacity());
-        StartCoroutine(TypeText());
+        //StartCoroutine(TypeText());
 
-        for (int i = 0; i < dialogueTriggers.Length; i++)
+        for (int i = 0; i < dialogueTriggers.Length - 1; i++)
         {
             yield return new WaitForSeconds(triggerInterval);
 
             if (dialogueTriggers[i].VO_Audio[interactionManagers[i].LevelIndex] != null)
             {
                 lightingManager.QuickSwitchOn(dialogueTriggers[i].gameObject.name);
-                dialogueTriggers[i].StartDialogue(interactionManagers[i].LevelIndex);
+                dialogueTriggers[i].StartFinalDialogue(interactionManagers[i].LevelIndex);
+                //dialogueTriggers[i].StartDialogue(interactionManagers[i].LevelIndex);
 
                 yield return new WaitForSeconds(dialogueTriggers[i].VO_Audio[interactionManagers[i].LevelIndex].length);
                 lightingManager.QuickSwitchOffAll();
