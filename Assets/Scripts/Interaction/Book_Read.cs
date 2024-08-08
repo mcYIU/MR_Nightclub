@@ -11,6 +11,7 @@ public class Book_Read : MonoBehaviour
     public float typeInterval;
     public float readingDuration;
     public AudioSource sFx_TurnPage;
+    public TextMeshProUGUI noticeText;
 
     private Animator animator;
 
@@ -25,6 +26,7 @@ public class Book_Read : MonoBehaviour
     {
         if(bookText != null)
         {
+            noticeText.text = "";
             StartCoroutine(Type());
         }
     }
