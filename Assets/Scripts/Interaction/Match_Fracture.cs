@@ -4,8 +4,8 @@ using UnityEngine;
 public class Match_Fracture : MonoBehaviour
 {
     public GameObject fracturedObjectPrefab;
-    //public HandGrabInteractor leftInteractor;
-    //public HandGrabInteractor rightInteractor;
+    public HandGrabInteractor leftInteractor;
+    public HandGrabInteractor rightInteractor;
 
     HandGrabInteractable interactable;
     //private bool isGrabbed;
@@ -17,7 +17,7 @@ public class Match_Fracture : MonoBehaviour
 
     private void Update()
     {
-        if(interactable.Interactors.Count > 0)
+        if (leftInteractor.IsGrabbing == gameObject && rightInteractor.IsGrabbing == gameObject)
         {
             FractureObject();
         }
