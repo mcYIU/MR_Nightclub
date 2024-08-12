@@ -3,26 +3,29 @@ using UnityEngine;
 
 public class Match_Fracture : MonoBehaviour
 {
-    public HandGrabInteractor leftInteractor;
-    public HandGrabInteractor rightInteractor;
     public GameObject fracturedObjectPrefab;
+    //public HandGrabInteractor leftInteractor;
+    //public HandGrabInteractor rightInteractor;
 
-    private bool isGrabbed;
+    HandGrabInteractable interactable;
+    //private bool isGrabbed;
+
+    private void Start()
+    {
+        interactable = GetComponent<HandGrabInteractable>();
+    }
 
     private void Update()
     {
-        if(isGrabbed)
+        if(interactable.Interactors.Count > 0)
         {
-            if(leftInteractor.IsGrabbing == gameObject && rightInteractor.IsGrabbing == gameObject)
-            {
-                FractureObject();
-            }
+            FractureObject();
         }
     }
 
-    private void OnCollisionEnter(Collision collision)
+    /*private void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.CompareTag("Environment"))
+        if (collision.gameObject.CompareTag("Environment"))
         {
             isGrabbed = false;
         }
@@ -34,12 +37,16 @@ public class Match_Fracture : MonoBehaviour
         {
             isGrabbed = true;
         }
-    }
+    }*/
 
-    private void FractureObject()
+    public void FractureObject()
     {
-        Instantiate(fracturedObjectPrefab, transform.position, transform.rotation);
+        //Debug.Log(interactable.Interactors.Count);
+        //if (interactable.Interactors.Count > 1)
+        //{
+            Instantiate(fracturedObjectPrefab, transform.position, transform.rotation);
 
-        Destroy(gameObject);
+            Destroy(gameObject);
+        //}
     }
 }

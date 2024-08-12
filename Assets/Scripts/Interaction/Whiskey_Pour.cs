@@ -2,34 +2,34 @@ using UnityEngine;
 
 public class Whiskey_Pour : MonoBehaviour
 {
-    public GameObject attachPoint;
+    //public GameObject attachPoint;
     public ParticleSystem fluid;
     public float pouringAngle;
     public InteractionManager interactionManager;
 
-    public AudioSource AS_OpenCap;
-    public AudioSource AS_DropCap;
+    //public AudioSource AS_OpenCap;
+    //public AudioSource AS_DropCap;
 
-    private Rigidbody rb;
-    private Transform bottle;
+    //private Rigidbody rb;
+    //private Transform bottle;
     private Quaternion bottle_InitialRotation;
 
-    private bool isOpened = false;
+    //private bool isOpened = false;
     private bool isPouring = false;
     private bool isBottleHeld = false;
 
 
     void Start()
     {
-        rb = GetComponent<Rigidbody>();
+        //rb = GetComponent<Rigidbody>();
 
-        bottle = transform.parent;
-        bottle_InitialRotation = bottle.rotation;
+        //bottle = transform.parent;
+        bottle_InitialRotation = transform.localRotation;
     }
 
     private void Update()
     {
-        if (isOpened && isBottleHeld)
+        if (isBottleHeld)
         {
             bool pourCheck = CalculatePourAngle() > pouringAngle;
             if (isPouring != pourCheck)
@@ -51,22 +51,12 @@ public class Whiskey_Pour : MonoBehaviour
         }
     }
 
-    private void OnCollisionEnter(Collision collision)
+    /*private void OnCollisionEnter(Collision collision)
     {
         if (collision.collider.gameObject.CompareTag("Environment"))
         {
             AS_DropCap.Play();
         }
-    }
-
-    public void HoldBottle()
-    {
-        isBottleHeld = true;
-    }
-
-    public void ReleaseBottle()
-    {
-        isBottleHeld = false;
     }
 
     public void CapPhysics()
@@ -81,11 +71,21 @@ public class Whiskey_Pour : MonoBehaviour
             rb.useGravity = true;
             transform.SetParent(null);
         }
+    }*/
+
+    public void HoldBottle()
+    {
+        isBottleHeld = true;
+    }
+
+    public void ReleaseBottle()
+    {
+        isBottleHeld = false;
     }
 
     private float CalculatePourAngle()
     {
-        return Quaternion.Angle(bottle_InitialRotation, bottle.transform.rotation);
+        return Quaternion.Angle(bottle_InitialRotation, transform.localRotation);
     }
 
     public void ChangeLevelIndex()
