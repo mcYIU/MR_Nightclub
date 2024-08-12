@@ -1,11 +1,10 @@
-using System.Collections;
 using UnityEngine;
 
 public class Match_Fire : MonoBehaviour
 {
     public GameObject matchBox;
     public GameObject firePrefab;
-    public AudioSource soundEffect;
+    public AudioSource AS_Scratch;
     public InteractionManager interactionManager;
     [HideInInspector] public bool isFired = false;
 
@@ -17,7 +16,7 @@ public class Match_Fire : MonoBehaviour
         {
             if (!isFired)
             {
-                soundEffect.Play();
+                AS_Scratch.Play();
                 fireInstance = Instantiate(firePrefab, transform.position, Quaternion.identity);
                 isFired = true;
             }
@@ -42,14 +41,20 @@ public class Match_Fire : MonoBehaviour
         return false;
     }
 
+    /*private void Fire()
+    {
+        if (!isFired)
+        {
+            AS_Scratch.Play();
+            fireInstance = Instantiate(firePrefab, transform.position, Quaternion.identity);
+            isFired = true;
+
+            ChangeLevelIndex();
+        }
+    }*/
+
     public void ChangeLevelIndex()
     {
-        StartCoroutine(Index());
-    }
-
-    private IEnumerator Index()
-    {
-        yield return new WaitForSeconds(1f);
         interactionManager.ChangeLevelIndex(transform.parent.name);
     }
 

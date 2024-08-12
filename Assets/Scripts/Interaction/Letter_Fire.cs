@@ -5,14 +5,13 @@ using UnityEngine;
 public class Letter_Fire : MonoBehaviour
 {
     public ParticleSystem fireVFX;
-    public float burningDuration = 5.0f;
+    public float burningDuration;
+    public float burningDelay;
     public string alphaClipPropertyName = "_Cutoff";
-    public float targetAlphaThreshold = 0.8f;
+    public float targetAlphaThreshold = 1.0f;
     public AudioSource fireSFX;
 
     private Renderer objectRenderer;
-    private Rigidbody rb;
-    private HandGrabInteractable interactable;
     private float initialAlphaThreshold;
     private Color initialColor;
     private Color targetColor = Color.black;
@@ -21,9 +20,6 @@ public class Letter_Fire : MonoBehaviour
 
     private void Start()
     {
-        rb = GetComponentInParent<Rigidbody>();
-        interactable = GetComponentInParent<HandGrabInteractable>();
-
         objectRenderer = GetComponentInParent<Renderer>();
         if(objectRenderer != null)
         {
@@ -50,7 +46,7 @@ public class Letter_Fire : MonoBehaviour
 
         while (elapsedTime < burningDuration)
         {
-            float normalizedTime = elapsedTime / burningDuration;
+            float normalizedTime = (elapsedTime - burningDelay) / burningDuration;
 
             float currentAlphaThreshold = Mathf.Lerp(initialAlphaThreshold, targetAlphaThreshold, normalizedTime);
             objectRenderer.material.SetFloat(alphaClipPropertyName, currentAlphaThreshold);
@@ -69,10 +65,6 @@ public class Letter_Fire : MonoBehaviour
 
     private IEnumerator Burn(Match_Fire fire)
     {
-        //rb.isKinematic = true;
-        //rb.useGravity = false;
-        //interactable.enabled = false;
-
         fireVFX.Play();
         fireSFX.Play();
         StartCoroutine(FadeToAsh());
