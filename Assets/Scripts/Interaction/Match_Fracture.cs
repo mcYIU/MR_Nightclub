@@ -7,14 +7,6 @@ public class Match_Fracture : MonoBehaviour
     public HandGrabInteractor leftInteractor;
     public HandGrabInteractor rightInteractor;
 
-    HandGrabInteractable interactable;
-    //private bool isGrabbed;
-
-    private void Start()
-    {
-        interactable = GetComponent<HandGrabInteractable>();
-    }
-
     private void Update()
     {
         if (leftInteractor.IsGrabbing == gameObject && rightInteractor.IsGrabbing == gameObject)
