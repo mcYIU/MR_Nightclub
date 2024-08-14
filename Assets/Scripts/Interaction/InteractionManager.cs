@@ -181,7 +181,6 @@ public class InteractionManager : MonoBehaviour
     public void Test()
     {
         levelIndex = 2;
-
         gameManager.CheckGameState();
     }
 }

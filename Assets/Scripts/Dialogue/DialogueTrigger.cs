@@ -1,5 +1,4 @@
-﻿using TMPro;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class DialogueTrigger : MonoBehaviour
 {
@@ -12,9 +11,11 @@ public class DialogueTrigger : MonoBehaviour
     public float triggerDistance;
     public InteractionManager interactionManager;
 
+    [HideInInspector] public bool canTalk = false;
+    [HideInInspector] public bool isPlayerOut = true;
+
     DialogueManager dialogueManager;
     LightingManager lightingManager;
-    private bool isPlayerStaying = false;
 
     private void Start()
     {
@@ -27,32 +28,28 @@ public class DialogueTrigger : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Player") && interactionManager.LevelIndex < interactionManager.ineteractionLayerCount)
-        {
-            if (!isPlayerStaying)
+        if (other.gameObject.CompareTag("Player") && interactionManager.LevelIndex < interactionManager.ineteractionLayerCount && canTalk)
+            if (isPlayerOut)
             {
-                isPlayerStaying = true;
+                isPlayerOut = false;
 
                 lightingManager.LightSwitch_Enter(gameObject.name);
                 StartDialogue(interactionManager.LevelIndex);
             }
-        }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.CompareTag("Player") && interactionManager.LevelIndex < interactionManager.ineteractionLayerCount)
-        {
-            if (isPlayerStaying)
+        if (other.gameObject.CompareTag("Player") && interactionManager.LevelIndex < interactionManager.ineteractionLayerCount && canTalk)
+            if (!isPlayerOut)
             {
                 EndDialogue();
 
                 lightingManager.LightSwitch_Exit(gameObject.name);
                 interactionManager.CleanNotice();
 
-                isPlayerStaying = false;
+                isPlayerOut = true;
             }
-        }
     }
 
     /*private void Update()

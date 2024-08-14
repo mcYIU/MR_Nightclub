@@ -1,4 +1,3 @@
-using Oculus.Interaction.HandGrab;
 using System.Collections;
 using UnityEngine;
 
@@ -42,11 +41,12 @@ public class Letter_Fire : MonoBehaviour
 
     private IEnumerator FadeToAsh()
     {
+        yield return new WaitForSeconds(burningDelay);
         float elapsedTime = 0f;
 
         while (elapsedTime < burningDuration)
         {
-            float normalizedTime = (elapsedTime - burningDelay) / burningDuration;
+            float normalizedTime = (elapsedTime) / burningDuration;
 
             float currentAlphaThreshold = Mathf.Lerp(initialAlphaThreshold, targetAlphaThreshold, normalizedTime);
             objectRenderer.material.SetFloat(alphaClipPropertyName, currentAlphaThreshold);
