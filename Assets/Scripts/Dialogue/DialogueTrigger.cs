@@ -12,7 +12,7 @@ public class DialogueTrigger : MonoBehaviour
     public InteractionManager interactionManager;
 
     [HideInInspector] public bool canTalk = false;
-    [HideInInspector] public bool isPlayerStaying = false;
+    [HideInInspector] public bool isPlayerOut = true;
 
     DialogueManager dialogueManager;
     LightingManager lightingManager;
@@ -29,9 +29,9 @@ public class DialogueTrigger : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Player") && interactionManager.LevelIndex < interactionManager.ineteractionLayerCount && canTalk)
-            if (!isPlayerStaying)
+            if (isPlayerOut)
             {
-                isPlayerStaying = true;
+                isPlayerOut = false;
 
                 lightingManager.LightSwitch_Enter(gameObject.name);
                 StartDialogue(interactionManager.LevelIndex);
@@ -41,14 +41,14 @@ public class DialogueTrigger : MonoBehaviour
     private void OnTriggerExit(Collider other)
     {
         if (other.gameObject.CompareTag("Player") && interactionManager.LevelIndex < interactionManager.ineteractionLayerCount && canTalk)
-            if (isPlayerStaying)
+            if (!isPlayerOut)
             {
                 EndDialogue();
 
                 lightingManager.LightSwitch_Exit(gameObject.name);
                 interactionManager.CleanNotice();
 
-                isPlayerStaying = false;
+                isPlayerOut = true;
             }
     }
 

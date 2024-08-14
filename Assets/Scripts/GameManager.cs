@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
+    [Header("FinalDialogue")]
     public InteractionManager[] interactionManagers;
     public DialogueTrigger[] dialogueTriggers;
     public float triggerInterval = 2.0f;
@@ -28,6 +29,7 @@ public class GameManager : MonoBehaviour
     public Transform playerTransform;
     public Transform endPosition;
     public float speed;
+    public float stayDuration;
     public float stopDistance;
     private Transform nextCharacterTransform;
 
@@ -53,6 +55,8 @@ public class GameManager : MonoBehaviour
 
     public void CheckGameState()
     {
+        completedLevelCount = 0;
+
         for (int i = 0; i < interactionManagers.Length; i++)
         {
             if (interactionManagers[i].LevelIndex == interactionManagers[i].ineteractionLayerCount)
@@ -68,8 +72,9 @@ public class GameManager : MonoBehaviour
         else
         {
             EnableDialogueCharacter(completedLevelCount);
-            TraceToNextCharacter();
         }
+
+        TraceToNextCharacter();
     }
 
     public void FinalDialogue()
@@ -87,15 +92,9 @@ public class GameManager : MonoBehaviour
 
     private void TraceToNextCharacter()
     {
-        if(completedLevelCount != dialogueTriggers.Length)
-        {
-            nextCharacterTransform = dialogueTriggers[completedLevelCount].transform;
-            Debug.Log(nextCharacterTransform.name);
-        }
-        else
-        {
-            nextCharacterTransform = endPosition;
-        }
+        StopCoroutine(ParticleMove());
+
+        nextCharacterTransform = (completedLevelCount == interactionManagers.Length)? endPosition : dialogueTriggers[completedLevelCount].transform;
 
         StartCoroutine(ParticleMove());
     }
@@ -106,7 +105,6 @@ public class GameManager : MonoBehaviour
         lightingManager.QuickSwitchOffAll();
 
         AS_Clock.Play();
-        TraceToNextCharacter();
     }
 
     IEnumerator ParticleMove()
@@ -114,7 +112,8 @@ public class GameManager : MonoBehaviour
         Transform startPoint = playerTransform;
         Transform endPoint = nextCharacterTransform;
 
-        while (!dialogueTriggers[completedLevelCount].isPlayerStaying)
+        while ((completedLevelCount == interactionManagers.Length)? 
+            Vector3.Distance(playerTransform.position, nextCharacterTransform.position) > stopDistance : dialogueTriggers[completedLevelCount].isPlayerOut)
         {
             float journeyLength = Vector3.Distance(startPoint.position, endPoint.position);
             float journeyTime = journeyLength / speed;
@@ -134,7 +133,7 @@ public class GameManager : MonoBehaviour
                 yield return null;
             }
 
-            yield return new WaitForSeconds(1.0f);
+            yield return new WaitForSeconds(stayDuration);
             Transform tempValue = startPoint;
             startPoint = endPoint;
             endPoint = tempValue;
@@ -152,17 +151,18 @@ public class GameManager : MonoBehaviour
         StartCoroutine(ChangeOpacity());
         //StartCoroutine(TypeText());
 
-        for (int i = 0; i < dialogueTriggers.Length - 1; i++)
+        for (int i = dialogueTriggers.Length - 1; i >= 0; i--)
         {
             yield return new WaitForSeconds(triggerInterval);
 
-            if (dialogueTriggers[i].VO_Audio[interactionManagers[i].LevelIndex] != null)
+            int level = interactionManagers[i].LevelIndex;
+            if (dialogueTriggers[i].VO_Audio[level] != null)
             {
-                lightingManager.QuickSwitchOn(dialogueTriggers[i].gameObject.name);
-                dialogueTriggers[i].StartFinalDialogue(interactionManagers[i].LevelIndex);
+                lightingManager.QuickSwitchOn(dialogueTriggers[i].name);
+                dialogueTriggers[i].StartFinalDialogue(level);
                 //dialogueTriggers[i].StartDialogue(interactionManagers[i].LevelIndex);
 
-                yield return new WaitForSeconds(dialogueTriggers[i].VO_Audio[interactionManagers[i].LevelIndex].length);
+                yield return new WaitForSeconds(dialogueTriggers[i].VO_Audio[level].length);
                 lightingManager.QuickSwitchOffAll();
             }
         }
