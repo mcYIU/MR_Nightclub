@@ -8,7 +8,7 @@ public class DialogueTrigger : MonoBehaviour
     public GameObject dialogueNoticeUI;
     public GameObject dialogueCanvas;
     public Transform player;
-    public float triggerDistance;
+    //public float triggerDistance;
     public InteractionManager interactionManager;
 
     [HideInInspector] public bool canTalk = false;

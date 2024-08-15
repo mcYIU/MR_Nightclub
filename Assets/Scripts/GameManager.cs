@@ -28,6 +28,7 @@ public class GameManager : MonoBehaviour
     public AudioSource traceSound;
     public Transform playerTransform;
     public Transform endPosition;
+    public Vector3 transformOffset;
     public float speed;
     public float stayDuration;
     public float stopDistance;
@@ -129,7 +130,7 @@ public class GameManager : MonoBehaviour
 
                 float distanceCovered = (Time.time - startTime) * speed;
                 float fractionOfJourney = distanceCovered / journeyLength;
-                particle.transform.position = Vector3.Lerp(startPoint.position, endPoint.position, fractionOfJourney);
+                particle.transform.position = Vector3.Lerp(startPoint.position, endPoint.position + transformOffset, fractionOfJourney);
                 yield return null;
             }
 
