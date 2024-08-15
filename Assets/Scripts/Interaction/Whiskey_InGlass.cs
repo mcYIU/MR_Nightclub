@@ -39,7 +39,11 @@ public class Whiskey_InGlass : MonoBehaviour
 
             if(currentHeight == maxHeight)
             {
-                whiskeyPour.ChangeLevelIndex();
+                if(whiskeyPour != null)
+                {
+                    whiskeyPour.ChangeLevelIndex();
+                }
+
                 AS_Pour.Stop();
                 isPoured = false;
             }

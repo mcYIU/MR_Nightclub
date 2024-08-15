@@ -23,12 +23,15 @@ public class DialogueTrigger : MonoBehaviour
 
         dialogueManager = FindAnyObjectByType<DialogueManager>();
         dialogueCanvas.SetActive(false);
-        dialogueNoticeUI.SetActive(true);
+        //dialogueNoticeUI.SetActive(false);
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Player") && interactionManager.LevelIndex < interactionManager.ineteractionLayerCount && canTalk)
+        if 
+        (other.gameObject.CompareTag("Player") && 
+        interactionManager.LevelIndex < interactionManager.ineteractionLayerCount && 
+        canTalk)
             if (isPlayerOut)
             {
                 isPlayerOut = false;
@@ -40,7 +43,10 @@ public class DialogueTrigger : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.CompareTag("Player") && interactionManager.LevelIndex < interactionManager.ineteractionLayerCount && canTalk)
+        if 
+        (other.gameObject.CompareTag("Player") && 
+        interactionManager.LevelIndex < interactionManager.ineteractionLayerCount && 
+        canTalk)
             if (!isPlayerOut)
             {
                 EndDialogue();

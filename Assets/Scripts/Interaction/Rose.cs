@@ -3,7 +3,7 @@ using UnityEngine;
 public class Rose : MonoBehaviour
 {
     public InteractionManager interactionManager;
-    public  int maxInteractionIndex = 2;
+    public int maxInteractionIndex = 2;
 
     private int interactionIndex = 0;
     

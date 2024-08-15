@@ -90,6 +90,7 @@ public class Whiskey_Pour : MonoBehaviour
 
     public void ChangeLevelIndex()
     {
-        interactionManager.ChangeLevelIndex(gameObject.name);
+        if(interactionManager != null)
+            interactionManager.ChangeLevelIndex(gameObject.name);
     }
 }

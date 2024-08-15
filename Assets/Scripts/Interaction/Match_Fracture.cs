@@ -16,11 +16,15 @@ public class Match_Fracture : MonoBehaviour
 
     private void Update()
     {
-        if (leftInteractor.SelectedInteractable == interactable && rightInteractor.SelectedInteractable == interactable)
-        {
-            Instantiate(fracturedObjectPrefab, transform.position, transform.rotation);
-
-            Destroy(gameObject);
-        }
+        if (leftInteractor != null && rightInteractor != null)
+            if (leftInteractor.SelectedInteractable == interactable && rightInteractor.SelectedInteractable == interactable)
+            {
+                CreateFracturedObject();
+            }
+    }
+    private void CreateFracturedObject()
+    {
+        Instantiate(fracturedObjectPrefab, transform.position, transform.rotation);
+        Destroy(gameObject);
     }
 }

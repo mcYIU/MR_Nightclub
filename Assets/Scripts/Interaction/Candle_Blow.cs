@@ -11,8 +11,9 @@ public class Candle_Blow : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        transform.parent.TryGetComponent<HandGrabInteractable> (out HandGrabInteractable handGrabInteractable);
-        if (handGrabInteractable.enabled)
+        if
+        (transform.parent.TryGetComponent<HandGrabInteractable>(out HandGrabInteractable handGrabInteractable)
+        && handGrabInteractable.enabled)
         {
             float weightIndex = face.GetBlendShapeWeight(blendshapeIndex);
             if (weightIndex > triggerFloat)

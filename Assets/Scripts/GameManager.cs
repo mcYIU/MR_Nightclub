@@ -88,6 +88,7 @@ public class GameManager : MonoBehaviour
         for (int i = 0; i < dialogueTriggers.Length; i++)
         {
             dialogueTriggers[i].canTalk = (i == level) ? true : false;
+            dialogueTriggers[i].dialogueNoticeUI.SetActive(dialogueTriggers[i].canTalk);
         }
     }
 
@@ -95,7 +96,8 @@ public class GameManager : MonoBehaviour
     {
         StopCoroutine(ParticleMove());
 
-        nextCharacterTransform = (completedLevelCount == interactionManagers.Length)? endPosition : dialogueTriggers[completedLevelCount].transform;
+        nextCharacterTransform = (completedLevelCount == interactionManagers.Length)? 
+            endPosition : dialogueTriggers[completedLevelCount].transform;
 
         StartCoroutine(ParticleMove());
     }
@@ -108,7 +110,7 @@ public class GameManager : MonoBehaviour
         AS_Clock.Play();
     }
 
-    IEnumerator ParticleMove()
+    private IEnumerator ParticleMove()
     {
         Transform startPoint = playerTransform;
         Transform endPoint = nextCharacterTransform;
@@ -146,7 +148,7 @@ public class GameManager : MonoBehaviour
         StopCoroutine(ParticleMove());  
     }
 
-    IEnumerator TriggerFinalDialogue()
+    private IEnumerator TriggerFinalDialogue()
     {
         lightingManager.QuickSwitchOffAll();
         StartCoroutine(ChangeOpacity());
@@ -178,7 +180,7 @@ public class GameManager : MonoBehaviour
         StartCoroutine(ChangeScene());
     }
 
-    IEnumerator ChangeOpacity()
+    private IEnumerator ChangeOpacity()
     {
         float elapsedTime = 0f;
         float startValue = passthroughLayers.textureOpacity;
@@ -193,6 +195,12 @@ public class GameManager : MonoBehaviour
         }
 
         passthroughLayers.textureOpacity = endValue;
+    }
+
+    private IEnumerator ChangeScene()
+    {
+        yield return new WaitForSeconds(triggerInterval * triggerInterval);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 
     /*IEnumerator TypeText()
@@ -212,10 +220,4 @@ public class GameManager : MonoBehaviour
 
         notice.text = "";
     }*/
-
-    IEnumerator ChangeScene()
-    {
-        yield return new WaitForSeconds(triggerInterval * triggerInterval);
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-    }
 }
