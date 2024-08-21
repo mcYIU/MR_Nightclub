@@ -36,7 +36,7 @@ public class DialogueTrigger : MonoBehaviour
             {
                 isPlayerOut = false;
 
-                lightingManager.LightSwitch_Enter(gameObject.name);
+                //lightingManager.LightSwitch_Enter(gameObject.name);
                 StartDialogue(interactionManager.LevelIndex);
             }
     }
@@ -51,7 +51,7 @@ public class DialogueTrigger : MonoBehaviour
             {
                 EndDialogue();
 
-                lightingManager.LightSwitch_Exit(gameObject.name);
+                //lightingManager.LightSwitch_Exit(gameObject.name);
                 interactionManager.CleanNotice();
 
                 isPlayerOut = true;

@@ -52,6 +52,7 @@ public class GameManager : MonoBehaviour
 
         EnableDialogueCharacter(completedLevelCount);
         TraceToNextCharacter();
+        //lightingManager.LightSwitch_Enter(dialogueTriggers[completedLevelCount].name);
     }
 
     public void CheckGameState()
@@ -72,10 +73,16 @@ public class GameManager : MonoBehaviour
         }
         else
         {
+            //lightingManager.LightSwitch_Exit(dialogueTriggers[completedLevelCount - 1].name);
             EnableDialogueCharacter(completedLevelCount);
         }
 
         TraceToNextCharacter();
+
+        if(completedLevelCount != interactionManagers.Length)
+        {
+            //lightingManager.LightSwitch_Enter(dialogueTriggers[completedLevelCount].name);
+        }
     }
 
     public void FinalDialogue()
