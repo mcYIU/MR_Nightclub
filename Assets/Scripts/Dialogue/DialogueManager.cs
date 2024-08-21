@@ -25,31 +25,27 @@ public class DialogueManager : MonoBehaviour
 
     public void StartDialogue(Dialogue dialogue, GameObject canvas, AudioClip clip, InteractionManager manager)
     {
-        if(manager.isNoticed)
+        if (manager.isNoticed)
         {
             manager.DisplayNotice(manager.noticeText[manager.LevelIndex]);
             return;
         }
-        if(dialogue == null)
-        {
-            return;
-        }
-        else
-        {
-            interactionManager = manager;
 
-            isPlayCompleted = false;
-            VO.clip = clip;
-            PlayVoiceOver();
+        if (dialogue == null) return;
 
-            foreach (string sentence in dialogue.sentences)
-            {
-                dialogueQueue.Enqueue(sentence);
-            }
-            dialogueCanvas = canvas;    
-            dialogueTime = clip.length / dialogue.sentences.Length;
-            NextSentence();
+        interactionManager = manager;
+
+        isPlayCompleted = false;
+        VO.clip = clip;
+        PlayVoiceOver();
+
+        foreach (string sentence in dialogue.sentences)
+        {
+            dialogueQueue.Enqueue(sentence);
         }
+        dialogueCanvas = canvas;
+        dialogueTime = clip.length / dialogue.sentences.Length;
+        NextSentence();
     }
 
     public void StartFinalText(Dialogue dialogue, AudioClip clip, InteractionManager manager)
@@ -74,6 +70,7 @@ public class DialogueManager : MonoBehaviour
         {
             isPlayCompleted = true;
             EndDialogue();
+
             if (interactionManager.LevelIndex < interactionManager.ineteractionLayerCount)
             {
                 interactionManager.PlayAudio();
@@ -103,7 +100,7 @@ public class DialogueManager : MonoBehaviour
         }
         else
         {
-            if(interactionManager.LevelIndex >= interactionManager.ineteractionLayerCount)
+            if (interactionManager.LevelIndex >= interactionManager.ineteractionLayerCount)
             {
                 finalText.text = sentence;
             }
@@ -116,7 +113,6 @@ public class DialogueManager : MonoBehaviour
     public void EndDialogue()
     {
         CleanText();
-
         PlayVoiceOver();
     }
 
@@ -137,7 +133,7 @@ public class DialogueManager : MonoBehaviour
     }
 
     private void PlayVoiceOver()
-    {       
+    {
         if (!VO.isPlaying && !isPlayCompleted)
         {
             VO.Play();

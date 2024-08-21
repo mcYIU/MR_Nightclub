@@ -41,21 +41,20 @@ public class Match_Fire : MonoBehaviour
         return false;
     }
 
-    /*private void Fire()
-    {
-        if (!isFired)
-        {
-            AS_Scratch.Play();
-            fireInstance = Instantiate(firePrefab, transform.position, Quaternion.identity);
-            isFired = true;
-
-            ChangeLevelIndex();
-        }
-    }*/
-
     public void ChangeLevelIndex()
     {
         interactionManager.ChangeLevelIndex(transform.parent.name);
     }
 
+    /*private void Fire()
+{
+    if (!isFired)
+    {
+        AS_Scratch.Play();
+        fireInstance = Instantiate(firePrefab, transform.position, Quaternion.identity);
+        isFired = true;
+
+        ChangeLevelIndex();
+    }
+}*/
 }

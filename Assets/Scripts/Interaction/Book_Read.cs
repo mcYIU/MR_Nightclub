@@ -51,7 +51,7 @@ public class Book_Read : MonoBehaviour
 
             yield return new WaitForSeconds(readingDuration);
             sFx_TurnPage.Play();
-            textBuffer = null;
+            textBuffer = "";
             bookText.text = "";
         }
 

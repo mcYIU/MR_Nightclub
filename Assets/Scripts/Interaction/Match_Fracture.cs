@@ -8,7 +8,6 @@ public class Match_Fracture : MonoBehaviour
     public HandGrabInteractor rightInteractor;
 
     HandGrabInteractable interactable;
-    //private bool isGrabbed;
 
     private void Start()
     {
@@ -17,36 +16,15 @@ public class Match_Fracture : MonoBehaviour
 
     private void Update()
     {
-        if (leftInteractor.IsGrabbing == gameObject && rightInteractor.IsGrabbing == gameObject)
-        {
-            FractureObject();
-        }
+        if (leftInteractor != null && rightInteractor != null)
+            if (leftInteractor.SelectedInteractable == interactable && rightInteractor.SelectedInteractable == interactable)
+            {
+                CreateFracturedObject();
+            }
     }
-
-    /*private void OnCollisionEnter(Collision collision)
+    private void CreateFracturedObject()
     {
-        if (collision.gameObject.CompareTag("Environment"))
-        {
-            isGrabbed = false;
-        }
-    }
-
-    private void OnCollisionExit(Collision collision)
-    {
-        if (collision.gameObject.CompareTag("Environment"))
-        {
-            isGrabbed = true;
-        }
-    }*/
-
-    public void FractureObject()
-    {
-        //Debug.Log(interactable.Interactors.Count);
-        //if (interactable.Interactors.Count > 1)
-        //{
-            Instantiate(fracturedObjectPrefab, transform.position, transform.rotation);
-
-            Destroy(gameObject);
-        //}
+        Instantiate(fracturedObjectPrefab, transform.position, transform.rotation);
+        Destroy(gameObject);
     }
 }

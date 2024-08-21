@@ -31,7 +31,7 @@ Material:
   disabledShaderPasses:
   - RayTracingPrepass
   - MOTIONVECTORS
-  m_LockedProperties: 
+  m_LockedProperties: _AlphaPower
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
@@ -94,7 +94,7 @@ Material:
     - _AOStrength: 1
     - _AlphaClip2: 0.666
     - _AlphaCutoff: 0.5
-    - _AlphaPower: 1
+    - _AlphaPower: 0.01
     - _AlphaRemap: 0.75
     - _BaseColorStrength: 0
     - _BlendStrength: 1

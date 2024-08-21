@@ -1,5 +1,4 @@
 using Oculus.Interaction.HandGrab;
-using System.Collections;
 using UnityEngine;
 
 public class Champagne_Splash : MonoBehaviour
