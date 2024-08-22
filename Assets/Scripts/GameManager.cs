@@ -10,14 +10,14 @@ public class GameManager : MonoBehaviour
     public InteractionManager[] interactionManagers;
     public DialogueTrigger[] dialogueTriggers;
     public float triggerInterval = 2.0f;
+    public StartGameTrigger triggerPoint;
     public AudioSource AS_Clock;
-    public AudioSource AS_Shot;
 
     [Header("Pass Through")]
     public OVRPassthroughLayer passthroughLayers;
     public float passThroughFadeDuration = 5.0f;
 
-    [Header("Notice")]
+    [Header("Notice UI")]
     public TextMeshProUGUI notice;
     public Image sceneTransition;
     public float readingDuration = 3.0f;
@@ -80,6 +80,8 @@ public class GameManager : MonoBehaviour
         dialogueManager.EndDialogue();
         lightingManager.QuickSwitchOffAll();
 
+        triggerPoint.EnableTriggerPoint();
+
         AS_Clock.Play();
     }
 
@@ -105,7 +107,6 @@ public class GameManager : MonoBehaviour
 
         yield return new WaitForSeconds(triggerInterval);
         AS_Clock.Stop();
-        AS_Shot.Play();
 
         sceneTransition.enabled = true;
         StartCoroutine(ChangeScene());

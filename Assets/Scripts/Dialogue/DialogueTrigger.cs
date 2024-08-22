@@ -78,38 +78,37 @@ public class DialogueTrigger : MonoBehaviour
             lightingManager.LightSwitch_Exit(gameObject.name);
         }
     }
-
-    //BackUp//
-    /*private void Update()
- {
-     if (interactionManager.LevelIndex < interactionManager.ineteractionLayerCount)
-     {
-         float distance = Vector3.Distance(player.position, gameObject.transform.position);
-         if (distance < triggerDistance)
-         {
-             if (!isPlayerStaying)
-             {
-                 isPlayerStaying = true;
-
-                 lightingManager.LightSwitch_Enter(gameObject.name);
-                 StartDialogue(interactionManager.LevelIndex);
-             }
-         }
-         else
-         {
-             if (isPlayerStaying)
-             {
-                 EndDialogue();
-
-                 lightingManager.LightSwitch_Exit(gameObject.name);
-                 interactionManager.CleanNotice();
-
-                 isPlayerStaying = false;
-             }
-         }
-     }         
- }*/
-
 }
+
+//BackUp//
+/*private void Update()
+{
+ if (interactionManager.LevelIndex < interactionManager.ineteractionLayerCount)
+ {
+     float distance = Vector3.Distance(player.position, gameObject.transform.position);
+     if (distance < triggerDistance)
+     {
+         if (!isPlayerStaying)
+         {
+             isPlayerStaying = true;
+
+             lightingManager.LightSwitch_Enter(gameObject.name);
+             StartDialogue(interactionManager.LevelIndex);
+         }
+     }
+     else
+     {
+         if (isPlayerStaying)
+         {
+             EndDialogue();
+
+             lightingManager.LightSwitch_Exit(gameObject.name);
+             interactionManager.CleanNotice();
+
+             isPlayerStaying = false;
+         }
+     }
+ }         
+}*/
 
 

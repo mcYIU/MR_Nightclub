@@ -6,7 +6,6 @@ public class CharacterTrailController : MonoBehaviour
     public ParticleSystem[] characterTrails;
     public AudioSource tracingSound;
     public Transform playerTransform;
-    public Vector3 transformOffset;
     public float speed;
     public float stopParticleDistance;
 
@@ -43,7 +42,7 @@ public class CharacterTrailController : MonoBehaviour
 
                 float distanceCovered = (Time.time - startTime) * speed;
                 float fractionOfJourney = distanceCovered / journeyLength;
-                particle.transform.position = Vector3.Lerp(startPoint.position, endPoint.position + transformOffset, fractionOfJourney);
+                particle.transform.position = Vector3.Lerp(startPoint.position, endPoint.position, fractionOfJourney);
                 yield return null;
             }
 
