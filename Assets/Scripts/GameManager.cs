@@ -18,27 +18,14 @@ public class GameManager : MonoBehaviour
     public float passThroughFadeDuration = 5.0f;
 
     [Header("Notice")]
-    //public string[] endingText;
     public TextMeshProUGUI notice;
     public Image sceneTransition;
     public float readingDuration = 3.0f;
 
-    [Header("Trace")]
-    public ParticleSystem particle;
-    public AudioSource traceSound;
-    public Transform playerTransform;
-    public Transform endPosition;
-    public Vector3 transformOffset;
-    public float speed;
-    public float stayDuration;
-    public float stopDistance;
-    private Transform nextCharacterTransform;
-
     private LightingManager lightingManager;
     private DialogueManager dialogueManager;
+    private CharacterTrailController characterTrailController;
     private int completedLevelCount = 0;
-
-    //private bool isTyping = false;
 
     private void Awake()
     {
@@ -49,9 +36,8 @@ public class GameManager : MonoBehaviour
     {
         lightingManager = FindAnyObjectByType<LightingManager>();
         dialogueManager = FindAnyObjectByType<DialogueManager>();
+        characterTrailController = FindAnyObjectByType<CharacterTrailController>();
 
-        EnableDialogueCharacter(completedLevelCount);
-        TraceToNextCharacter();
         //lightingManager.LightSwitch_Enter(dialogueTriggers[completedLevelCount].name);
     }
 
@@ -74,10 +60,9 @@ public class GameManager : MonoBehaviour
         else
         {
             //lightingManager.LightSwitch_Exit(dialogueTriggers[completedLevelCount - 1].name);
-            EnableDialogueCharacter(completedLevelCount);
         }
 
-        TraceToNextCharacter();
+        characterTrailController.ResetTrails();
 
         if(completedLevelCount != interactionManagers.Length)
         {
@@ -90,25 +75,6 @@ public class GameManager : MonoBehaviour
         StartCoroutine(TriggerFinalDialogue());
     }
 
-    private void EnableDialogueCharacter(int level)
-    {
-        for (int i = 0; i < dialogueTriggers.Length; i++)
-        {
-            dialogueTriggers[i].canTalk = (i == level) ? true : false;
-            dialogueTriggers[i].dialogueNoticeUI.SetActive(dialogueTriggers[i].canTalk);
-        }
-    }
-
-    private void TraceToNextCharacter()
-    {
-        StopCoroutine(ParticleMove());
-
-        nextCharacterTransform = (completedLevelCount == interactionManagers.Length)? 
-            endPosition : dialogueTriggers[completedLevelCount].transform;
-
-        StartCoroutine(ParticleMove());
-    }
-
     private void EndLevel()
     {
         dialogueManager.EndDialogue();
@@ -117,49 +83,10 @@ public class GameManager : MonoBehaviour
         AS_Clock.Play();
     }
 
-    private IEnumerator ParticleMove()
-    {
-        Transform startPoint = playerTransform;
-        Transform endPoint = nextCharacterTransform;
-
-        while ((completedLevelCount == interactionManagers.Length)? 
-            Vector3.Distance(playerTransform.position, nextCharacterTransform.position) > stopDistance : dialogueTriggers[completedLevelCount].isPlayerOut)
-        {
-            float journeyLength = Vector3.Distance(startPoint.position, endPoint.position);
-            float journeyTime = journeyLength / speed;
-            float startTime = Time.time;
-
-            while (Time.time < startTime + journeyTime)
-            {
-                if (!particle.isPlaying)
-                {
-                    particle.Play();
-                    traceSound.Play();
-                }
-
-                float distanceCovered = (Time.time - startTime) * speed;
-                float fractionOfJourney = distanceCovered / journeyLength;
-                particle.transform.position = Vector3.Lerp(startPoint.position, endPoint.position + transformOffset, fractionOfJourney);
-                yield return null;
-            }
-
-            yield return new WaitForSeconds(stayDuration);
-            Transform tempValue = startPoint;
-            startPoint = endPoint;
-            endPoint = tempValue;
-        }
-
-        particle.Stop();
-        traceSound.Stop();
-
-        StopCoroutine(ParticleMove());  
-    }
-
     private IEnumerator TriggerFinalDialogue()
     {
         lightingManager.QuickSwitchOffAll();
         StartCoroutine(ChangeOpacity());
-        //StartCoroutine(TypeText());
 
         for (int i = dialogueTriggers.Length - 1; i >= 0; i--)
         {
@@ -170,14 +97,11 @@ public class GameManager : MonoBehaviour
             {
                 lightingManager.QuickSwitchOn(dialogueTriggers[i].name);
                 dialogueTriggers[i].StartFinalDialogue(level);
-                //dialogueTriggers[i].StartDialogue(interactionManagers[i].LevelIndex);
 
                 yield return new WaitForSeconds(dialogueTriggers[i].VO_Audio[level].length);
                 lightingManager.QuickSwitchOffAll();
             }
         }
-
-        //isTyping = false;
 
         yield return new WaitForSeconds(triggerInterval);
         AS_Clock.Stop();
@@ -209,22 +133,4 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(triggerInterval * triggerInterval);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
-
-    /*IEnumerator TypeText()
-    {
-        yield return new WaitForSeconds(triggerInterval);
-        isTyping = true;
-
-        while (isTyping)
-        {
-            for (int i = 0; i < endingText.Length; i++)
-            {
-                notice.text = endingText[i];
-
-                yield return new WaitForSeconds(readingDuration);
-            }
-        }
-
-        notice.text = "";
-    }*/
 }

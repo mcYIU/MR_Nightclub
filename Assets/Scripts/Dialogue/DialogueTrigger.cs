@@ -8,10 +8,8 @@ public class DialogueTrigger : MonoBehaviour
     public GameObject dialogueNoticeUI;
     public GameObject dialogueCanvas;
     public Transform player;
-    //public float triggerDistance;
     public InteractionManager interactionManager;
 
-    [HideInInspector] public bool canTalk = false;
     [HideInInspector] public bool isPlayerOut = true;
 
     DialogueManager dialogueManager;
@@ -23,15 +21,13 @@ public class DialogueTrigger : MonoBehaviour
 
         dialogueManager = FindAnyObjectByType<DialogueManager>();
         dialogueCanvas.SetActive(false);
-        //dialogueNoticeUI.SetActive(false);
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if 
         (other.gameObject.CompareTag("Player") && 
-        interactionManager.LevelIndex < interactionManager.ineteractionLayerCount && 
-        canTalk)
+        interactionManager.LevelIndex < interactionManager.ineteractionLayerCount)
             if (isPlayerOut)
             {
                 isPlayerOut = false;
@@ -45,8 +41,7 @@ public class DialogueTrigger : MonoBehaviour
     {
         if 
         (other.gameObject.CompareTag("Player") && 
-        interactionManager.LevelIndex < interactionManager.ineteractionLayerCount && 
-        canTalk)
+        interactionManager.LevelIndex < interactionManager.ineteractionLayerCount)
             if (!isPlayerOut)
             {
                 EndDialogue();
@@ -57,36 +52,6 @@ public class DialogueTrigger : MonoBehaviour
                 isPlayerOut = true;
             }
     }
-
-    /*private void Update()
-    {
-        if (interactionManager.LevelIndex < interactionManager.ineteractionLayerCount)
-        {
-            float distance = Vector3.Distance(player.position, gameObject.transform.position);
-            if (distance < triggerDistance)
-            {
-                if (!isPlayerStaying)
-                {
-                    isPlayerStaying = true;
-
-                    lightingManager.LightSwitch_Enter(gameObject.name);
-                    StartDialogue(interactionManager.LevelIndex);
-                }
-            }
-            else
-            {
-                if (isPlayerStaying)
-                {
-                    EndDialogue();
-
-                    lightingManager.LightSwitch_Exit(gameObject.name);
-                    interactionManager.CleanNotice();
-
-                    isPlayerStaying = false;
-                }
-            }
-        }         
-    }*/
 
     public void StartDialogue(int index)
     {
@@ -113,6 +78,38 @@ public class DialogueTrigger : MonoBehaviour
             lightingManager.LightSwitch_Exit(gameObject.name);
         }
     }
+
+    //BackUp//
+    /*private void Update()
+ {
+     if (interactionManager.LevelIndex < interactionManager.ineteractionLayerCount)
+     {
+         float distance = Vector3.Distance(player.position, gameObject.transform.position);
+         if (distance < triggerDistance)
+         {
+             if (!isPlayerStaying)
+             {
+                 isPlayerStaying = true;
+
+                 lightingManager.LightSwitch_Enter(gameObject.name);
+                 StartDialogue(interactionManager.LevelIndex);
+             }
+         }
+         else
+         {
+             if (isPlayerStaying)
+             {
+                 EndDialogue();
+
+                 lightingManager.LightSwitch_Exit(gameObject.name);
+                 interactionManager.CleanNotice();
+
+                 isPlayerStaying = false;
+             }
+         }
+     }         
+ }*/
+
 }
 
 
