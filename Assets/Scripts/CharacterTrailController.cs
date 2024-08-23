@@ -4,21 +4,33 @@ using UnityEngine;
 public class CharacterTrailController : MonoBehaviour
 {
     public ParticleSystem[] characterTrails;
+    public ParticleSystem triggerPointTrail;
     public AudioSource tracingSound;
     public Transform playerTransform;
     public float speed;
     public float stopParticleDistance;
+
+    private bool isEnteringOrigin = false;
 
     public void ResetTrails()
     {
         for (int i = 0; i < characterTrails.Length; i++)
         {
             characterTrails[i].transform.parent.TryGetComponent<InteractionManager>(out InteractionManager interactionManager);
+            // Find the characters who have not finished all the interactions
             if (interactionManager.LevelIndex < interactionManager.ineteractionLayerCount)
             {
+                Debug.Log(interactionManager.LevelIndex);
                 StartCoroutine(PlayTrail(characterTrails[i]));
             }
         }
+    }
+
+    public void GoToOrigin()
+    {
+        isEnteringOrigin = true;
+
+        StartCoroutine(PlayTrail(triggerPointTrail));
     }
 
     private IEnumerator PlayTrail(ParticleSystem particle)
@@ -46,9 +58,8 @@ public class CharacterTrailController : MonoBehaviour
                 yield return null;
             }
 
-            Transform tempValue = startPoint;
-            startPoint = endPoint;
-            endPoint = tempValue;
+            // Move between two points continuously
+            (startPoint, endPoint) = (endPoint, startPoint);
         }
 
         StopAllTrails();
@@ -58,11 +69,19 @@ public class CharacterTrailController : MonoBehaviour
     {
         if (tracingSound != null) tracingSound.Stop();
 
-        for (int i = 0; i < characterTrails.Length; i++)
+        if (isEnteringOrigin)
         {
-            characterTrails[i].Stop();
+            triggerPointTrail.Stop();
+            isEnteringOrigin = false;
         }
+        else
+        {
+            for (int i = 0; i < characterTrails.Length; i++)
+            {
+                characterTrails[i].Stop();
+            }
 
-        StopAllCoroutines();
+            StopAllCoroutines();
+        }
     }
 }

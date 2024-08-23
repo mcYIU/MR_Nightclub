@@ -1,22 +1,21 @@
 using UnityEngine;
 
-public class StartGameTrigger : MonoBehaviour
+public class GameLevelTrigger : MonoBehaviour
 {
     public ParticleSystem[] customParticles;
+    public ParticleSystem mainParticle;
     public Color initialColor;
     public Color endColor;
 
     private GameManager gameManager;
     private CharacterTrailController trailController;
-    private ParticleSystem triggerPoint;
     private Collider triggerCollider;
-    private bool isStarted = false;
 
     private void Start()
     {
-        gameManager = GetComponent<GameManager>();
+        gameManager = FindAnyObjectByType<GameManager>();
         trailController = FindAnyObjectByType<CharacterTrailController>();
-        triggerPoint = GetComponent<ParticleSystem>();
+
         triggerCollider = GetComponent<Collider>();
 
         EnableTriggerPoint();
@@ -24,13 +23,17 @@ public class StartGameTrigger : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (isStarted)
-            gameManager.FinalDialogue();       
-        else 
+        if (gameManager.isStarted)
+        {
+            gameManager.ChangeToNextScene();
+        }
+        else
+        {
             trailController.ResetTrails();
+        }
 
         DisableTriggerPoint();
-        if(!isStarted) isStarted = true;
+        if(!gameManager.isStarted) gameManager.isStarted = true;
     }
 
     public void EnableTriggerPoint()
@@ -38,16 +41,18 @@ public class StartGameTrigger : MonoBehaviour
         for (int i = 0; i < customParticles.Length; i++)
         {
             ParticleSystem.MainModule particleMain = customParticles[i].main;
-            particleMain.startColor = (!isStarted) ? initialColor : endColor;
+            particleMain.startColor = new ParticleSystem.MinMaxGradient((!gameManager.isStarted) ? initialColor : endColor);
         }
 
-        if (!triggerCollider.isTrigger) triggerCollider.isTrigger = true;
-        triggerPoint.Play();
+        if (!triggerCollider.enabled) triggerCollider.enabled = true;
+        mainParticle.Play();
     }
 
     private void DisableTriggerPoint()
     {
-        triggerCollider.isTrigger = false;
-        triggerPoint.Stop();
+        triggerCollider.enabled = false;
+        mainParticle.Stop();
+
+        trailController.triggerPointTrail.Stop();
     }
 }

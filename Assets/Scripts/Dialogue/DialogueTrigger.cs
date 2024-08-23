@@ -12,11 +12,14 @@ public class DialogueTrigger : MonoBehaviour
 
     [HideInInspector] public bool isPlayerOut = true;
 
+    GameManager gameManager;
     DialogueManager dialogueManager;
     LightingManager lightingManager;
 
     private void Start()
     {
+        gameManager = FindAnyObjectByType<GameManager>();
+
         lightingManager = FindAnyObjectByType<LightingManager>();
 
         dialogueManager = FindAnyObjectByType<DialogueManager>();
@@ -27,12 +30,12 @@ public class DialogueTrigger : MonoBehaviour
     {
         if 
         (other.gameObject.CompareTag("Player") && 
-        interactionManager.LevelIndex < interactionManager.ineteractionLayerCount)
+        interactionManager.LevelIndex < interactionManager.ineteractionLayerCount &&
+        gameManager.isStarted)
             if (isPlayerOut)
             {
                 isPlayerOut = false;
 
-                //lightingManager.LightSwitch_Enter(gameObject.name);
                 StartDialogue(interactionManager.LevelIndex);
             }
     }
@@ -41,12 +44,11 @@ public class DialogueTrigger : MonoBehaviour
     {
         if 
         (other.gameObject.CompareTag("Player") && 
-        interactionManager.LevelIndex < interactionManager.ineteractionLayerCount)
+        interactionManager.LevelIndex < interactionManager.ineteractionLayerCount &&
+        gameManager.isStarted)
             if (!isPlayerOut)
             {
                 EndDialogue();
-
-                //lightingManager.LightSwitch_Exit(gameObject.name);
                 interactionManager.CleanNotice();
 
                 isPlayerOut = true;
@@ -57,11 +59,6 @@ public class DialogueTrigger : MonoBehaviour
     {
         dialogueNoticeUI.SetActive(false);
         dialogueManager.StartDialogue(VO_Text[index], dialogueCanvas, VO_Audio[index], interactionManager);
-    }
-
-    public void StartFinalDialogue(int index)
-    {
-        dialogueManager.StartFinalText(VO_Text[index], VO_Audio[index], interactionManager);
     }
 
     public void EndDialogue()

@@ -1,31 +1,30 @@
 ﻿using System.Collections;
-using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
-    [Header("FinalDialogue")]
+    [HideInInspector] public bool isStarted = false;
+
+    [Header("SceneTrigger")]
+    public GameLevelTrigger triggerPoint;
+    public float triggerInterval;
+    public Animator sceneTransition;
+
+    [Header("FinalScene")]
     public InteractionManager[] interactionManagers;
     public DialogueTrigger[] dialogueTriggers;
-    public float triggerInterval = 2.0f;
-    public StartGameTrigger triggerPoint;
-    public AudioSource AS_Clock;
+    public AudioSource endSceneMusic;
 
     [Header("Pass Through")]
     public OVRPassthroughLayer passthroughLayers;
-    public float passThroughFadeDuration = 5.0f;
-
-    [Header("Notice UI")]
-    public TextMeshProUGUI notice;
-    public Image sceneTransition;
-    public float readingDuration = 3.0f;
+    public float passThroughFadeDuration;
 
     private LightingManager lightingManager;
     private DialogueManager dialogueManager;
     private CharacterTrailController characterTrailController;
     private int completedLevelCount = 0;
+    private int currentSceneIndex;
 
     private void Awake()
     {
@@ -36,9 +35,25 @@ public class GameManager : MonoBehaviour
     {
         lightingManager = FindAnyObjectByType<LightingManager>();
         dialogueManager = FindAnyObjectByType<DialogueManager>();
-        characterTrailController = FindAnyObjectByType<CharacterTrailController>();
 
-        //lightingManager.LightSwitch_Enter(dialogueTriggers[completedLevelCount].name);
+        currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+        // set the different script instances in different scenes 
+        switch (currentSceneIndex)
+        {
+            case 0:
+                characterTrailController = FindAnyObjectByType<CharacterTrailController>();
+                characterTrailController.GoToOrigin();
+                break;
+            case 1:
+                sceneTransition.SetTrigger("OpenEye");
+
+                endSceneMusic.Play();
+
+                EndDialogueTrigger _endDialogueTrigger = FindAnyObjectByType<EndDialogueTrigger>();
+                if (dialogueManager != null && _endDialogueTrigger != null)
+                    dialogueManager.StartFinalDialogue(_endDialogueTrigger);
+                break;
+        }
     }
 
     public void CheckGameState()
@@ -46,33 +61,21 @@ public class GameManager : MonoBehaviour
         completedLevelCount = 0;
 
         for (int i = 0; i < interactionManagers.Length; i++)
-        {
+            // if all the character's interactions are completed
             if (interactionManagers[i].LevelIndex == interactionManagers[i].ineteractionLayerCount)
             {
                 completedLevelCount++;
             }
-        }
 
         if (completedLevelCount == interactionManagers.Length)
-        {
             EndLevel();
-        }
         else
-        {
-            //lightingManager.LightSwitch_Exit(dialogueTriggers[completedLevelCount - 1].name);
-        }
-
-        characterTrailController.ResetTrails();
-
-        if(completedLevelCount != interactionManagers.Length)
-        {
-            //lightingManager.LightSwitch_Enter(dialogueTriggers[completedLevelCount].name);
-        }
+            characterTrailController.ResetTrails();
     }
 
-    public void FinalDialogue()
+    public void ChangeToNextScene()
     {
-        StartCoroutine(TriggerFinalDialogue());
+        StartCoroutine(ChangeScene());
     }
 
     private void EndLevel()
@@ -81,38 +84,15 @@ public class GameManager : MonoBehaviour
         lightingManager.QuickSwitchOffAll();
 
         triggerPoint.EnableTriggerPoint();
+        characterTrailController.GoToOrigin();
 
-        AS_Clock.Play();
+        StartCoroutine(ChangePassThroughOpacity());
+
+        endSceneMusic.Play();
+        //endSceneMusic.playOnAwake = true;
     }
 
-    private IEnumerator TriggerFinalDialogue()
-    {
-        lightingManager.QuickSwitchOffAll();
-        StartCoroutine(ChangeOpacity());
-
-        for (int i = dialogueTriggers.Length - 1; i >= 0; i--)
-        {
-            yield return new WaitForSeconds(triggerInterval);
-
-            int level = interactionManagers[i].LevelIndex;
-            if (dialogueTriggers[i].VO_Audio[level] != null)
-            {
-                lightingManager.QuickSwitchOn(dialogueTriggers[i].name);
-                dialogueTriggers[i].StartFinalDialogue(level);
-
-                yield return new WaitForSeconds(dialogueTriggers[i].VO_Audio[level].length);
-                lightingManager.QuickSwitchOffAll();
-            }
-        }
-
-        yield return new WaitForSeconds(triggerInterval);
-        AS_Clock.Stop();
-
-        sceneTransition.enabled = true;
-        StartCoroutine(ChangeScene());
-    }
-
-    private IEnumerator ChangeOpacity()
+    private IEnumerator ChangePassThroughOpacity()
     {
         float elapsedTime = 0f;
         float startValue = passthroughLayers.textureOpacity;
@@ -131,7 +111,9 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator ChangeScene()
     {
-        yield return new WaitForSeconds(triggerInterval * triggerInterval);
+        sceneTransition.SetTrigger("CloseEye");
+
+        yield return new WaitForSeconds(triggerInterval);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 }
