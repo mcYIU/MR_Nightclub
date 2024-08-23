@@ -17,7 +17,7 @@ public class LightingManager: MonoBehaviour
     private void Start()
     {
         initialIntensity_DirectionalLight = directionalLight.intensity;
-
+        
         foreach (Light light in spotLights)
         {
             light.intensity = initialIntensity_SpotLight;

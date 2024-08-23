@@ -1,44 +1,30 @@
 ﻿using System.Collections;
-using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
-    [Header("FinalDialogue")]
+    [HideInInspector] public bool isStarted = false;
+
+    [Header("SceneTrigger")]
+    public GameLevelTrigger triggerPoint;
+    public float triggerInterval;
+    public Animator sceneTransition;
+
+    [Header("FinalScene")]
     public InteractionManager[] interactionManagers;
     public DialogueTrigger[] dialogueTriggers;
-    public float triggerInterval = 2.0f;
-    public AudioSource AS_Clock;
-    public AudioSource AS_Shot;
+    public AudioSource endSceneMusic;
 
     [Header("Pass Through")]
     public OVRPassthroughLayer passthroughLayers;
-    public float passThroughFadeDuration = 5.0f;
-
-    [Header("Notice")]
-    //public string[] endingText;
-    public TextMeshProUGUI notice;
-    public Image sceneTransition;
-    public float readingDuration = 3.0f;
-
-    [Header("Trace")]
-    public ParticleSystem particle;
-    public AudioSource traceSound;
-    public Transform playerTransform;
-    public Transform endPosition;
-    public Vector3 transformOffset;
-    public float speed;
-    public float stayDuration;
-    public float stopDistance;
-    private Transform nextCharacterTransform;
+    public float passThroughFadeDuration;
 
     private LightingManager lightingManager;
     private DialogueManager dialogueManager;
+    private CharacterTrailController characterTrailController;
     private int completedLevelCount = 0;
-
-    //private bool isTyping = false;
+    private int currentSceneIndex;
 
     private void Awake()
     {
@@ -50,9 +36,24 @@ public class GameManager : MonoBehaviour
         lightingManager = FindAnyObjectByType<LightingManager>();
         dialogueManager = FindAnyObjectByType<DialogueManager>();
 
-        EnableDialogueCharacter(completedLevelCount);
-        TraceToNextCharacter();
-        //lightingManager.LightSwitch_Enter(dialogueTriggers[completedLevelCount].name);
+        currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+        // set the different script instances in different scenes 
+        switch (currentSceneIndex)
+        {
+            case 0:
+                characterTrailController = FindAnyObjectByType<CharacterTrailController>();
+                characterTrailController.GoToOrigin();
+                break;
+            case 1:
+                sceneTransition.SetTrigger("OpenEye");
+
+                endSceneMusic.Play();
+
+                EndDialogueTrigger _endDialogueTrigger = FindAnyObjectByType<EndDialogueTrigger>();
+                if (dialogueManager != null && _endDialogueTrigger != null)
+                    dialogueManager.StartFinalDialogue(_endDialogueTrigger);
+                break;
+        }
     }
 
     public void CheckGameState()
@@ -60,53 +61,21 @@ public class GameManager : MonoBehaviour
         completedLevelCount = 0;
 
         for (int i = 0; i < interactionManagers.Length; i++)
-        {
+            // if all the character's interactions are completed
             if (interactionManagers[i].LevelIndex == interactionManagers[i].ineteractionLayerCount)
             {
                 completedLevelCount++;
             }
-        }
 
         if (completedLevelCount == interactionManagers.Length)
-        {
             EndLevel();
-        }
         else
-        {
-            //lightingManager.LightSwitch_Exit(dialogueTriggers[completedLevelCount - 1].name);
-            EnableDialogueCharacter(completedLevelCount);
-        }
-
-        TraceToNextCharacter();
-
-        if(completedLevelCount != interactionManagers.Length)
-        {
-            //lightingManager.LightSwitch_Enter(dialogueTriggers[completedLevelCount].name);
-        }
+            characterTrailController.ResetTrails();
     }
 
-    public void FinalDialogue()
+    public void ChangeToNextScene()
     {
-        StartCoroutine(TriggerFinalDialogue());
-    }
-
-    private void EnableDialogueCharacter(int level)
-    {
-        for (int i = 0; i < dialogueTriggers.Length; i++)
-        {
-            dialogueTriggers[i].canTalk = (i == level) ? true : false;
-            dialogueTriggers[i].dialogueNoticeUI.SetActive(dialogueTriggers[i].canTalk);
-        }
-    }
-
-    private void TraceToNextCharacter()
-    {
-        StopCoroutine(ParticleMove());
-
-        nextCharacterTransform = (completedLevelCount == interactionManagers.Length)? 
-            endPosition : dialogueTriggers[completedLevelCount].transform;
-
-        StartCoroutine(ParticleMove());
+        StartCoroutine(ChangeScene());
     }
 
     private void EndLevel()
@@ -114,80 +83,16 @@ public class GameManager : MonoBehaviour
         dialogueManager.EndDialogue();
         lightingManager.QuickSwitchOffAll();
 
-        AS_Clock.Play();
+        triggerPoint.EnableTriggerPoint();
+        characterTrailController.GoToOrigin();
+
+        StartCoroutine(ChangePassThroughOpacity());
+
+        endSceneMusic.Play();
+        //endSceneMusic.playOnAwake = true;
     }
 
-    private IEnumerator ParticleMove()
-    {
-        Transform startPoint = playerTransform;
-        Transform endPoint = nextCharacterTransform;
-
-        while ((completedLevelCount == interactionManagers.Length)? 
-            Vector3.Distance(playerTransform.position, nextCharacterTransform.position) > stopDistance : dialogueTriggers[completedLevelCount].isPlayerOut)
-        {
-            float journeyLength = Vector3.Distance(startPoint.position, endPoint.position);
-            float journeyTime = journeyLength / speed;
-            float startTime = Time.time;
-
-            while (Time.time < startTime + journeyTime)
-            {
-                if (!particle.isPlaying)
-                {
-                    particle.Play();
-                    traceSound.Play();
-                }
-
-                float distanceCovered = (Time.time - startTime) * speed;
-                float fractionOfJourney = distanceCovered / journeyLength;
-                particle.transform.position = Vector3.Lerp(startPoint.position, endPoint.position + transformOffset, fractionOfJourney);
-                yield return null;
-            }
-
-            yield return new WaitForSeconds(stayDuration);
-            Transform tempValue = startPoint;
-            startPoint = endPoint;
-            endPoint = tempValue;
-        }
-
-        particle.Stop();
-        traceSound.Stop();
-
-        StopCoroutine(ParticleMove());  
-    }
-
-    private IEnumerator TriggerFinalDialogue()
-    {
-        lightingManager.QuickSwitchOffAll();
-        StartCoroutine(ChangeOpacity());
-        //StartCoroutine(TypeText());
-
-        for (int i = dialogueTriggers.Length - 1; i >= 0; i--)
-        {
-            yield return new WaitForSeconds(triggerInterval);
-
-            int level = interactionManagers[i].LevelIndex;
-            if (dialogueTriggers[i].VO_Audio[level] != null)
-            {
-                lightingManager.QuickSwitchOn(dialogueTriggers[i].name);
-                dialogueTriggers[i].StartFinalDialogue(level);
-                //dialogueTriggers[i].StartDialogue(interactionManagers[i].LevelIndex);
-
-                yield return new WaitForSeconds(dialogueTriggers[i].VO_Audio[level].length);
-                lightingManager.QuickSwitchOffAll();
-            }
-        }
-
-        //isTyping = false;
-
-        yield return new WaitForSeconds(triggerInterval);
-        AS_Clock.Stop();
-        AS_Shot.Play();
-
-        sceneTransition.enabled = true;
-        StartCoroutine(ChangeScene());
-    }
-
-    private IEnumerator ChangeOpacity()
+    private IEnumerator ChangePassThroughOpacity()
     {
         float elapsedTime = 0f;
         float startValue = passthroughLayers.textureOpacity;
@@ -206,25 +111,9 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator ChangeScene()
     {
-        yield return new WaitForSeconds(triggerInterval * triggerInterval);
+        sceneTransition.SetTrigger("CloseEye");
+
+        yield return new WaitForSeconds(triggerInterval);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
-
-    /*IEnumerator TypeText()
-    {
-        yield return new WaitForSeconds(triggerInterval);
-        isTyping = true;
-
-        while (isTyping)
-        {
-            for (int i = 0; i < endingText.Length; i++)
-            {
-                notice.text = endingText[i];
-
-                yield return new WaitForSeconds(readingDuration);
-            }
-        }
-
-        notice.text = "";
-    }*/
 }

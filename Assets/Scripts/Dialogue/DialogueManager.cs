@@ -7,6 +7,9 @@ public class DialogueManager : MonoBehaviour
 {
     public AudioSource VO;
     public TextMeshProUGUI finalText;
+    public float finalDialogueInterval;
+    public Animator crossfade;
+
     [HideInInspector] public bool isPlayCompleted = false;
 
     private float dialogueTime;
@@ -48,20 +51,11 @@ public class DialogueManager : MonoBehaviour
         NextSentence();
     }
 
-    public void StartFinalText(Dialogue dialogue, AudioClip clip, InteractionManager manager)
+    public void StartFinalDialogue(EndDialogueTrigger _endDialogueTrigger)
     {
-        interactionManager = manager;
-
         isPlayCompleted = false;
-        VO.clip = clip;
-        PlayVoiceOver();
 
-        foreach (string sentence in dialogue.sentences)
-        {
-            dialogueQueue.Enqueue(sentence);
-        }
-        dialogueTime = clip.length / dialogue.sentences.Length;
-        NextSentence();
+        StartCoroutine(TriggerFinalDialogue(_endDialogueTrigger));
     }
 
     public void NextSentence()
@@ -71,9 +65,12 @@ public class DialogueManager : MonoBehaviour
             isPlayCompleted = true;
             EndDialogue();
 
-            if (interactionManager.LevelIndex < interactionManager.ineteractionLayerCount)
+            if(interactionManager != null)
             {
-                interactionManager.PlayAudio();
+                if (interactionManager.LevelIndex < interactionManager.ineteractionLayerCount)
+                {
+                    interactionManager.PlayAudio();
+                }
             }
             else
             {
@@ -100,14 +97,39 @@ public class DialogueManager : MonoBehaviour
         }
         else
         {
-            if (interactionManager.LevelIndex >= interactionManager.ineteractionLayerCount)
-            {
-                finalText.text = sentence;
-            }
+            finalText.text = sentence;
         }
 
         yield return new WaitForSeconds(dialogueTime);
         NextSentence();
+    }
+
+    private IEnumerator TriggerFinalDialogue(EndDialogueTrigger _trigger)
+    {
+        for (int i = 0; i < _trigger.characters.Length; i++)
+        {
+            _trigger.characters[i].SetActive(true);
+
+            VO.clip = _trigger.VO_Audio[i];
+            PlayVoiceOver();
+
+            foreach (string sentence in _trigger.VO_Text[i].sentences)
+            {
+                dialogueQueue.Enqueue(sentence);
+            }
+            dialogueCanvas = null;
+            dialogueTime = VO.clip.length / _trigger.VO_Text[i].sentences.Length;
+            NextSentence();
+
+            yield return new WaitForSeconds(VO.clip.length);
+            crossfade.SetTrigger("CloseEye");
+
+            yield return new WaitForSeconds(finalDialogueInterval);
+            _trigger.characters[i].SetActive(false);
+            crossfade.SetTrigger("OpenEye");
+        }
+
+        isPlayCompleted = true;
     }
 
     public void EndDialogue()
