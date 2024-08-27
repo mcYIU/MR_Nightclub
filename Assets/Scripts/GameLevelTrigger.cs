@@ -24,13 +24,10 @@ public class GameLevelTrigger : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (gameManager.isStarted)
-        {
             gameManager.ChangeToNextScene();
-        }
+
         else
-        {
             trailController.ResetTrails();
-        }
 
         DisableTriggerPoint();
         if(!gameManager.isStarted) gameManager.isStarted = true;
