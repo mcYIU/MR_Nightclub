@@ -77,7 +77,7 @@ Material:
     - _QueueControl: 0
     - _QueueOffset: 0
     - _ReceiveShadows: 1
-    - _ScreenSpaceReflections: 0
+    - _ScreenSpaceReflections: 1
     - _Speed: 0
     - _SrcBlend: 5
     - _Surface: 1
@@ -85,7 +85,7 @@ Material:
     - _Transparency: 1
     - _UseFoam: 1
     - _Use_Foam: 1
-    - _WaveDist: 0.32
+    - _WaveDist: 0.3
     - _WaveFrequency: 10
     - _WaveSpeed: 0.001
     - _Wave_Speed: 2
