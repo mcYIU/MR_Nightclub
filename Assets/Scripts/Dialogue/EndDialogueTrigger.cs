@@ -6,11 +6,28 @@ public class EndDialogueTrigger : MonoBehaviour
     public AudioClip[] VO_Audio;
     public GameObject[] characters;
 
+    public static int dialogueIndex = 0;
+
+    DialogueManager dialogueManager;
+    GameManager gameManager;
+    private float startTime = 4f;
+
     private void Start()
     {
-        for (int i = 0; i < characters.Length; i++)
-        {
-            characters[i].SetActive(false);
-        }
+        dialogueManager = FindAnyObjectByType<DialogueManager>();
+        gameManager = FindAnyObjectByType<GameManager>();
+
+        if (dialogueManager != null) Invoke("StartDialogue", startTime);
+    }
+
+    public void ChangeToNextScene()
+    {
+        if (gameManager != null)
+            gameManager.ChangeToNextScene();
+    }
+
+    private void StartDialogue()
+    {
+        dialogueManager.StartFinalDialogue(this);
     }
 }

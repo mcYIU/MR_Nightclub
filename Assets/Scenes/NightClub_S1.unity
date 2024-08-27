@@ -99,8 +99,7 @@ LightmapSettings:
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 112000000, guid: 689bafe4eec539f48b9a7269f970e0ab,
     type: 2}
-  m_LightingSettings: {fileID: 4890085278179872738, guid: bcf34f0894446a74b980bdc14105a8f7,
-    type: 2}
+  m_LightingSettings: {fileID: 0}
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -5856,7 +5855,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 335487089}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -400.00003}
+  m_LocalPosition: {x: 0, y: 0, z: -700}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -6593,7 +6592,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u4ED6\u662F\u4E00\u4F4D\u6C89\u8FF7\u65BC\u838E\u58EB\u6BD4\u4E9E\u7814\u7A76\u7684\u5B78\u8005"
+  m_text: "\u80E1\u5747\u76CA\u80E1\u5747\u76CA\u80E1\u5747\u76CA\u80E1\u5747\u76CA\u80E1\u5747\u76CA"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: f927ea7819bdc134a98bf7c8dffd7714, type: 2}
   m_sharedMaterial: {fileID: -3172761626537305626, guid: f927ea7819bdc134a98bf7c8dffd7714,
@@ -22437,20 +22436,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isStarted: 0
   triggerPoint: {fileID: 435156572}
-  triggerInterval: 2
+  triggerInterval: 3
   sceneTransition: {fileID: 1192909192}
+  dialogueManager: {fileID: 1033205019}
   interactionManagers:
   - {fileID: 496085572}
   - {fileID: 932082934}
   - {fileID: 1443209214}
   - {fileID: 2075342476}
   - {fileID: 1563504382}
-  dialogueTriggers:
-  - {fileID: 496085569}
-  - {fileID: 932082935}
-  - {fileID: 1443209215}
-  - {fileID: 2075342477}
-  - {fileID: 1563504383}
   endSceneMusic: {fileID: 2120618420}
   passthroughLayers: {fileID: 1398115857}
   passThroughFadeDuration: 3
@@ -28969,7 +28963,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   VO: {fileID: 2006023464}
   finalText: {fileID: 1717322826}
-  finalDialogueInterval: 2
+  dialogueInterval: 4
   crossfade: {fileID: 1192909192}
   isPlayCompleted: 0
 --- !u!1 &1053079622
@@ -32325,7 +32319,7 @@ CanvasGroup:
   m_GameObject: {fileID: 1192909189}
   m_Enabled: 1
   m_Alpha: 0
-  m_Interactable: 1
+  m_Interactable: 0
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
 --- !u!95 &1192909192
@@ -32614,7 +32608,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -400}
+  m_AnchoredPosition: {x: 0, y: -500}
   m_SizeDelta: {x: 1000, y: 1000}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1238204185
@@ -33194,7 +33188,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1345605416}
   m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0, z: -200.00002}
+  m_LocalPosition: {x: 0, y: 0, z: -200}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -33202,7 +33196,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 400, y: 0}
+  m_AnchoredPosition: {x: 500, y: 0}
   m_SizeDelta: {x: 1000, y: 1000}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1345605418
@@ -34568,7 +34562,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1487590737}
   m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0, z: -200.00002}
+  m_LocalPosition: {x: 0, y: 0, z: -200}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -34576,7 +34570,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 400}
+  m_AnchoredPosition: {x: 0, y: 500}
   m_SizeDelta: {x: 1000, y: 1000}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1487590739
@@ -35786,7 +35780,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   VO_Text:
   - sentences:
-    - "\u4ED6\u662F\u4E00\u4F4D\u6C89\u8FF7\u65BC\u838E\u58EB\u6BD4\u4E9E\u7814\u7A76\u7684\u5B78\u8005\uFF0C\u66F8\u623F\u88E1\u653E\u6EFF\u4E86\u300AHamlet\u300B\u7684\u5404\u7A2E\u8B6F\u672C\u3002\u5728\u4E00\u4E5D\u4E09\u4E8C\u5E74"
+    - "\u4ED6\u662F\u4E00\u4F4D\u6C89\u8FF7\u65BC\u838E\u58EB\u6BD4\u4E9E\u7814\u7A76\u7684\u5B78\u8005\uFF0C\u66F8\u623F\u88E1\u653E\u6EFF\u4E86\u300AHamlet\u300B\u7684\u5404\u7A2E\u8B6F\u672C\u3002"
     - "\u5728\u4E00\u4E5D\u4E09\u4E8C\u5E74\u56DB\u6708\u516D\u65E5\u7684\u661F\u671F\u516D\u4E0B\u5348\uFF0C\u4ED6\u5728\u623F\u88E1\u4E0D\u65B7\u7CFE\u7D50\u300C\u4F60\u662F\u751A\u9EBC\uFF1F\u751A\u9EBC\u662F\u6211\uFF1F\u300D"
     - "\u5230\u4E86\u665A\u4E0A\uFF0C\u5728\u6B61\u8072\u7B11\u8A9E\u7684\u591C\u7E3D\u6703\u88E1\uFF0C\u53EA\u6709\u4ED6\u7368\u81EA\u4E0D\u7B11\uFF0C\u4EE5\u89E3\u5256\u5200\u4F3C\u7684\u76EE\u5149\u89C0\u671B\u8457\u5927\u5BB6\u2026\u2026"
   - sentences:
@@ -38394,7 +38388,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u80E1\u5747\u76CA\u80E1\u5747\u76CA\u80E1\u5747\u76CA\u80E1\u5747\u76CA\u80E1\u5747\u76CA\u80E1\u5747\u76CA\u80E1\u5747\u76CA\u80E1\u5747\u76CA\u80E1\u5747\u76CA\u80E1\u5747\u76CA\u80E1\u5747\u76CA\u80E1\u5747\u76CA\u80E1\u5747\u76CA\u80E1\u5747\u76CA\u80E1\u5747\u76CA\u80E1\u5747\u76CA\u80E1\u5747\u76CA\u80E1\u5747\u76CA\u80E1\u5747\u76CA\u80E1\u5747\u76CA\u80E1\u5747\u76CA\u80E1\u5747\u76CA"
+  m_text: "\u80E1\u5747\u76CA\u80E1\u5747\u76CA\u80E1\u5747\u76CA\u80E1\u5747\u76CA\u80E1\u5747\u76CA"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: f927ea7819bdc134a98bf7c8dffd7714, type: 2}
   m_sharedMaterial: {fileID: -3172761626537305626, guid: f927ea7819bdc134a98bf7c8dffd7714,
@@ -43215,7 +43209,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1857040716}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 300}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -44113,7 +44107,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1975234720
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -44126,7 +44120,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1464721f2283eb14e94a33e812b47be4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _interactableView: {fileID: 0}
+  _interactableView: {fileID: 1975234721}
   _whenHover:
     m_PersistentCalls:
       m_Calls: []
@@ -44248,8 +44242,8 @@ Rigidbody:
     m_Bits: 0
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
-  m_UseGravity: 1
-  m_IsKinematic: 0
+  m_UseGravity: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
@@ -45151,7 +45145,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 400, y: 0}
+  m_AnchoredPosition: {x: 500, y: 0}
   m_SizeDelta: {x: 1000, y: 1000}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1999040090
@@ -45964,7 +45958,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2104804916}
   m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0, z: -200.00002}
+  m_LocalPosition: {x: 0, y: 0, z: -200}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -45972,7 +45966,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -400, y: 0}
+  m_AnchoredPosition: {x: -500, y: 0}
   m_SizeDelta: {x: 1000, y: 1000}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2104804918

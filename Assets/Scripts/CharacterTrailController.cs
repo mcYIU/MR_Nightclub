@@ -20,7 +20,6 @@ public class CharacterTrailController : MonoBehaviour
             // Find the characters who have not finished all the interactions
             if (interactionManager.LevelIndex < interactionManager.ineteractionLayerCount)
             {
-                Debug.Log(interactionManager.LevelIndex);
                 StartCoroutine(PlayTrail(characterTrails[i]));
             }
         }
