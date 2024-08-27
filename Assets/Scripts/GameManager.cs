@@ -20,7 +20,7 @@ public class GameManager : MonoBehaviour
     public OVRPassthroughLayer passthroughLayers;
     public float passThroughFadeDuration;
 
-    private LightingManager lightingManager;
+    //private LightingManager lightingManager;
     private CharacterTrailController characterTrailController;
     private int completedLevelCount = 0;
 
@@ -31,23 +31,18 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        lightingManager = FindAnyObjectByType<LightingManager>();
+        //lightingManager = FindAnyObjectByType<LightingManager>();
+        
+        characterTrailController = FindAnyObjectByType<CharacterTrailController>();
+        if(characterTrailController != null) 
+            characterTrailController.GoToOrigin();
 
-        switch (SceneManager.GetActiveScene().buildIndex)
+        if(SceneManager.GetActiveScene().buildIndex == SceneManager.sceneCountInBuildSettings - 1)
         {
-            case 0:
-                characterTrailController = FindAnyObjectByType<CharacterTrailController>();
-                characterTrailController.GoToOrigin();
-                break;
-            case 1:
-                break;
-            case 2:
-                passthroughLayers.textureOpacity = 1;
-                endSceneMusic.Stop();
-                break;
-            default:
-                break;
-        }
+            Debug.Log("End");
+            passthroughLayers.textureOpacity = 1;
+            endSceneMusic.Stop();
+        }       
     }
 
     public void CheckGameState()
@@ -114,5 +109,12 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(triggerInterval);
 
         sceneTransition.SetBool("IsEyeClosed", false);
+
+        if (SceneManager.GetActiveScene().buildIndex == SceneManager.sceneCountInBuildSettings - 1)
+        {
+            Debug.Log("End");
+            passthroughLayers.textureOpacity = 1;
+            endSceneMusic.Stop();
+        }
     }
 }

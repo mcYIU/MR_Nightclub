@@ -22565,12 +22565,12 @@ PrefabInstance:
     - target: {fileID: 717669574285016497, guid: 2ea7e31559d27fc448bcaf01077d9ac0,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1611484049642437136, guid: 2ea7e31559d27fc448bcaf01077d9ac0,
         type: 3}
       propertyPath: _offsetTranslation.y
-      value: 0
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 1812344080751771174, guid: 2ea7e31559d27fc448bcaf01077d9ac0,
         type: 3}
@@ -43302,7 +43302,7 @@ MonoBehaviour:
   tracingSound: {fileID: 0}
   playerTransform: {fileID: 924661412}
   speed: 30
-  stopParticleDistance: 2.2
+  stopParticleDistance: 2.5
 --- !u!4 &1875217419
 Transform:
   m_ObjectHideFlags: 0
@@ -44112,7 +44112,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1975234720
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -44332,7 +44332,7 @@ Transform:
   m_GameObject: {fileID: 1975234719}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.039, z: 2.008}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children: []
