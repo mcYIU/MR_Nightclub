@@ -10,7 +10,7 @@ public class EndDialogueTrigger : MonoBehaviour
 
     DialogueManager dialogueManager;
     GameManager gameManager;
-    private float startTime = 4f;
+    private float startTime = 5f;
 
     private void Start()
     {

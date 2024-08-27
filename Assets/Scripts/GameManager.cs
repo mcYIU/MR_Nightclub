@@ -33,10 +33,20 @@ public class GameManager : MonoBehaviour
     {
         lightingManager = FindAnyObjectByType<LightingManager>();
 
-        if (SceneManager.GetActiveScene().buildIndex == 0)
+        switch (SceneManager.GetActiveScene().buildIndex)
         {
-            characterTrailController = FindAnyObjectByType<CharacterTrailController>();
-            characterTrailController.GoToOrigin();
+            case 0:
+                characterTrailController = FindAnyObjectByType<CharacterTrailController>();
+                characterTrailController.GoToOrigin();
+                break;
+            case 1:
+                break;
+            case 2:
+                passthroughLayers.textureOpacity = 1;
+                endSceneMusic.Stop();
+                break;
+            default:
+                break;
         }
     }
 
@@ -66,7 +76,7 @@ public class GameManager : MonoBehaviour
     private void EndLevel()
     {
         dialogueManager.EndDialogue();
-        lightingManager.QuickSwitchOffAll();
+        //lightingManager.QuickSwitchOffAll();
 
         triggerPoint.EnableTriggerPoint();
         characterTrailController.GoToOrigin();
