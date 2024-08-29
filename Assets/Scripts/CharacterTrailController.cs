@@ -16,7 +16,7 @@ public class CharacterTrailController : MonoBehaviour
     {
         for (int i = 0; i < characterTrails.Length; i++)
         {
-            characterTrails[i].transform.parent.TryGetComponent<InteractionManager>(out InteractionManager interactionManager);
+            characterTrails[i].transform.parent.parent.TryGetComponent<InteractionManager>(out InteractionManager interactionManager);
             // Find the characters who have not finished all the interactions
             if (interactionManager.LevelIndex < interactionManager.ineteractionLayerCount)
             {
@@ -37,7 +37,8 @@ public class CharacterTrailController : MonoBehaviour
         Transform startPoint = particle.transform.parent;
         Transform endPoint = playerTransform;
 
-        while (Vector3.Distance(startPoint.position, endPoint.position) > stopParticleDistance)
+        while (true)
+        //while (Vector3.Distance(playerTransform.position, particle.transform.parent.position) > stopParticleDistance)
         {
             float journeyLength = Vector3.Distance(startPoint.position, endPoint.position);
             float journeyTime = journeyLength / speed;
@@ -61,10 +62,10 @@ public class CharacterTrailController : MonoBehaviour
             (startPoint, endPoint) = (endPoint, startPoint);
         }
 
-        StopAllTrails();
+        //StopAllTrails();
     }
 
-    private void StopAllTrails()
+    public void StopAllTrails()
     {
         if (tracingSound != null) tracingSound.Stop();
 
@@ -78,9 +79,8 @@ public class CharacterTrailController : MonoBehaviour
             for (int i = 0; i < characterTrails.Length; i++)
             {
                 characterTrails[i].Stop();
+                StopAllCoroutines();
             }
-
-            StopAllCoroutines();
         }
     }
 }

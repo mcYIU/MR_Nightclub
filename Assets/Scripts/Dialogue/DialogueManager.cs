@@ -17,11 +17,14 @@ public class DialogueManager : MonoBehaviour
     private GameObject dialogueCanvas;
     private TextMeshProUGUI dialogueText;
 
+    CharacterTrailController trails;
     InteractionManager interactionManager;
     EndDialogueTrigger finalDialogue;
 
     private void Start()
     {
+        trails = FindAnyObjectByType<CharacterTrailController>();
+
         dialogueQueue = new Queue<string>();
 
         finalText.text = "";
@@ -29,6 +32,8 @@ public class DialogueManager : MonoBehaviour
 
     public void StartDialogue(Dialogue dialogue, GameObject canvas, AudioClip clip, InteractionManager manager)
     {
+        if(trails != null) trails.StopAllTrails();
+
         if (manager.isNoticed)
         {
             manager.DisplayNotice(manager.noticeText[manager.LevelIndex]);
