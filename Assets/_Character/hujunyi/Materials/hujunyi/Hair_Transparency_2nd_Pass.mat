@@ -131,15 +131,15 @@ Material:
     - _Translucency: 0.25
     - _VertexColorStrength: 0.947
     m_Colors:
-    - _DiffuseColor: {r: 0.99999994, g: 0.99999994, b: 0.99999994, a: 1}
+    - _DiffuseColor: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 1, g: 1, b: 1, a: 1}
     - _EmissiveColor: {r: 0, g: 0, b: 0, a: 0}
     - _EndColor: {r: 0.93139815, g: 0.87003416, b: 0.80236465, a: 1}
-    - _HighlightAColor: {r: 0.95925546, g: 0.9408053, b: 0.8984323, a: 1}
+    - _HighlightAColor: {r: 0.9592554, g: 0.9408053, b: 0.8984323, a: 1}
     - _HighlightADistribution: {r: 0.36320004, g: 0.9146001, b: 0.95400006, a: 0}
-    - _HighlightBColor: {r: 0.3652521, g: 0.25026038, b: 0.1318038, a: 1}
+    - _HighlightBColor: {r: 0.36525208, g: 0.25026035, b: 0.13180375, a: 1}
     - _HighlightBDistribution: {r: 0.65430003, g: 0.7942, b: 0.94750005, a: 0}
-    - _RootColor: {r: 0.25026038, g: 0.20689574, b: 0.18085851, a: 1}
+    - _RootColor: {r: 0.25026035, g: 0.20689571, b: 0.18085846, a: 1}
     - _SpecularTint: {r: 1, g: 0.9704867, b: 0.94407946, a: 1}
-    - _VertexBaseColor: {r: 0.19435316, g: 0.16618572, b: 0.16618572, a: 1}
+    - _VertexBaseColor: {r: 0.19435313, g: 0.16618568, b: 0.16618568, a: 1}
   m_BuildTextureStacks: []
