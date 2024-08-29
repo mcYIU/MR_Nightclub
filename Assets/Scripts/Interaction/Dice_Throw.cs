@@ -22,21 +22,12 @@ public class Dice_Throw : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (isGrabbed)
-            if (collision.collider.gameObject.CompareTag("Environment"))
-            {
-                int soundIndex = Random.Range(0, diceSound.Length);
-                audioSource.PlayOneShot(diceSound[soundIndex]);
-
-                interactionManager.ChangeLevelIndex(gameObject.name);
-            }
-    }
-
-    private void OnCollisionExit(Collision collision)
-    {
-        if (grab.Interactors != null)
+        if (collision.collider.gameObject.CompareTag("Environment") && isGrabbed)
         {
-            isGrabbed = true;
+            int soundIndex = Random.Range(0, diceSound.Length);
+            audioSource.PlayOneShot(diceSound[soundIndex]);
+
+            interactionManager.ChangeLevelIndex(gameObject.name);
         }
     }
 
@@ -47,6 +38,8 @@ public class Dice_Throw : MonoBehaviour
         rb.interpolation = RigidbodyInterpolation.None;
         transform.position = parentDice.position;
         transform.SetParent(parentDice.transform);
+
+        isGrabbed = true;
     }
 
     public void ReleaseAllDice()
