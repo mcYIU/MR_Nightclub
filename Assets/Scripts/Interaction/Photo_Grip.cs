@@ -5,20 +5,20 @@ public class Photo_Grip : MonoBehaviour
 {
     public Animator animator;
     public InteractionManager manager;
-    HandGrabInteractable interactable;
+    public HandGrabInteractable[] interactables;
 
-    private void Start()
+    public void Grip()
     {
-        interactable = GetComponent<HandGrabInteractable>();
-    }
+        int grabCount = 0;
 
-    void Update()
-    {
-        if (interactable.enabled)
-            if (interactable.Interactors.Count > 1)
-            {
-                animator.SetBool("IsGripped", true);
-                manager.ChangeLevelIndex(gameObject.name);
-            }
+        for (int i = 0; i < interactables.Length; i++)
+            if (interactables[i].Interactors.Count > 0)
+                grabCount++;
+
+        if(grabCount == interactables.Length)
+        {
+            animator.SetBool("IsGripped", true);
+            manager.ChangeLevelIndex(gameObject.name);
+        }
     }
 }
