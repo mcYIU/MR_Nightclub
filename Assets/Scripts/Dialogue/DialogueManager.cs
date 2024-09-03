@@ -107,7 +107,24 @@ public class DialogueManager : MonoBehaviour
             dialogueText.text = "";
             dialogueCanvas.SetActive(true);
 
-            dialogueText.text += sentence;
+            //dialogueText.text += sentence;
+
+            int currentIndex = 0;
+
+            while (currentIndex < sentence.Length)
+            {
+                char currentChar = sentence[currentIndex];
+                if (currentChar == '.')
+                {                   
+                    dialogueText.text += "\n";
+                    currentIndex++;
+                }
+                else
+                {
+                    dialogueText.text += currentChar;
+                    currentIndex++;
+                }
+            }
         }
         else
         {
