@@ -36,8 +36,11 @@ public class Dice_Throw : MonoBehaviour
         rb.useGravity = false;
         rb.isKinematic = true;
         rb.interpolation = RigidbodyInterpolation.None;
+
         transform.position = parentDice.position;
+        transform.rotation = parentDice.rotation;
         transform.SetParent(parentDice.transform);
+        transform.localScale = Vector3.one;
 
         isGrabbed = true;
     }
@@ -45,6 +48,8 @@ public class Dice_Throw : MonoBehaviour
     public void ReleaseAllDice()
     {
         transform.SetParent(null);
+        transform.localScale = Vector3.one;
+
         rb.isKinematic = false;
         rb.useGravity = true;
         rb.interpolation = RigidbodyInterpolation.Interpolate;
