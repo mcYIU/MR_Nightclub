@@ -4,6 +4,7 @@ public class DialogueTrigger : MonoBehaviour
 {
     public Dialogue[] VO_Text;
     public AudioClip[] VO_Audio;
+    public AudioClip Bye_Audio;
 
     public GameObject dialogueNoticeUI;
     public GameObject dialogueCanvas;
@@ -30,8 +31,7 @@ public class DialogueTrigger : MonoBehaviour
     {
         if 
         (other.gameObject.CompareTag("Player") && 
-        interactionManager.LevelIndex < interactionManager.ineteractionLayerCount &&
-        gameManager.isStarted)
+        interactionManager.LevelIndex < interactionManager.ineteractionLayerCount)
             if (isPlayerOut)
             {
                 isPlayerOut = false;
@@ -44,8 +44,7 @@ public class DialogueTrigger : MonoBehaviour
     {
         if 
         (other.gameObject.CompareTag("Player") && 
-        interactionManager.LevelIndex < interactionManager.ineteractionLayerCount &&
-        gameManager.isStarted)
+        interactionManager.LevelIndex < interactionManager.ineteractionLayerCount)
             if (!isPlayerOut)
             {
                 EndDialogue();
@@ -53,6 +52,11 @@ public class DialogueTrigger : MonoBehaviour
 
                 isPlayerOut = true;
             }
+    }
+
+    private void TransitionalDialogue()
+    {
+        if (Bye_Audio != null) dialogueManager.VO.PlayOneShot(Bye_Audio);     
     }
 
     public void StartDialogue(int index)

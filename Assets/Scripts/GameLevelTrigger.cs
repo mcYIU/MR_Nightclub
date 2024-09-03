@@ -14,27 +14,27 @@ public class GameLevelTrigger : MonoBehaviour
     private void Start()
     {
         gameManager = FindAnyObjectByType<GameManager>();
-        trailController = FindAnyObjectByType<CharacterTrailController>();
+        //trailController = FindAnyObjectByType<CharacterTrailController>();
 
         triggerCollider = GetComponent<Collider>();
 
-        EnableTriggerPoint();
+        //EnableTriggerPoint();
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (gameManager.isStarted)
             gameManager.ChangeToNextScene();
-
         else
             trailController.ResetTrails();
 
-        DisableTriggerPoint();
+        //DisableTriggerPoint();
         if(!gameManager.isStarted) gameManager.isStarted = true;
     }
 
     public void EnableTriggerPoint()
     {
+        /*
         for (int i = 0; i < customParticles.Length; i++)
         {
             ParticleSystem.MainModule particleMain = customParticles[i].main;
@@ -43,6 +43,7 @@ public class GameLevelTrigger : MonoBehaviour
 
         if (!triggerCollider.enabled) triggerCollider.enabled = true;
         mainParticle.Play();
+        */
     }
 
     private void DisableTriggerPoint()

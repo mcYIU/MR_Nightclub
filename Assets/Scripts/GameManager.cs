@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    [HideInInspector] public bool isStarted = false;
+    [HideInInspector] public bool isStarted = true;
 
     [Header("SceneTrigger")]
     public GameLevelTrigger triggerPoint;
@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
     public Animator sceneTransition;
 
     [Header("FinalScene")]
+    public GameObject endTrigger;
     public DialogueManager dialogueManager;
     public InteractionManager[] interactionManagers;
     public AudioSource endSceneMusic;
@@ -33,13 +34,12 @@ public class GameManager : MonoBehaviour
     {
         //lightingManager = FindAnyObjectByType<LightingManager>();
         
-        characterTrailController = FindAnyObjectByType<CharacterTrailController>();
-        if(characterTrailController != null) 
-            characterTrailController.GoToOrigin();
+        //characterTrailController = FindAnyObjectByType<CharacterTrailController>();
+        //if(characterTrailController != null) 
+        //    characterTrailController.GoToOrigin();
 
         if(SceneManager.GetActiveScene().buildIndex == SceneManager.sceneCountInBuildSettings - 1)
         {
-            Debug.Log("End");
             passthroughLayers.textureOpacity = 1;
             endSceneMusic.Stop();
         }       
@@ -59,8 +59,8 @@ public class GameManager : MonoBehaviour
 
         if (completedLevelCount == interactionManagers.Length)
             EndLevel();
-        else
-            characterTrailController.ResetTrails();
+        //else
+            //characterTrailController.ResetTrails();
     }
 
     public void ChangeToNextScene()
@@ -71,10 +71,12 @@ public class GameManager : MonoBehaviour
     private void EndLevel()
     {
         dialogueManager.EndDialogue();
-        //lightingManager.QuickSwitchOffAll();
 
-        triggerPoint.EnableTriggerPoint();
-        characterTrailController.GoToOrigin();
+        //lightingManager.QuickSwitchOffAll();
+        //triggerPoint.EnableTriggerPoint();
+        //characterTrailController.GoToOrigin();
+
+        endTrigger.SetActive(true);
 
         StartCoroutine(ChangePassThroughOpacity());
 
