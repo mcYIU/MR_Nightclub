@@ -19,10 +19,10 @@
       "depth": 1,
       "source": "registry",
       "dependencies": {
-        "com.unity.ai.navigation": "1.1.4",
-        "com.unity.nuget.newtonsoft-json": "3.0.2",
         "com.meta.xr.sdk.core": "67.0.0",
-        "com.unity.textmeshpro": "3.0.6"
+        "com.unity.textmeshpro": "3.0.6",
+        "com.unity.ai.navigation": "1.1.4",
+        "com.unity.nuget.newtonsoft-json": "3.0.2"
       },
       "url": "https://packages.unity.com"
     },
@@ -31,15 +31,15 @@
       "depth": 0,
       "source": "registry",
       "dependencies": {
-        "com.meta.xr.sdk.audio": "67.0.0",
-        "com.meta.xr.sdk.interaction": "67.0.0",
-        "com.meta.xr.sdk.interaction.ovr": "67.0.1",
-        "com.meta.xr.sdk.platform": "67.0.0",
         "com.meta.xr.sdk.core": "67.0.0",
+        "com.meta.xr.sdk.audio": "67.0.0",
         "com.meta.xr.sdk.voice": "67.0.0",
-        "com.meta.xr.sdk.haptics": "67.0.0",
         "com.meta.xr.simulator": "66.0.1",
-        "com.meta.xr.mrutilitykit": "67.0.0"
+        "com.meta.xr.sdk.haptics": "67.0.0",
+        "com.meta.xr.mrutilitykit": "67.0.0",
+        "com.meta.xr.sdk.platform": "67.0.0",
+        "com.meta.xr.sdk.interaction": "67.0.0",
+        "com.meta.xr.sdk.interaction.ovr": "67.0.1"
       },
       "url": "https://packages.unity.com"
     },
@@ -71,8 +71,8 @@
       "depth": 1,
       "source": "registry",
       "dependencies": {
-        "com.unity.textmeshpro": "3.0.6",
-        "com.unity.ugui": "1.0.0"
+        "com.unity.ugui": "1.0.0",
+        "com.unity.textmeshpro": "3.0.6"
       },
       "url": "https://packages.unity.com"
     },
@@ -81,8 +81,8 @@
       "depth": 1,
       "source": "registry",
       "dependencies": {
-        "com.meta.xr.sdk.interaction": "67.0.0",
-        "com.meta.xr.sdk.core": "67.0.0"
+        "com.meta.xr.sdk.core": "67.0.0",
+        "com.meta.xr.sdk.interaction": "67.0.0"
       },
       "url": "https://packages.unity.com"
     },
@@ -91,8 +91,8 @@
       "depth": 0,
       "source": "registry",
       "dependencies": {
-        "com.meta.xr.sdk.interaction.ovr": "67.0.1",
-        "com.meta.xr.sdk.sharedassets": "67.0.0"
+        "com.meta.xr.sdk.sharedassets": "67.0.0",
+        "com.meta.xr.sdk.interaction.ovr": "67.0.1"
       },
       "url": "https://packages.unity.com"
     },
@@ -130,7 +130,7 @@
       "url": "https://packages.unity.com"
     },
     "com.soupday.cc3_unity_tools": {
-      "version": "file:C:/Users/user/Downloads/cc_unity_tools_URP-1.6.3.URP14",
+      "version": "file:C:/Users/user/Desktop/cc_unity_tools_URP-1.6.3.URP14/cc_unity_tools_URP-1.6.3.URP14",
       "depth": 0,
       "source": "local",
       "dependencies": {
@@ -172,8 +172,8 @@
       "source": "registry",
       "dependencies": {
         "com.unity.burst": "1.8.13",
-        "com.unity.nuget.mono-cecil": "1.11.4",
         "com.unity.test-framework": "1.4.3",
+        "com.unity.nuget.mono-cecil": "1.11.4",
         "com.unity.test-framework.performance": "3.0.3"
       },
       "url": "https://packages.unity.com"
@@ -348,9 +348,9 @@
       "depth": 1,
       "source": "registry",
       "dependencies": {
-        "com.unity.modules.subsystems": "1.0.0",
         "com.unity.modules.vr": "1.0.0",
         "com.unity.modules.xr": "1.0.0",
+        "com.unity.modules.subsystems": "1.0.0",
         "com.unity.xr.legacyinputhelpers": "2.1.7"
       },
       "url": "https://packages.unity.com"
