@@ -95,11 +95,17 @@ public class InteractionManager : MonoBehaviour
 
     public void PlayAudio()
     {
-        audioSource.clip = audioClips[levelIndex];
-        float playTime = audioClips[levelIndex].length;
-        audioSource.Play();
+        if(audioSource != null)
+        {
+            if (audioSource != null && audioClips[levelIndex] != null)
+                audioSource.PlayOneShot(audioClips[levelIndex]);
 
-        StartCoroutine(EnableInteraction(playTime));
+            if (LevelIndex < ineteractionLayerCount)
+            {
+                float playTime = audioClips[levelIndex].length;
+                StartCoroutine(EnableInteraction(playTime));
+            }
+        }
     }
 
     public void DisplayNotice(string noticeText)
@@ -111,6 +117,7 @@ public class InteractionManager : MonoBehaviour
     public void CleanNotice()
     {
         notice.text = "";
+        audioSource.Stop();
         StopAllCoroutines();
     }
 

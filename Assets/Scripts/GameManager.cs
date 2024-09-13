@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -12,6 +13,8 @@ public class GameManager : MonoBehaviour
     public Animator sceneTransition;
 
     [Header("FinalScene")]
+    public string endNoticeText;
+    public TextMeshProUGUI notice;
     public DialogueManager dialogueManager;
     public InteractionManager[] interactionManagers;
     public AudioSource endSceneMusic;
@@ -74,10 +77,10 @@ public class GameManager : MonoBehaviour
         //lightingManager.QuickSwitchOffAll();
 
         triggerPoint.EnableTriggerPoint();
-        characterTrailController.GoToOrigin();
 
         StartCoroutine(ChangePassThroughOpacity());
 
+        notice.text = endNoticeText;
         endSceneMusic.Play();
     }
 
@@ -100,6 +103,8 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator ChangeScene()
     {
+        notice.text = "";
+
         sceneTransition.SetBool("IsEyeClosed", true);
 
         yield return new WaitForSeconds(triggerInterval);

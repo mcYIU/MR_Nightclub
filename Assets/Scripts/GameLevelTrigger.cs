@@ -25,6 +25,12 @@ public class GameLevelTrigger : MonoBehaviour
         if(!gameManager.isStarted) gameManager.isStarted = true;
     }
 
+    public void EnableTriggerPoint()
+    {
+        triggerCollider.enabled = true;
+        startPoint.Play();
+    }
+
     private void DisableTriggerPoint()
     {
         triggerCollider.enabled = false;

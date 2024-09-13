@@ -14,7 +14,7 @@ public class DialogueManager : MonoBehaviour
 
     private float dialogueTime;
     private Queue<string> dialogueQueue;
-    private GameObject dialogueCanvas;
+    private Canvas dialogueCanvas;
     private TextMeshProUGUI dialogueText;
 
     CharacterTrailController trails;
@@ -30,30 +30,30 @@ public class DialogueManager : MonoBehaviour
         finalText.text = "";
     }
 
-    public void StartDialogue(Dialogue dialogue, GameObject canvas, AudioClip clip, InteractionManager manager)
+    public void StartDialogue(Dialogue _dialogue, Canvas _canvas, AudioClip _audio, InteractionManager _manager)
     {
-        if(trails != null) trails.StopAllTrails();
+        //if(trails != null) trails.StopAllTrails();
 
-        if (manager.isNoticed)
+        if (_manager.isNoticed)
         {
-            manager.DisplayNotice(manager.noticeText[manager.LevelIndex]);
+            _manager.DisplayNotice(_manager.noticeText[_manager.LevelIndex]);
             return;
         }
 
-        if (dialogue == null) return;
+        if (_dialogue == null) return;
 
-        interactionManager = manager;
+        interactionManager = _manager;
 
         isPlayCompleted = false;
-        VO.clip = clip;
+        VO.clip = _audio;
         PlayVoiceOver();
 
-        foreach (string sentence in dialogue.sentences)
+        foreach (string _sentence in _dialogue.sentences)
         {
-            dialogueQueue.Enqueue(sentence);
+            dialogueQueue.Enqueue(_sentence);
         }
-        dialogueCanvas = canvas;
-        dialogueTime = clip.length / dialogue.sentences.Length;
+        dialogueCanvas = _canvas;
+        dialogueTime = _audio.length / _dialogue.sentences.Length;
         NextSentence();
     }
 
@@ -87,7 +87,7 @@ public class DialogueManager : MonoBehaviour
             {
                 EndDialogue();
 
-                if (interactionManager.LevelIndex < interactionManager.ineteractionLayerCount) interactionManager.PlayAudio();
+                interactionManager.PlayAudio();
             }
             else StartCoroutine(Transition());
         }
@@ -105,7 +105,7 @@ public class DialogueManager : MonoBehaviour
         {
             dialogueText = dialogueCanvas.GetComponentInChildren<TextMeshProUGUI>();
             dialogueText.text = "";
-            dialogueCanvas.SetActive(true);
+            dialogueCanvas.enabled = true;
 
             //dialogueText.text += sentence;
 
@@ -171,7 +171,7 @@ public class DialogueManager : MonoBehaviour
         dialogueQueue.Clear();
         if (dialogueCanvas != null)
         {
-            dialogueCanvas.SetActive(false);
+            dialogueCanvas.enabled = false;
             dialogueCanvas = null;
             dialogueText.text = "";
         }
@@ -184,12 +184,8 @@ public class DialogueManager : MonoBehaviour
     private void PlayVoiceOver()
     {
         if (!VO.isPlaying && !isPlayCompleted)
-        {
             VO.Play();
-        }
         else
-        {
             VO.Stop();
-        }
     }
 }
