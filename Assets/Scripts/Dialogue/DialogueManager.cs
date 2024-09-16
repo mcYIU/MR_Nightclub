@@ -59,7 +59,7 @@ public class DialogueManager : MonoBehaviour
 
     public void StartFinalDialogue(EndDialogueTrigger _endDialogue)
     {
-        if(finalDialogue == null) finalDialogue = _endDialogue;
+        if (finalDialogue == null) finalDialogue = _endDialogue;
 
         if (!finalDialogue.characters[EndDialogueTrigger.dialogueIndex].activeSelf)
             finalDialogue.characters[EndDialogueTrigger.dialogueIndex].SetActive(true);
@@ -115,15 +115,10 @@ public class DialogueManager : MonoBehaviour
             {
                 char currentChar = sentence[currentIndex];
                 if (currentChar == '.')
-                {                   
                     dialogueText.text += "\n";
-                    currentIndex++;
-                }
                 else
-                {
                     dialogueText.text += currentChar;
-                    currentIndex++;
-                }
+                currentIndex++;
             }
         }
         else

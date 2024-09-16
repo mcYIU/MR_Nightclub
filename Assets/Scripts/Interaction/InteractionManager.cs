@@ -19,7 +19,8 @@ public class InteractionManager : MonoBehaviour
 
     [Header("Notice")]
     public string[] noticeText;
-    public TextMeshProUGUI notice;
+    public TextMeshProUGUI interactionNotice;
+    public TextMeshProUGUI endNotice;
     public float noticeDuration;
     public int ineteractionLayerCount;
     [HideInInspector] public bool isNoticed = false;
@@ -54,6 +55,7 @@ public class InteractionManager : MonoBehaviour
                 else
                 {
                     dialogueTrigger.EndDialogue();
+                    PlayAudio();
                     gameManager.CheckGameState();
                 }
             }
@@ -66,7 +68,9 @@ public class InteractionManager : MonoBehaviour
         dialogueTrigger = GetComponent<DialogueTrigger>();
 
         ResetInteraction();
-        notice.text = "";
+
+        interactionNotice.text = "";
+        endNotice.text = "";
     }
 
     public void ChangeLevelIndex(string obj_name)
@@ -81,42 +85,37 @@ public class InteractionManager : MonoBehaviour
             LevelIndex = 2;
             Debug.Log(levelIndex);
         }
-
-        /*if (levelIndex < ineteractionLayerCount)
-        {
-            DialogueTrigger trigger = GetComponent<DialogueTrigger>();
-            trigger.StartDialogue(levelIndex);
-        }
-        else
-        {
-            gameManager.CheckGameState();
-        }*/
     }
 
     public void PlayAudio()
     {
-        if(audioSource != null)
+        if (levelIndex < ineteractionLayerCount)
         {
-            if (audioSource != null && audioClips[levelIndex] != null)
-                audioSource.PlayOneShot(audioClips[levelIndex]);
+            if (audioSource != null) audioSource.PlayOneShot(audioClips[levelIndex]);
 
-            if (LevelIndex < ineteractionLayerCount)
-            {
-                float playTime = audioClips[levelIndex].length;
-                StartCoroutine(EnableInteraction(playTime));
-            }
+            float playTime = audioClips[levelIndex].length;
+            StartCoroutine(EnableInteraction(playTime));
+        }
+        else
+        {
+            DisplayNotice(dialogueTrigger.transitionText);
         }
     }
 
     public void DisplayNotice(string noticeText)
     {
-        notice.text = noticeText;
+        if (levelIndex < ineteractionLayerCount)
+            interactionNotice.text = noticeText;
+        else
+            StartCoroutine(TypeEndNotice(noticeText));
+
         isNoticed = true;
     }
 
     public void CleanNotice()
     {
-        notice.text = "";
+        interactionNotice.text = "";
+        endNotice.text = "";
         audioSource.Stop();
         StopAllCoroutines();
     }
@@ -130,10 +129,21 @@ public class InteractionManager : MonoBehaviour
         AddandDisableInteractables(grabInteractables_LV2, pokeInteractables_LV2, interactablesNames_LV2);
     }
 
-    public void Test()
+    private IEnumerator TypeEndNotice(string _text)
     {
-        levelIndex = 2;
-        gameManager.CheckGameState();
+        int currentIndex = 0;
+
+        while (currentIndex < _text.Length)
+        {
+            char currentChar = _text[currentIndex];
+            if (currentChar == '.')
+                endNotice.text += "\n";
+            else
+                endNotice.text += currentChar;
+            currentIndex++;
+        }
+
+        yield return null;
     }
 
     private void AddandDisableInteractables(HandGrabInteractable[] grabObjs, PokeInteractable[] pokeObjs, List<string> interactablesNames)
@@ -180,61 +190,15 @@ public class InteractionManager : MonoBehaviour
         switch (levelIndex)
         {
             case 0:
-                /*for (int i = 0; i < grabInteractables_LV1.Length; i++)
-                {
-                    grabInteractables_LV1[i].enabled = true;
-
-                }
-                for (int i = 0; i < pokeInteractables_LV1.Length; i++)
-                {
-                    pokeInteractables_LV1[i].enabled = true;
-                }*/
                 EnableGrabInteractables(grabInteractables_LV1);
                 EnablePokeInteractables(pokeInteractables_LV1);
                 break;
             case 1:
-                /*for (int i = 0; i < grabInteractables_LV2.Length; i++)
-                {
-                    grabInteractables_LV2[i].enabled = true;
-
-                }
-                for (int i = 0; i < pokeInteractables_LV2.Length; i++)
-                {
-                    pokeInteractables_LV2[i].enabled = true;
-                }*/
                 EnableGrabInteractables(grabInteractables_LV2);
                 EnablePokeInteractables(pokeInteractables_LV2);
                 break;
             default:
-                //ResetInteraction();
                 break;
         }
     }
-
-    /*public void ResetInteraction()
-    {
-        for (int i = 0; i < grabInteractables_LV1.Length; i++)
-        {
-            grabInteractables_LV1[i].enabled = false;
-            name_interactables_One.Add(grabInteractables_LV1[i].name);
-        }
-
-        for (int i = 0; i < pokeInteractables_LV1.Length; i++)
-        {
-            pokeInteractables_LV1[i].enabled = false;
-            name_interactables_One.Add(pokeInteractables_LV1[i].name);
-        }
-
-        for (int i = 0; i < grabInteractables_LV2.Length; i++)
-        {
-            grabInteractables_LV2[i].enabled = false;
-            name_interactables_Two.Add(grabInteractables_LV2[i].name);
-        }
-
-        for (int i = 0; i < pokeInteractables_LV2.Length; i++)
-        {
-            pokeInteractables_LV2[i].enabled = false;
-            name_interactables_Two.Add(pokeInteractables_LV2[i].name);
-        }
-    }*/
 }

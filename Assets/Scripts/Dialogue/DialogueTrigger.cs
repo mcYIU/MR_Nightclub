@@ -5,6 +5,7 @@ public class DialogueTrigger : MonoBehaviour
 {
     public Dialogue[] VO_Text;
     public AudioClip[] VO_Audio;
+    public string transitionText;
 
     public Image dialogueNoticeUI;
     public Canvas dialogueCanvas;
@@ -32,16 +33,18 @@ public class DialogueTrigger : MonoBehaviour
         if (other.gameObject.CompareTag("Player") && gameManager.isStarted)
             if (interactionManager.LevelIndex < interactionManager.ineteractionLayerCount)
             {
-                //if (isPlayerOut)
-                //{
-                //    isPlayerOut = false;
+                if (isPlayerOut)
+                {
+                    isPlayerOut = false;
 
                 StartDialogue(interactionManager.LevelIndex);
-                //}
+                }
             }
             else
             {
-                interactionManager.PlayAudio();
+                if (!gameManager.isCompleted)
+                //interactionManager.PlayAudio();
+                interactionManager.DisplayNotice(transitionText);
             }
     }
 
@@ -53,12 +56,12 @@ public class DialogueTrigger : MonoBehaviour
 
             if (interactionManager.LevelIndex < interactionManager.ineteractionLayerCount)
             {
-                //if (!isPlayerOut)
-                //{
+                if (!isPlayerOut)
+                {
                     EndDialogue();
 
-                //    isPlayerOut = true;
-                //}
+                    isPlayerOut = true;
+                }
             }
         }
     }
