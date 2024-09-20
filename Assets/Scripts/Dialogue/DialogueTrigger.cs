@@ -1,12 +1,14 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 public class DialogueTrigger : MonoBehaviour
 {
     public Dialogue[] VO_Text;
     public AudioClip[] VO_Audio;
+    public string transitionText;
 
-    public GameObject dialogueNoticeUI;
-    public GameObject dialogueCanvas;
+    public Image dialogueNoticeUI;
+    public Canvas dialogueCanvas;
     public Transform player;
     public InteractionManager interactionManager;
 
@@ -14,50 +16,55 @@ public class DialogueTrigger : MonoBehaviour
 
     GameManager gameManager;
     DialogueManager dialogueManager;
-    LightingManager lightingManager;
 
     private void Start()
     {
         gameManager = FindAnyObjectByType<GameManager>();
 
-        lightingManager = FindAnyObjectByType<LightingManager>();
-
         dialogueManager = FindAnyObjectByType<DialogueManager>();
-        dialogueCanvas.SetActive(false);
+        dialogueCanvas.enabled = false;
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if 
-        (other.gameObject.CompareTag("Player") && 
-        interactionManager.LevelIndex < interactionManager.ineteractionLayerCount &&
-        gameManager.isStarted)
-            if (isPlayerOut)
+        if (other.gameObject.CompareTag("Player") && gameManager.isStarted && !gameManager.isCompleted)
+            if (interactionManager.LevelIndex < interactionManager.ineteractionLayerCount)
             {
-                isPlayerOut = false;
+                if (isPlayerOut)
+                {
+                    isPlayerOut = false;
 
-                StartDialogue(interactionManager.LevelIndex);
+                    StartDialogue(interactionManager.LevelIndex);
+                }
+            }
+            else
+            {
+                interactionManager.PlayAudio();
+                //interactionManager.DisplayNotice(transitionText);
             }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if 
-        (other.gameObject.CompareTag("Player") && 
-        interactionManager.LevelIndex < interactionManager.ineteractionLayerCount &&
-        gameManager.isStarted)
-            if (!isPlayerOut)
-            {
-                EndDialogue();
-                interactionManager.CleanNotice();
+        if (other.gameObject.CompareTag("Player") && gameManager.isStarted)
+        {
+            interactionManager.CleanNotice();
 
-                isPlayerOut = true;
+            if (interactionManager.LevelIndex < interactionManager.ineteractionLayerCount)
+            {
+                if (!isPlayerOut)
+                {
+                    EndDialogue();
+
+                    isPlayerOut = true;
+                }
             }
+        }
     }
 
     public void StartDialogue(int index)
     {
-        dialogueNoticeUI.SetActive(false);
+        dialogueNoticeUI.enabled = false;
         dialogueManager.StartDialogue(VO_Text[index], dialogueCanvas, VO_Audio[index], interactionManager);
     }
 
@@ -65,14 +72,13 @@ public class DialogueTrigger : MonoBehaviour
     {
         if (interactionManager.LevelIndex < interactionManager.ineteractionLayerCount)
         {
-            dialogueNoticeUI.SetActive(true);
+            dialogueNoticeUI.enabled = true;
             dialogueManager.EndDialogue();
         }
         else
         {
-            dialogueNoticeUI.SetActive(false);
+            dialogueNoticeUI.enabled = false;
             dialogueManager.EndDialogue();
-            lightingManager.LightSwitch_Exit(gameObject.name);
         }
     }
 }

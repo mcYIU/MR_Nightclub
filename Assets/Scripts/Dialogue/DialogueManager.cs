@@ -14,59 +14,53 @@ public class DialogueManager : MonoBehaviour
 
     private float dialogueTime;
     private Queue<string> dialogueQueue;
-    private GameObject dialogueCanvas;
+    private Canvas dialogueCanvas;
     private TextMeshProUGUI dialogueText;
 
-    CharacterTrailController trails;
     InteractionManager interactionManager;
     EndDialogueTrigger finalDialogue;
 
     private void Start()
     {
-        trails = FindAnyObjectByType<CharacterTrailController>();
-
         dialogueQueue = new Queue<string>();
 
         finalText.text = "";
     }
 
-    public void StartDialogue(Dialogue dialogue, GameObject canvas, AudioClip clip, InteractionManager manager)
+    public void StartDialogue(Dialogue _dialogue, Canvas _canvas, AudioClip _audio, InteractionManager _manager)
     {
-        if(trails != null) trails.StopAllTrails();
-
-        if (manager.isNoticed)
+        if (_manager.isNoticed)
         {
-            manager.DisplayNotice(manager.noticeText[manager.LevelIndex]);
+            _manager.DisplayNotice(_manager.noticeText[_manager.LevelIndex]);
             return;
         }
 
-        if (dialogue == null) return;
+        if (_dialogue == null) return;
 
-        interactionManager = manager;
+        interactionManager = _manager;
 
         isPlayCompleted = false;
-        VO.clip = clip;
-        PlayVoiceOver();
+        if (VO != null) VO.PlayOneShot(_audio);
 
-        foreach (string sentence in dialogue.sentences)
+        foreach (string _sentence in _dialogue.sentences)
         {
-            dialogueQueue.Enqueue(sentence);
+            dialogueQueue.Enqueue(_sentence);
         }
-        dialogueCanvas = canvas;
-        dialogueTime = clip.length / dialogue.sentences.Length;
+        dialogueCanvas = _canvas;
+        dialogueTime = _audio.length / _dialogue.sentences.Length;
         NextSentence();
     }
 
     public void StartFinalDialogue(EndDialogueTrigger _endDialogue)
     {
-        if(finalDialogue == null) finalDialogue = _endDialogue;
+        if (finalDialogue == null) finalDialogue = _endDialogue;
 
         if (!finalDialogue.characters[EndDialogueTrigger.dialogueIndex].activeSelf)
             finalDialogue.characters[EndDialogueTrigger.dialogueIndex].SetActive(true);
 
         isPlayCompleted = false;
         VO.clip = finalDialogue.VO_Audio[EndDialogueTrigger.dialogueIndex];
-        PlayVoiceOver();
+        VO.Play();
 
         foreach (string sentence in finalDialogue.VO_Text[EndDialogueTrigger.dialogueIndex].sentences)
         {
@@ -87,7 +81,7 @@ public class DialogueManager : MonoBehaviour
             {
                 EndDialogue();
 
-                if (interactionManager.LevelIndex < interactionManager.ineteractionLayerCount) interactionManager.PlayAudio();
+                interactionManager.PlayAudio();
             }
             else StartCoroutine(Transition());
         }
@@ -105,8 +99,7 @@ public class DialogueManager : MonoBehaviour
         {
             dialogueText = dialogueCanvas.GetComponentInChildren<TextMeshProUGUI>();
             dialogueText.text = "";
-            dialogueCanvas.SetActive(true);
-
+            dialogueCanvas.enabled = true;
             //dialogueText.text += sentence;
 
             int currentIndex = 0;
@@ -115,15 +108,10 @@ public class DialogueManager : MonoBehaviour
             {
                 char currentChar = sentence[currentIndex];
                 if (currentChar == '.')
-                {                   
                     dialogueText.text += "\n";
-                    currentIndex++;
-                }
                 else
-                {
                     dialogueText.text += currentChar;
-                    currentIndex++;
-                }
+                currentIndex++;
             }
         }
         else
@@ -162,7 +150,7 @@ public class DialogueManager : MonoBehaviour
     public void EndDialogue()
     {
         CleanText();
-        PlayVoiceOver();
+        VO.Stop();
     }
 
     private void CleanText()
@@ -171,25 +159,13 @@ public class DialogueManager : MonoBehaviour
         dialogueQueue.Clear();
         if (dialogueCanvas != null)
         {
-            dialogueCanvas.SetActive(false);
+            dialogueCanvas.enabled = false;
             dialogueCanvas = null;
             dialogueText.text = "";
         }
         else
         {
             finalText.text = "";
-        }
-    }
-
-    private void PlayVoiceOver()
-    {
-        if (!VO.isPlaying && !isPlayCompleted)
-        {
-            VO.Play();
-        }
-        else
-        {
-            VO.Stop();
         }
     }
 }

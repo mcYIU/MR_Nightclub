@@ -1,10 +1,12 @@
 ﻿using System.Collections;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
     [HideInInspector] public bool isStarted = false;
+    [HideInInspector] public bool isCompleted = false;
 
     [Header("SceneTrigger")]
     public GameLevelTrigger triggerPoint;
@@ -12,6 +14,9 @@ public class GameManager : MonoBehaviour
     public Animator sceneTransition;
 
     [Header("FinalScene")]
+    public AudioSource NPC_EndAudio;
+    public string endNoticeText;
+    public TextMeshProUGUI endNotice;
     public DialogueManager dialogueManager;
     public InteractionManager[] interactionManagers;
     public AudioSource endSceneMusic;
@@ -20,8 +25,6 @@ public class GameManager : MonoBehaviour
     public OVRPassthroughLayer passthroughLayers;
     public float passThroughFadeDuration;
 
-    //private LightingManager lightingManager;
-    private CharacterTrailController characterTrailController;
     private int completedLevelCount = 0;
 
     private void Awake()
@@ -31,18 +34,14 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        //lightingManager = FindAnyObjectByType<LightingManager>();
-        
-        characterTrailController = FindAnyObjectByType<CharacterTrailController>();
-        if(characterTrailController != null) 
-            characterTrailController.GoToOrigin();
+        endNotice.text = "";
 
-        if(SceneManager.GetActiveScene().buildIndex == SceneManager.sceneCountInBuildSettings - 1)
+        if (SceneManager.GetActiveScene().buildIndex == SceneManager.sceneCountInBuildSettings - 1)
         {
             Debug.Log("End");
             passthroughLayers.textureOpacity = 1;
             endSceneMusic.Stop();
-        }       
+        }
     }
 
     public void CheckGameState()
@@ -59,8 +58,11 @@ public class GameManager : MonoBehaviour
 
         if (completedLevelCount == interactionManagers.Length)
             EndLevel();
-        else
-            characterTrailController.ResetTrails();
+    }
+
+    public void Test()
+    {
+        EndLevel();
     }
 
     public void ChangeToNextScene()
@@ -70,15 +72,34 @@ public class GameManager : MonoBehaviour
 
     private void EndLevel()
     {
-        dialogueManager.EndDialogue();
-        //lightingManager.QuickSwitchOffAll();
+        isCompleted = true;
 
+        dialogueManager.EndDialogue();
         triggerPoint.EnableTriggerPoint();
-        characterTrailController.GoToOrigin();
 
         StartCoroutine(ChangePassThroughOpacity());
 
+        //StartCoroutine(TypeEndNotice(endNoticeText));
         endSceneMusic.Play();
+        if(NPC_EndAudio != null) NPC_EndAudio.Play();    
+    }
+
+    private IEnumerator TypeEndNotice(string _text)
+    {
+        if (endNotice.text != null) endNotice.text = "";
+        int currentIndex = 0;
+
+        while (currentIndex < _text.Length)
+        {
+            char currentChar = _text[currentIndex];
+            if (currentChar == '.')
+                endNotice.text += "\n";
+            else
+                endNotice.text += currentChar;
+            currentIndex++;
+        }
+
+        yield return null;
     }
 
     private IEnumerator ChangePassThroughOpacity()
@@ -100,6 +121,8 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator ChangeScene()
     {
+        endNotice.text = "";
+
         sceneTransition.SetBool("IsEyeClosed", true);
 
         yield return new WaitForSeconds(triggerInterval);

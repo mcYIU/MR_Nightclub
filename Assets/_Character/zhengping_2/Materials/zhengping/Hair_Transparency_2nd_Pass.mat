@@ -94,7 +94,7 @@ Material:
     - _AOStrength: 1
     - _AlphaClip2: 0.666
     - _AlphaCutoff: 0.5
-    - _AlphaPower: 1
+    - _AlphaPower: 0.01
     - _AlphaRemap: 0.75
     - _BaseColorStrength: 1
     - _BlendStrength: 0
@@ -124,21 +124,22 @@ Material:
     - _SmoothnessPower: 1
     - _SpecularMix: 0.5
     - _SpecularMultiplier: 0.18565516
+    - _SpecularPower: 4
     - _SpecularPowerScale: 4
     - _SpecularShiftMax: -0.25
     - _SpecularShiftMin: -0.25
     - _Translucency: 0.25
     - _VertexColorStrength: 0.921
     m_Colors:
-    - _DiffuseColor: {r: 0.99999994, g: 0.99999994, b: 0.99999994, a: 1}
+    - _DiffuseColor: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 1, g: 1, b: 1, a: 1}
     - _EmissiveColor: {r: 0, g: 0, b: 0, a: 0}
-    - _EndColor: {r: 0.44260103, g: 0.417003, b: 0.3892968, a: 1}
-    - _HighlightAColor: {r: 0.52232945, g: 0.38345808, b: 0.2402475, a: 1}
+    - _EndColor: {r: 0.442601, g: 0.41700298, b: 0.38929677, a: 1}
+    - _HighlightAColor: {r: 0.52232945, g: 0.38345805, b: 0.24024746, a: 1}
     - _HighlightADistribution: {r: 0.30630004, g: 0.73960006, b: 0.8184, a: 0}
-    - _HighlightBColor: {r: 0.417003, g: 0.29458886, b: 0.11070206, a: 1}
+    - _HighlightBColor: {r: 0.41700298, g: 0.29458883, b: 0.11070203, a: 1}
     - _HighlightBDistribution: {r: 0.07000001, g: 0.55930007, b: 0.92120004, a: 0}
-    - _RootColor: {r: 0.3025538, g: 0.25983334, b: 0.2402475, a: 1}
-    - _SpecularTint: {r: 1, g: 0.96946937, b: 0.9483352, a: 1}
-    - _VertexBaseColor: {r: 0.2402475, g: 0.20689574, b: 0.19435316, a: 1}
+    - _RootColor: {r: 0.30255377, g: 0.2598333, b: 0.24024746, a: 1}
+    - _SpecularTint: {r: 1, g: 0.96946937, b: 0.9483351, a: 1}
+    - _VertexBaseColor: {r: 0.24024746, g: 0.20689571, b: 0.19435313, a: 1}
   m_BuildTextureStacks: []
