@@ -17,14 +17,11 @@ public class DialogueManager : MonoBehaviour
     private Canvas dialogueCanvas;
     private TextMeshProUGUI dialogueText;
 
-    CharacterTrailController trails;
     InteractionManager interactionManager;
     EndDialogueTrigger finalDialogue;
 
     private void Start()
     {
-        trails = FindAnyObjectByType<CharacterTrailController>();
-
         dialogueQueue = new Queue<string>();
 
         finalText.text = "";
@@ -32,8 +29,6 @@ public class DialogueManager : MonoBehaviour
 
     public void StartDialogue(Dialogue _dialogue, Canvas _canvas, AudioClip _audio, InteractionManager _manager)
     {
-        //if(trails != null) trails.StopAllTrails();
-
         if (_manager.isNoticed)
         {
             _manager.DisplayNotice(_manager.noticeText[_manager.LevelIndex]);
@@ -45,8 +40,7 @@ public class DialogueManager : MonoBehaviour
         interactionManager = _manager;
 
         isPlayCompleted = false;
-        VO.clip = _audio;
-        PlayVoiceOver();
+        if (VO != null) VO.PlayOneShot(_audio);
 
         foreach (string _sentence in _dialogue.sentences)
         {
@@ -66,7 +60,7 @@ public class DialogueManager : MonoBehaviour
 
         isPlayCompleted = false;
         VO.clip = finalDialogue.VO_Audio[EndDialogueTrigger.dialogueIndex];
-        PlayVoiceOver();
+        VO.Play();
 
         foreach (string sentence in finalDialogue.VO_Text[EndDialogueTrigger.dialogueIndex].sentences)
         {
@@ -106,7 +100,6 @@ public class DialogueManager : MonoBehaviour
             dialogueText = dialogueCanvas.GetComponentInChildren<TextMeshProUGUI>();
             dialogueText.text = "";
             dialogueCanvas.enabled = true;
-
             //dialogueText.text += sentence;
 
             int currentIndex = 0;
@@ -157,7 +150,7 @@ public class DialogueManager : MonoBehaviour
     public void EndDialogue()
     {
         CleanText();
-        PlayVoiceOver();
+        VO.Stop();
     }
 
     private void CleanText()
@@ -174,13 +167,5 @@ public class DialogueManager : MonoBehaviour
         {
             finalText.text = "";
         }
-    }
-
-    private void PlayVoiceOver()
-    {
-        if (!VO.isPlaying && !isPlayCompleted)
-            VO.Play();
-        else
-            VO.Stop();
     }
 }

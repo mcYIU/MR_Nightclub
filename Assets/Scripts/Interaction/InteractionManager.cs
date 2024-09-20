@@ -89,16 +89,12 @@ public class InteractionManager : MonoBehaviour
 
     public void PlayAudio()
     {
+        if (audioSource != null && !audioSource.isPlaying) audioSource.PlayOneShot(audioClips[levelIndex]);
+
         if (levelIndex < ineteractionLayerCount)
         {
-            if (audioSource != null) audioSource.PlayOneShot(audioClips[levelIndex]);
-
             float playTime = audioClips[levelIndex].length;
             StartCoroutine(EnableInteraction(playTime));
-        }
-        else
-        {
-            DisplayNotice(dialogueTrigger.transitionText);
         }
     }
 

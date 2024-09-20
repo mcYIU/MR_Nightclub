@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using TMPro;
-using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -15,6 +14,7 @@ public class GameManager : MonoBehaviour
     public Animator sceneTransition;
 
     [Header("FinalScene")]
+    public AudioSource NPC_EndAudio;
     public string endNoticeText;
     public TextMeshProUGUI endNotice;
     public DialogueManager dialogueManager;
@@ -25,8 +25,6 @@ public class GameManager : MonoBehaviour
     public OVRPassthroughLayer passthroughLayers;
     public float passThroughFadeDuration;
 
-    //private LightingManager lightingManager;
-    private CharacterTrailController characterTrailController;
     private int completedLevelCount = 0;
 
     private void Awake()
@@ -36,12 +34,6 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        //lightingManager = FindAnyObjectByType<LightingManager>();
-
-        //characterTrailController = FindAnyObjectByType<CharacterTrailController>();
-        //if(characterTrailController != null) 
-        //    characterTrailController.GoToOrigin();
-
         endNotice.text = "";
 
         if (SceneManager.GetActiveScene().buildIndex == SceneManager.sceneCountInBuildSettings - 1)
@@ -66,8 +58,6 @@ public class GameManager : MonoBehaviour
 
         if (completedLevelCount == interactionManagers.Length)
             EndLevel();
-        // else
-        // characterTrailController.ResetTrails();
     }
 
     public void Test()
@@ -85,13 +75,13 @@ public class GameManager : MonoBehaviour
         isCompleted = true;
 
         dialogueManager.EndDialogue();
-        //lightingManager.QuickSwitchOffAll();
-        //triggerPoint.EnableTriggerPoint();
+        triggerPoint.EnableTriggerPoint();
 
         StartCoroutine(ChangePassThroughOpacity());
 
-        StartCoroutine(TypeEndNotice(endNoticeText));
+        //StartCoroutine(TypeEndNotice(endNoticeText));
         endSceneMusic.Play();
+        if(NPC_EndAudio != null) NPC_EndAudio.Play();    
     }
 
     private IEnumerator TypeEndNotice(string _text)

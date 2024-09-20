@@ -16,13 +16,10 @@ public class DialogueTrigger : MonoBehaviour
 
     GameManager gameManager;
     DialogueManager dialogueManager;
-    LightingManager lightingManager;
 
     private void Start()
     {
         gameManager = FindAnyObjectByType<GameManager>();
-
-        lightingManager = FindAnyObjectByType<LightingManager>();
 
         dialogueManager = FindAnyObjectByType<DialogueManager>();
         dialogueCanvas.enabled = false;
@@ -30,21 +27,20 @@ public class DialogueTrigger : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Player") && gameManager.isStarted)
+        if (other.gameObject.CompareTag("Player") && gameManager.isStarted && !gameManager.isCompleted)
             if (interactionManager.LevelIndex < interactionManager.ineteractionLayerCount)
             {
                 if (isPlayerOut)
                 {
                     isPlayerOut = false;
 
-                StartDialogue(interactionManager.LevelIndex);
+                    StartDialogue(interactionManager.LevelIndex);
                 }
             }
             else
             {
-                if (!gameManager.isCompleted)
-                //interactionManager.PlayAudio();
-                interactionManager.DisplayNotice(transitionText);
+                interactionManager.PlayAudio();
+                //interactionManager.DisplayNotice(transitionText);
             }
     }
 
@@ -83,7 +79,6 @@ public class DialogueTrigger : MonoBehaviour
         {
             dialogueNoticeUI.enabled = false;
             dialogueManager.EndDialogue();
-            //lightingManager.LightSwitch_Exit(gameObject.name);
         }
     }
 }

@@ -3,7 +3,9 @@ using UnityEngine;
 public class GameLevelTrigger : MonoBehaviour
 {
     public ParticleSystem startPoint;
+    public AudioSource particleSound;
     public Animator NPC_Animator;
+    public AudioSource NPC_Wellcome;
 
     private GameManager gameManager;
     private Collider triggerCollider;
@@ -12,6 +14,8 @@ public class GameLevelTrigger : MonoBehaviour
     {
         gameManager = FindAnyObjectByType<GameManager>();
         triggerCollider = GetComponent<Collider>();
+
+        EnableTriggerPoint();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -19,7 +23,7 @@ public class GameLevelTrigger : MonoBehaviour
         if (gameManager.isStarted)
             gameManager.ChangeToNextScene();
         else
-            Debug.Log("Play NPC Anim");
+            NPC_Wellcome.Play();
 
         DisableTriggerPoint();
         if(!gameManager.isStarted) gameManager.isStarted = true;
@@ -28,12 +32,14 @@ public class GameLevelTrigger : MonoBehaviour
     public void EnableTriggerPoint()
     {
         triggerCollider.enabled = true;
-        startPoint.Play();
+        if(startPoint != null) startPoint.Play();
+        if(particleSound != null) particleSound.Play();
     }
 
     private void DisableTriggerPoint()
     {
         triggerCollider.enabled = false;
-        startPoint.Stop();
+        if (startPoint != null) startPoint.Stop();
+        if (particleSound != null) particleSound.Stop();
     }
 }
