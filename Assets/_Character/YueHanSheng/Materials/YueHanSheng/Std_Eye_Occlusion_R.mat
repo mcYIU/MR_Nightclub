@@ -74,7 +74,7 @@ Material:
     m_Colors:
     - _OcclusionColor: {r: 0.045420855, g: 0.0068510403, b: 0.0028026958, a: 1}
   m_BuildTextureStacks: []
---- !u!114 &9020005913141034808
+--- !u!114 &3567972132792738831
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}
