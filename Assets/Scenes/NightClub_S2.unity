@@ -532,15 +532,16 @@ MonoBehaviour:
     - "\u6C92\u7D50\u6C92\u5B8C\u7684\u2026\u2026\u5929\u4E00\u4EAE\uFF0C\u4ED6\u5C31\u7834\u7522\u5566\uFF01"
     - "\u6B64\u523B\u4ED6\u6E34\u671B\u7761\u89BA\uFF0C\u6E34\u671B\u4ED6\u624B\u69CD\u9ED1\u7684\u6D1E\u773C\u3002"
   VO_Audio:
-  - {fileID: 8300000, guid: 93db298bd9b4ca7419306d4d2651c3f6, type: 3}
-  - {fileID: 8300000, guid: f7b566f4511172e4eba958ee6663f0a8, type: 3}
-  - {fileID: 8300000, guid: 990f0d1ebf155e441832d23c031d69da, type: 3}
-  - {fileID: 8300000, guid: 866277dd890f16343be199696089f693, type: 3}
+  - {fileID: 8300000, guid: 5355a964851f446499075f0ccd6de4a6, type: 3}
+  - {fileID: 8300000, guid: 8a480ecaf16b82242872d359f90df26d, type: 3}
+  - {fileID: 8300000, guid: f43eb6efd6e4d8f4dac702814bf9b301, type: 3}
+  - {fileID: 8300000, guid: b0e4a41427837534c8cd037194e59e71, type: 3}
   characters:
   - {fileID: 1620807261}
   - {fileID: 1107418624}
   - {fileID: 1047465952}
   - {fileID: 248189140}
+  changeSceneAudio: {fileID: 8300000, guid: 33ccf0ff129be404d81c167550f55069, type: 3}
 --- !u!4 &214610013
 Transform:
   m_ObjectHideFlags: 0
