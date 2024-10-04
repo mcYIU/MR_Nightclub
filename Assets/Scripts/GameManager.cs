@@ -14,7 +14,7 @@ public class GameManager : MonoBehaviour
     public Animator sceneTransition;
 
     [Header("FinalScene")]
-    public AudioSource NPC_EndAudio;
+    public AudioClip endAudio;
     public string endNoticeText;
     public TextMeshProUGUI endNotice;
     public DialogueManager dialogueManager;
@@ -81,7 +81,7 @@ public class GameManager : MonoBehaviour
 
         //StartCoroutine(TypeEndNotice(endNoticeText));
         endSceneMusic.Play();
-        if(NPC_EndAudio != null) NPC_EndAudio.Play();    
+        if(endAudio != null && dialogueManager.VO != null) dialogueManager.VO.PlayOneShot(endAudio);    
     }
 
     private IEnumerator TypeEndNotice(string _text)
@@ -134,10 +134,6 @@ public class GameManager : MonoBehaviour
         sceneTransition.SetBool("IsEyeClosed", false);
 
         if (SceneManager.GetActiveScene().buildIndex == SceneManager.sceneCountInBuildSettings - 1)
-        {
-            Debug.Log("End");
             passthroughLayers.textureOpacity = 1;
-            endSceneMusic.Stop();
-        }
     }
 }
