@@ -89,13 +89,7 @@ public class InteractionManager : MonoBehaviour
 
     public void PlayAudio()
     {
-        if (audioSource != null && !audioSource.isPlaying) audioSource.PlayOneShot(audioClips[levelIndex]);
-
-        if (levelIndex < ineteractionLayerCount)
-        {
-            float playTime = audioClips[levelIndex].length;
-            StartCoroutine(EnableInteraction(playTime));
-        }
+        StartCoroutine(DelayPlayAudio());
     }
 
     public void DisplayNotice(string noticeText)
@@ -195,6 +189,19 @@ public class InteractionManager : MonoBehaviour
                 break;
             default:
                 break;
+        }
+    }
+
+    private IEnumerator DelayPlayAudio()
+    {
+        yield return new WaitForSeconds(1.0f);
+
+        if (audioSource != null && !audioSource.isPlaying) audioSource.PlayOneShot(audioClips[levelIndex]);
+
+        if (levelIndex < ineteractionLayerCount)
+        {
+            float playTime = audioClips[levelIndex].length;
+            StartCoroutine(EnableInteraction(playTime));
         }
     }
 }
