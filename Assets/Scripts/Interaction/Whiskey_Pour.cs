@@ -6,16 +6,19 @@ public class Whiskey_Pour : MonoBehaviour
     public float pouringAngle;
     public InteractionManager interactionManager;
 
-    private Quaternion bottle_InitialRotation;
+    private Quaternion initialRotation;
     private bool isPouring = false;
     private bool isBottleHeld = false;
+
+    private void Start()
+    {
+        initialRotation = transform.localRotation;
+    }
 
     private void Update()
     {
         if (isBottleHeld)
         {
-            bottle_InitialRotation = transform.localRotation;
-
             bool pourCheck = CalculatePourAngle() > pouringAngle;
             if (isPouring != pourCheck)
             {
@@ -48,7 +51,7 @@ public class Whiskey_Pour : MonoBehaviour
 
     private float CalculatePourAngle()
     {
-        return Quaternion.Angle(bottle_InitialRotation, transform.localRotation);
+        return Quaternion.Angle(initialRotation, transform.rotation);
     }
 
     public void ChangeLevelIndex()
