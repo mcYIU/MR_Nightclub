@@ -129,11 +129,11 @@ public class GameManager : MonoBehaviour
 
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
 
+        if (SceneManager.GetActiveScene().buildIndex == SceneManager.sceneCountInBuildSettings - 1)
+            passthroughLayers.textureOpacity = 1;
+
         yield return new WaitForSeconds(triggerInterval);
 
         sceneTransition.SetBool("IsEyeClosed", false);
-
-        if (SceneManager.GetActiveScene().buildIndex == SceneManager.sceneCountInBuildSettings - 1)
-            passthroughLayers.textureOpacity = 1;
     }
 }

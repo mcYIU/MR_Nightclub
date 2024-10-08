@@ -39285,7 +39285,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fluid: {fileID: 970199397}
-  pouringAngle: 90
+  pouringAngle: 70
   interactionManager: {fileID: 1443209214}
 --- !u!1 &1487590737
 GameObject:
