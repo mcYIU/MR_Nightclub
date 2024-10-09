@@ -2,9 +2,10 @@ using UnityEngine;
 
 public class Whiskey_InGlass : MonoBehaviour
 {
-    public float fillSpeed = 0.1f;
+    public float fillSpeed;
     public Whiskey_Pour whiskeyPour;
-    public AudioSource AS_Pour;
+    public AudioSource audioSource;
+    public Canvas interactionUI;
 
     private Renderer sphereRenderer;
     private float maxHeight;
@@ -16,13 +17,16 @@ public class Whiskey_InGlass : MonoBehaviour
         maxHeight = transform.localScale.y;
         sphereRenderer = GetComponent<Renderer>();
         sphereRenderer.enabled = false;
+
+        interactionUI.enabled = false;
     }
 
     private void OnParticleCollision(GameObject other)
     {
         if(!isPoured && currentHeight != maxHeight)
         {
-            AS_Pour.Play();
+            audioSource.Play();
+            interactionUI.enabled = false;
             isPoured = true;
         }
     }
@@ -44,7 +48,7 @@ public class Whiskey_InGlass : MonoBehaviour
                     whiskeyPour.ChangeLevelIndex();
                 }
 
-                AS_Pour.Stop();
+                audioSource.Stop();
                 isPoured = false;
             }
         }

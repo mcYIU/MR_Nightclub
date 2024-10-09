@@ -7,6 +7,7 @@ public class Candle_Blow : MonoBehaviour
     public int blendshapeIndex;
     public float triggerFloat;
     public AudioSource audioSource;
+    public Canvas interactionUI;
     public InteractionManager interactionManager;
 
     private void OnTriggerStay(Collider other)
@@ -19,6 +20,7 @@ public class Candle_Blow : MonoBehaviour
             if (weightIndex > triggerFloat)
             {
                 audioSource.Play();
+                interactionUI.enabled = false;
                 interactionManager.ChangeLevelIndex(transform.parent.name);
                 gameObject.SetActive(false);
             }

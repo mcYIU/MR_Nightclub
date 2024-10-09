@@ -38,9 +38,10 @@ public class GameManager : MonoBehaviour
 
         if (SceneManager.GetActiveScene().buildIndex == SceneManager.sceneCountInBuildSettings - 1)
         {
-            Debug.Log("End");
-            passthroughLayers.textureOpacity = 1;
-            endSceneMusic.Stop();
+            //if (changeSceneAudio != null && dialogueManager.VO != null)
+            //    dialogueManager.VO.PlayOneShot(changeSceneAudio);
+
+            if (endSceneMusic.isPlaying) endSceneMusic.Stop();
         }
     }
 
@@ -78,10 +79,10 @@ public class GameManager : MonoBehaviour
         triggerPoint.EnableTriggerPoint();
 
         StartCoroutine(ChangePassThroughOpacity());
-
-        //StartCoroutine(TypeEndNotice(endNoticeText));
         endSceneMusic.Play();
-        if(endAudio != null && dialogueManager.VO != null) dialogueManager.VO.PlayOneShot(endAudio);    
+        //StartCoroutine(TypeEndNotice(endNoticeText));
+
+        if (endAudio != null && dialogueManager.VO != null) dialogueManager.VO.PlayOneShot(endAudio);    
     }
 
     private IEnumerator TypeEndNotice(string _text)
@@ -130,7 +131,7 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
 
         if (SceneManager.GetActiveScene().buildIndex == SceneManager.sceneCountInBuildSettings - 1)
-            passthroughLayers.textureOpacity = 1;
+            passthroughLayers.textureOpacity = 1;     
 
         yield return new WaitForSeconds(triggerInterval);
 

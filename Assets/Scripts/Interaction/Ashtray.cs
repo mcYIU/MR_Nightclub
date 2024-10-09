@@ -4,6 +4,7 @@ public class Ashtray : MonoBehaviour
 {
     public GameObject interactionObject;
     public AudioSource audioSource;
+    public Canvas interactionUI;
     public InteractionManager interactionManager;
 
     string interactablesName;
@@ -17,6 +18,7 @@ public class Ashtray : MonoBehaviour
     {
         if (collision.collider.gameObject.CompareTag("Fracture"))
         {
+            interactionUI.enabled = false;
             audioSource.Play();
             interactionManager.ChangeLevelIndex(interactablesName);
         }
