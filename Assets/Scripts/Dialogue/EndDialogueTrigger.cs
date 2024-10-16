@@ -15,8 +15,8 @@ public class EndDialogueTrigger : MonoBehaviour
 
     private void Start()
     {
-        dialogueManager = FindAnyObjectByType<DialogueManager>();
-        gameManager = FindAnyObjectByType<GameManager>();
+        dialogueManager = FindObjectOfType<DialogueManager>();
+        gameManager = FindObjectOfType<GameManager>();
 
         if (dialogueManager != null) Invoke("StartDialogue", startTime);
     }
