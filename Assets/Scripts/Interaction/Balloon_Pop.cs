@@ -8,7 +8,7 @@ public class Balloon_Pop : MonoBehaviour
     {
         Destroy(gameObject);
 
-        if(interactionManager != null && interactionManager.LevelIndex < interactionManager.ineteractionLayerCount)
+        if(interactionManager != null && interactionManager.LevelIndex == 0)
             interactionManager.ChangeLevelIndex(gameObject.name);
     }
 }

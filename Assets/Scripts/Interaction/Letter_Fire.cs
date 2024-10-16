@@ -9,6 +9,7 @@ public class Letter_Fire : MonoBehaviour
     public string alphaClipPropertyName = "_Cutoff";
     public float targetAlphaThreshold = 1.0f;
     public AudioSource fireSFX;
+    public Canvas interactionUI;
 
     private Renderer objectRenderer;
     private float initialAlphaThreshold;
@@ -34,6 +35,7 @@ public class Letter_Fire : MonoBehaviour
         if (other.gameObject.TryGetComponent<Match_Fire>(out Match_Fire fire))
             if (fire.isFired && !isLighted)
             {
+                interactionUI.enabled = false;
                 StartCoroutine(Burn(fire));
                 isLighted = true;
             }

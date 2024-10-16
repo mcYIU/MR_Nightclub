@@ -24,13 +24,14 @@ public class GameLevelTrigger : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (gameManager.isStarted) 
-            gameManager.ChangeToNextScene();
+        if (gameManager.isStarted) gameManager.ChangeToNextScene();
         else
+        {
             StartFirstScene();
+            gameManager.isStarted = true;
+        }
 
         DisableTriggerPoint();
-        if(!gameManager.isStarted) gameManager.isStarted = true;
     }
 
     private void StartFirstScene()

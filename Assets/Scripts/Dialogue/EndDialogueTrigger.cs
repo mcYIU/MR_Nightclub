@@ -11,26 +11,24 @@ public class EndDialogueTrigger : MonoBehaviour
 
     DialogueManager dialogueManager;
     GameManager gameManager;
-    private float startTime = 2.0f;
+    private float startTime = 3.5f;
 
     private void Start()
     {
-        dialogueManager = FindAnyObjectByType<DialogueManager>();
-        gameManager = FindAnyObjectByType<GameManager>();
+        dialogueManager = FindObjectOfType<DialogueManager>();
+        gameManager = FindObjectOfType<GameManager>();
 
         if (dialogueManager != null) Invoke("StartDialogue", startTime);
     }
 
     public void ChangeToNextScene()
     {
-        if (dialogueManager.VO != null)
+        if (gameManager != null)
         {
             gameManager.endSceneMusic.Stop();
-            dialogueManager.VO.PlayOneShot(changeSceneAudio);
-        }
-
-        if (gameManager != null)
             gameManager.ChangeToNextScene();
+            if (dialogueManager.VO != null) dialogueManager.VO.PlayOneShot(changeSceneAudio);
+        }
     }
 
     private void StartDialogue()

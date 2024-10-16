@@ -10,8 +10,8 @@ public class DialogueManager : MonoBehaviour
     public float dialogueInterval;
     public Animator crossfade;
 
-    [HideInInspector] public bool isPlayCompleted = false;
 
+    //private bool isPlayCompleted = false;
     private float dialogueTime;
     private Queue<string> dialogueQueue;
     private Canvas dialogueCanvas;
@@ -29,17 +29,19 @@ public class DialogueManager : MonoBehaviour
 
     public void StartDialogue(Dialogue _dialogue, Canvas _canvas, AudioClip _audio, InteractionManager _manager)
     {
-        if (_manager.isNoticed)
+        if (_manager != null)
         {
-            _manager.DisplayNotice(_manager.noticeText[_manager.LevelIndex]);
-            return;
+            if (_manager.isNoticed)
+            {
+                _manager.DisplayNotice(_manager.noticeText[_manager.LevelIndex]);
+                return;
+            }
+            interactionManager = _manager;
         }
 
         if (_dialogue == null) return;
 
-        interactionManager = _manager;
-
-        isPlayCompleted = false;
+        //isPlayCompleted = false;
         if (VO != null) VO.PlayOneShot(_audio);
 
         foreach (string _sentence in _dialogue.sentences)
@@ -58,7 +60,7 @@ public class DialogueManager : MonoBehaviour
         if (!finalDialogue.characters[EndDialogueTrigger.dialogueIndex].activeSelf)
             finalDialogue.characters[EndDialogueTrigger.dialogueIndex].SetActive(true);
 
-        isPlayCompleted = false;
+        //isPlayCompleted = false;
         VO.clip = finalDialogue.VO_Audio[EndDialogueTrigger.dialogueIndex];
         VO.Play();
 
@@ -75,15 +77,13 @@ public class DialogueManager : MonoBehaviour
     {
         if (dialogueQueue.Count == 0)
         {
-            isPlayCompleted = true;
+            //isPlayCompleted = true;
+            EndDialogue();
 
             if (interactionManager != null)
-            {
-                EndDialogue();
-
                 interactionManager.PlayAudio();
-            }
-            else StartCoroutine(Transition());
+            else if (finalDialogue != null)
+                StartCoroutine(Transition());
         }
         else
         {
