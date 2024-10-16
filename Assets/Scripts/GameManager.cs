@@ -38,6 +38,7 @@ public class GameManager : MonoBehaviour
 
         if (SceneManager.GetActiveScene().buildIndex == SceneManager.sceneCountInBuildSettings - 1)
         {
+            passthroughLayers.textureOpacity = 1;
             //if (changeSceneAudio != null && dialogueManager.VO != null)
             //    dialogueManager.VO.PlayOneShot(changeSceneAudio);
 
@@ -107,7 +108,7 @@ public class GameManager : MonoBehaviour
     {
         float elapsedTime = 0f;
         float startValue = passthroughLayers.textureOpacity;
-        float endValue = 0f;
+        float endValue = (SceneManager.GetActiveScene().buildIndex == 0) ? 0f : 1f;
 
         while (elapsedTime < passThroughFadeDuration)
         {
@@ -129,9 +130,8 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(triggerInterval);
 
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-
-        if (SceneManager.GetActiveScene().buildIndex == SceneManager.sceneCountInBuildSettings - 1)
-            passthroughLayers.textureOpacity = 1;     
+        
+        StartCoroutine(ChangePassThroughOpacity());
 
         yield return new WaitForSeconds(triggerInterval);
 
