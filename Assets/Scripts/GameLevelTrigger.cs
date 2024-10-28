@@ -3,6 +3,7 @@ using UnityEngine;
 public class GameLevelTrigger : MonoBehaviour
 {
     public ParticleSystem startPoint;
+    public GameObject footUI;
     public GameObject lights;
     public AudioSource particleSound;
     public GameObject NPC;
@@ -16,10 +17,19 @@ public class GameLevelTrigger : MonoBehaviour
         gameManager = FindAnyObjectByType<GameManager>();
         triggerCollider = GetComponent<Collider>();
 
-        if(NPC != null) NPC.SetActive(false);
-        if(lights != null) lights.SetActive(false);
+        if (NPC != null) NPC.SetActive(false);
+        if (lights != null) lights.SetActive(false);
 
         EnableTriggerPoint();
+    }
+
+    private void Update()
+    {
+        if (OVRInput.Get(OVRInput.Button.One))
+        {
+            Debug.Log("Press A");
+            EnableTriggerPoint();
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -46,13 +56,15 @@ public class GameLevelTrigger : MonoBehaviour
     public void EnableTriggerPoint()
     {
         triggerCollider.enabled = true;
-        if(startPoint != null) startPoint.Play();
-        if(particleSound != null) particleSound.Play();
+        if (footUI != null) footUI.SetActive(true);
+        if (startPoint != null) startPoint.Play();
+        if (particleSound != null) particleSound.Play();
     }
 
     private void DisableTriggerPoint()
     {
         triggerCollider.enabled = false;
+        if (footUI != null) footUI.SetActive(false);
         if (startPoint != null) startPoint.Stop();
         if (particleSound != null) particleSound.Stop();
     }
