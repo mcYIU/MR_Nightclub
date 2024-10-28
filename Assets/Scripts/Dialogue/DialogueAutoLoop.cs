@@ -7,9 +7,15 @@ public class DialogueAutoLoop : MonoBehaviour
     public Dialogue dialogue;
     public TextMeshProUGUI TMP;
     public float dialogueTime;
+    public AudioClip changeSceneAudio;
+
+    DialogueManager dialogueManager;
 
     private void Start()
     {
+        dialogueManager = FindObjectOfType<DialogueManager>();
+        if (dialogueManager.VO != null) dialogueManager.VO.PlayOneShot(changeSceneAudio);
+
         PlayDialogue();
     }
 

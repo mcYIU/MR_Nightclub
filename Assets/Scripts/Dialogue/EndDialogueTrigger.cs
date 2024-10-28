@@ -27,7 +27,7 @@ public class EndDialogueTrigger : MonoBehaviour
         {
             gameManager.endSceneMusic.Stop();
             gameManager.ChangeToNextScene();
-            if (dialogueManager.VO != null) dialogueManager.VO.PlayOneShot(changeSceneAudio);
+            //if (dialogueManager.VO != null) dialogueManager.VO.PlayOneShot(changeSceneAudio);
         }
     }
 
