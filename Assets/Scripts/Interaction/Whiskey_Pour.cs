@@ -51,7 +51,7 @@ public class Whiskey_Pour : MonoBehaviour
 
     private float CalculatePourAngle()
     {
-        return Quaternion.Angle(initialRotation, transform.rotation);
+        return Quaternion.Angle(initialRotation, transform.localRotation);
     }
 
     public void ChangeLevelIndex()
