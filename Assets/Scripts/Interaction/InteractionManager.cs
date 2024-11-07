@@ -1,7 +1,7 @@
 using Oculus.Interaction;
 using Oculus.Interaction.HandGrab;
+using System;
 using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -25,16 +25,20 @@ public class InteractionManager : MonoBehaviour
     public TextMeshProUGUI interactionNotice;
     public TextMeshProUGUI endNotice;
     public float noticeDuration;
-    public int ineteractionLayerCount;
     [HideInInspector] public bool isNoticed = false;
 
     [Header("Voiceover")]
     public AudioSource audioSource;
     public AudioClip[] audioClips;
 
+    private string[] interactablesNames_LV1;
+    private string[] interactablesNames_LV2;
+
+    public static int ineteractionLayerCount = 2;
     private int levelIndex = 0;
-    private List<string> interactablesNames_LV1 = new List<string>();
-    private List<string> interactablesNames_LV2 = new List<string>();
+
+    //private List<string> interactablesNames_LV1 = new List<string>();
+    //private List<string> interactablesNames_LV2 = new List<string>();
 
     GameManager gameManager;
     DialogueTrigger dialogueTrigger;
@@ -78,12 +82,14 @@ public class InteractionManager : MonoBehaviour
 
     public void ChangeLevelIndex(string _objName)
     {
-        if (interactablesNames_LV1.Contains(_objName))
+        //if (interactablesNames_LV1.Contains(_objName))
+        if (Array.Exists(interactablesNames_LV1, name => name == _objName))
         {
             LevelIndex = 1;
             Debug.Log(levelIndex);
         }
-        else if (interactablesNames_LV2.Contains(_objName))
+        //else if (interactablesNames_LV2.Contains(_objName))
+        else if (Array.Exists(interactablesNames_LV2, name => name == _objName))
         {
             LevelIndex = 2;
             Debug.Log(levelIndex);
@@ -115,13 +121,32 @@ public class InteractionManager : MonoBehaviour
 
     public void ResetInteraction()
     {
-        interactablesNames_LV1.Clear();
+        DisableUI(interactionUI_LV1);
+
+        if (grabInteractables_LV1.Length > 0 && pokeInteractables_LV1.Length == 0)
+            interactablesNames_LV1 = new string[grabInteractables_LV1.Length];
+        else if (pokeInteractables_LV1.Length > 0 && grabInteractables_LV1.Length == 0)
+            interactablesNames_LV1 = new string[pokeInteractables_LV1.Length];
+        else return;
+        AddandDisableInteractables(grabInteractables_LV1, pokeInteractables_LV1, ref interactablesNames_LV1);
+
+        DisableUI(interactionUI_LV2);
+
+        if (grabInteractables_LV2.Length > 0 && pokeInteractables_LV2.Length == 0)
+            interactablesNames_LV2 = new string[grabInteractables_LV2.Length];
+        else if (pokeInteractables_LV2.Length > 0 && grabInteractables_LV2.Length == 0)
+            interactablesNames_LV2 = new string[pokeInteractables_LV2.Length];
+        else return;
+        AddandDisableInteractables(grabInteractables_LV2, pokeInteractables_LV2, ref interactablesNames_LV2);
+
+
+        /*interactablesNames_LV1.Clear();
         AddandDisableInteractables(grabInteractables_LV1, pokeInteractables_LV1, interactablesNames_LV1);
         DisableUI(interactionUI_LV1);
 
         interactablesNames_LV2.Clear();
         AddandDisableInteractables(grabInteractables_LV2, pokeInteractables_LV2, interactablesNames_LV2);
-        DisableUI(interactionUI_LV2);
+        DisableUI(interactionUI_LV2);*/
     }
 
     public void DisableUI(Canvas[] _interactionUI)
@@ -138,29 +163,36 @@ public class InteractionManager : MonoBehaviour
         while (_currentIndex < _text.Length)
         {
             char _currentChar = _text[_currentIndex];
+
             if (_currentChar == '.')
                 endNotice.text += "\n";
             else
                 endNotice.text += _currentChar;
+
             _currentIndex++;
         }
 
         yield return null;
     }
 
-    private void AddandDisableInteractables(HandGrabInteractable[] _grabObjs, PokeInteractable[] _pokeObjs, List<string> _interactablesNames)
+    //private void AddandDisableInteractables(HandGrabInteractable[] _grabObjs, PokeInteractable[] _pokeObjs, List<string> _interactablesNames)
+    private void AddandDisableInteractables(HandGrabInteractable[] _grabObjs, PokeInteractable[] _pokeObjs, ref string[] _interactablesNames)
     {
+        int _index = 0;
+
         if (_grabObjs.Length > 0)
             foreach (var _obj in _grabObjs)
             {
-                _interactablesNames.Add(_obj.name);
+                //_interactablesNames.Add(_obj.name);
+                _interactablesNames[_index++] = _obj.name;
                 _obj.enabled = false;
             }
 
         if (_pokeObjs.Length > 0)
             foreach (var _obj in _pokeObjs)
             {
-                _interactablesNames.Add(_obj.name);
+                //_interactablesNames.Add(_obj.name);
+                _interactablesNames[_index++] = _obj.name;
                 _obj.enabled = false;
             }
     }

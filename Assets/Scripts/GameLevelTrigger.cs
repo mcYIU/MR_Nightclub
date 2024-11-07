@@ -4,10 +4,10 @@ public class GameLevelTrigger : MonoBehaviour
 {
     public ParticleSystem startPoint;
     public GameObject footUI;
+    public GameObject textUI;
     public GameObject lights;
     public AudioSource particleSound;
     public GameObject NPC;
-    //public Animator NPC_Animator;
 
     private GameManager gameManager;
     private Collider triggerCollider;
@@ -23,22 +23,13 @@ public class GameLevelTrigger : MonoBehaviour
         EnableTriggerPoint();
     }
 
-    private void Update()
-    {
-        if (OVRInput.Get(OVRInput.Button.One))
-        {
-            Debug.Log("Press A");
-            EnableTriggerPoint();
-        }
-    }
-
     private void OnTriggerEnter(Collider other)
     {
-        if (gameManager.isStarted) gameManager.ChangeToNextScene();
+        if (GameManager.isStarted) gameManager.ChangeToNextScene();
         else
         {
             StartFirstScene();
-            gameManager.isStarted = true;
+            GameManager.isStarted = true;
         }
 
         DisableTriggerPoint();
@@ -57,6 +48,7 @@ public class GameLevelTrigger : MonoBehaviour
     {
         triggerCollider.enabled = true;
         if (footUI != null) footUI.SetActive(true);
+        if (textUI != null) textUI.SetActive(true);
         if (startPoint != null) startPoint.Play();
         if (particleSound != null) particleSound.Play();
     }
@@ -65,6 +57,7 @@ public class GameLevelTrigger : MonoBehaviour
     {
         triggerCollider.enabled = false;
         if (footUI != null) footUI.SetActive(false);
+        if (textUI != null) textUI.SetActive(false);
         if (startPoint != null) startPoint.Stop();
         if (particleSound != null) particleSound.Stop();
     }

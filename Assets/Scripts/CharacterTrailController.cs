@@ -18,7 +18,7 @@ public class CharacterTrailController : MonoBehaviour
         {
             characterTrails[i].transform.parent.parent.TryGetComponent<InteractionManager>(out InteractionManager interactionManager);
             // Find the characters who have not finished all the interactions
-            if (interactionManager.LevelIndex < interactionManager.ineteractionLayerCount)
+            if (interactionManager.LevelIndex < InteractionManager.ineteractionLayerCount)
             {
                 StartCoroutine(PlayTrail(characterTrails[i]));
             }

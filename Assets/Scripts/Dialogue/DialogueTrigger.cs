@@ -3,6 +3,8 @@ using UnityEngine.UI;
 
 public class DialogueTrigger : MonoBehaviour
 {
+    [HideInInspector] public bool isPlayerOut = true;
+
     public Dialogue[] VO_Text;
     public AudioClip[] VO_Audio;
     public string transitionText;
@@ -12,23 +14,18 @@ public class DialogueTrigger : MonoBehaviour
     public Transform player;
     public InteractionManager interactionManager;
 
-    [HideInInspector] public bool isPlayerOut = true;
-
-    GameManager gameManager;
     DialogueManager dialogueManager;
 
     private void Start()
     {
-        gameManager = FindAnyObjectByType<GameManager>();
-
         dialogueManager = FindAnyObjectByType<DialogueManager>();
         dialogueCanvas.enabled = false;
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Player") && gameManager.isStarted && !gameManager.isCompleted)
-            if (interactionManager.LevelIndex < interactionManager.ineteractionLayerCount)
+        if (other.gameObject.CompareTag("Player") && GameManager.isStarted && !GameManager.isCompleted)
+            if (interactionManager.LevelIndex < InteractionManager.ineteractionLayerCount)
             {
                 if (isPlayerOut)
                 {
@@ -46,11 +43,11 @@ public class DialogueTrigger : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.CompareTag("Player") && gameManager.isStarted)
+        if (other.gameObject.CompareTag("Player") && GameManager.isStarted && !GameManager.isCompleted)
         {
             interactionManager.CleanNotice();
 
-            if (interactionManager.LevelIndex < interactionManager.ineteractionLayerCount)
+            if (interactionManager.LevelIndex < InteractionManager.ineteractionLayerCount)
             {
                 if (!isPlayerOut)
                 {
@@ -70,7 +67,7 @@ public class DialogueTrigger : MonoBehaviour
 
     public void EndDialogue()
     {
-        if (interactionManager.LevelIndex < interactionManager.ineteractionLayerCount)
+        if (interactionManager.LevelIndex < InteractionManager.ineteractionLayerCount)
         {
             dialogueNoticeUI.enabled = true;
             dialogueManager.EndDialogue();
