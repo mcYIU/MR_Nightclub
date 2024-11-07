@@ -10,9 +10,9 @@ public class DialogueManager : MonoBehaviour
     public float dialogueInterval;
     public Animator crossfade;
 
-
     //private bool isPlayCompleted = false;
     private float dialogueTime;
+    private readonly float defaultSentenceTime = 6.0f;
     private Queue<string> dialogueQueue;
     private Canvas dialogueCanvas;
     private TextMeshProUGUI dialogueText;
@@ -69,7 +69,10 @@ public class DialogueManager : MonoBehaviour
             dialogueQueue.Enqueue(sentence);
         }
         dialogueCanvas = null;
-        dialogueTime = VO.clip.length / finalDialogue.VO_Text[EndDialogueTrigger.dialogueIndex].sentences.Length;
+
+        dialogueTime = (VO.clip != null) ?
+            VO.clip.length / finalDialogue.VO_Text[EndDialogueTrigger.dialogueIndex].sentences.Length : defaultSentenceTime;
+
         NextSentence();
     }
 
@@ -83,7 +86,7 @@ public class DialogueManager : MonoBehaviour
             if (interactionManager != null)
                 interactionManager.PlayAudio();
             else if (finalDialogue != null)
-                StartCoroutine(Transition());
+                StartCoroutine(NextFinalDialogue());
         }
         else
         {
@@ -123,7 +126,7 @@ public class DialogueManager : MonoBehaviour
         NextSentence();
     }
 
-    private IEnumerator Transition()
+    private IEnumerator NextFinalDialogue()
     {
         finalText.text = "";
 
@@ -137,7 +140,7 @@ public class DialogueManager : MonoBehaviour
         crossfade.SetBool("IsEyeClosed", false);
 
         if (EndDialogueTrigger.dialogueIndex == finalDialogue.characters.Length)
-            finalDialogue.ChangeToNextScene();
+            finalDialogue.StartChangeSceneDialogue();
         else
         {
             finalDialogue.characters[EndDialogueTrigger.dialogueIndex].SetActive(true);
@@ -150,7 +153,7 @@ public class DialogueManager : MonoBehaviour
     public void EndDialogue()
     {
         CleanText();
-        VO.Stop();
+        VO.Stop();      
     }
 
     private void CleanText()

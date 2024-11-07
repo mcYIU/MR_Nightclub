@@ -5,25 +5,27 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    [HideInInspector] public bool isStarted = false;
-    [HideInInspector] public bool isCompleted = false;
+    public static bool isStarted = false;
+    public static bool isCompleted = false;
 
-    [Header("SceneTrigger")]
-    public GameLevelTrigger triggerPoint;
-    public float triggerInterval;
-    public Animator sceneTransition;
-
-    [Header("FinalScene")]
-    public AudioSource endAudio;
-    public string endNoticeText;
-    public TextMeshProUGUI endNotice;
-    public DialogueManager dialogueManager;
     public InteractionManager[] interactionManagers;
-    public AudioSource endSceneMusic;
+    public DialogueManager dialogueManager;
+
+    [Header("SceneTransition")]
+    public GameLevelTrigger triggerPoint;
+    public Animator sceneTransition;
+    public float triggerInterval;
+    public string transitionNoticeText;
+    public TextMeshProUGUI transitionNotice;
+    public AudioClip transitionTriggerAudio;
+    public AudioSource transitionMusic;
 
     [Header("Passthrough")]
     public OVRPassthroughLayer passthroughLayers;
     public float passThroughFadeDuration;
+
+    [Header("EndingScene")]
+    public AudioClip welcomeAudio;
 
     private int completedLevelCount = 0;
 
@@ -34,7 +36,7 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        endNotice.text = "";
+        transitionNotice.text = "";
 
         if (SceneManager.GetActiveScene().buildIndex == SceneManager.sceneCountInBuildSettings - 1)
         {
@@ -42,9 +44,18 @@ public class GameManager : MonoBehaviour
             //if (changeSceneAudio != null && dialogueManager.VO != null)
             //    dialogueManager.VO.PlayOneShot(changeSceneAudio);
 
-            if (endSceneMusic.isPlaying) endSceneMusic.Stop();
+            if (transitionMusic.isPlaying) transitionMusic.Stop();
+            if (dialogueManager.VO != null) dialogueManager.VO.PlayOneShot(welcomeAudio);
         }
-    }   
+    }
+    private void Update()
+    {
+        if (OVRInput.GetUp(OVRInput.Button.Two) && SceneManager.GetActiveScene().buildIndex == 0)
+        {
+            Debug.Log("Press B");
+            EndLevel();
+        }
+    }
 
     public void CheckGameState()
     {
@@ -53,7 +64,7 @@ public class GameManager : MonoBehaviour
         if (interactionManagers.Length > 0)
             for (int i = 0; i < interactionManagers.Length; i++)
                 // if all the character's interactions are completed
-                if (interactionManagers[i].LevelIndex == interactionManagers[i].ineteractionLayerCount)
+                if (interactionManagers[i].LevelIndex == InteractionManager.ineteractionLayerCount)
                 {
                     completedLevelCount++;
                 }
@@ -80,24 +91,24 @@ public class GameManager : MonoBehaviour
         triggerPoint.EnableTriggerPoint();
 
         StartCoroutine(ChangePassThroughOpacity());
-        endSceneMusic.Play();
+        transitionMusic.Play();
         //StartCoroutine(TypeEndNotice(endNoticeText));
 
-        if (endAudio != null) endAudio.Play();    
+        if (dialogueManager.VO != null) dialogueManager.VO.PlayOneShot(transitionTriggerAudio);    
     }
 
     private IEnumerator TypeEndNotice(string _text)
     {
-        if (endNotice.text != null) endNotice.text = "";
+        if (transitionNotice.text != null) transitionNotice.text = "";
         int currentIndex = 0;
 
         while (currentIndex < _text.Length)
         {
             char currentChar = _text[currentIndex];
             if (currentChar == '.')
-                endNotice.text += "\n";
+                transitionNotice.text += "\n";
             else
-                endNotice.text += currentChar;
+                transitionNotice.text += currentChar;
             currentIndex++;
         }
 
@@ -123,7 +134,9 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator ChangeScene()
     {
-        endNotice.text = "";
+        if (SceneManager.GetActiveScene().buildIndex == 1) triggerInterval += triggerInterval;
+
+        transitionNotice.text = "";
 
         sceneTransition.SetBool("IsEyeClosed", true);
 
