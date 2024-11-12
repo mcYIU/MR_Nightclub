@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using TMPro;
+using static UnityEngine.ParticleSystem;
 
 public class EndDialogueTrigger : MonoBehaviour
 {
@@ -11,35 +12,41 @@ public class EndDialogueTrigger : MonoBehaviour
     public AudioClip changeSceneAudio;
 
     [Header("Change Scene Dialogue")]
+    public CanvasGroup textCanvasMask;
     public Dialogue dialogue;
     public TextMeshProUGUI TMP;
     public float dialogueTime;
     public ParticleSystem particle;
 
     public static int dialogueIndex = 0;
+
     private readonly float startTime = 3.5f;
-    DialogueManager dialogueManager;
-    GameManager gameManager;
+    private ParticleSystem[] sceneParticles;
+    private DialogueManager dialogueManager;
+    private GameManager gameManager;
 
     private void Start()
     {
         dialogueManager = FindObjectOfType<DialogueManager>();
         gameManager = FindObjectOfType<GameManager>();
 
-        if (TMP != null) TMP.enabled = false;
+        sceneParticles = FindObjectsOfType<ParticleSystem>();
+        if (sceneParticles.Length > 0) foreach (ParticleSystem _particle in sceneParticles) _particle.Stop();
+
+        textCanvasMask.alpha = 0f;
+        //if (TMP != null) TMP.enabled = false;
 
         if (dialogueManager != null) Invoke(nameof(StartDialogue), startTime);
     }
 
     public void StartChangeSceneDialogue()
     {
-        if (particle != null) particle.Play();
+        if (gameManager != null) gameManager.transitionMusic.Stop();
 
-        if(gameManager != null) gameManager.transitionMusic.Stop();
-
-        if (TMP != null) TMP.enabled = true;
-
-        //StartCoroutine(Type());
+        StartCoroutine(Type());
+        //if(gameManager != null) gameManager.transitionMusic.Stop();
+        //if (TMP != null) TMP.enabled = true;
+        //if (particle != null) particle.Play();
         //if (dialogueManager.VO != null) dialogueManager.VO.PlayOneShot(changeSceneAudio);
     }
 
@@ -50,11 +57,17 @@ public class EndDialogueTrigger : MonoBehaviour
 
     private IEnumerator Type()
     {
-        foreach (string _sentence in dialogue.sentences)
-        {
-            TMP.text = _sentence;
-            yield return new WaitForSeconds(dialogueTime);
-        }
+        //foreach (string _sentence in dialogue.sentences)
+        //{
+        //    TMP.text = _sentence;
+        //    yield return new WaitForSeconds(dialogueTime);
+        //}
+
+        textCanvasMask.alpha = 1.0f;
+
+        if(sceneParticles.Length > 0) foreach (ParticleSystem _particle in sceneParticles) _particle.Play();
+
+        yield return new WaitForSeconds(dialogueTime);
 
         gameManager.ChangeToNextScene();
     }

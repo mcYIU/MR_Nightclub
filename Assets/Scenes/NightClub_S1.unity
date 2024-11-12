@@ -9206,7 +9206,6 @@ MonoBehaviour:
   interactionNotice: {fileID: 220664789}
   endNotice: {fileID: 1717322826}
   noticeDuration: 7
-  ineteractionLayerCount: 2
   isNoticed: 0
   audioSource: {fileID: 2006023464}
   audioClips:
@@ -22772,6 +22771,11 @@ PrefabInstance:
       propertyPath: useFixedUpdateForTracking
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3520062402775270882, guid: 2ea7e31559d27fc448bcaf01077d9ac0,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3520062402776910398, guid: 2ea7e31559d27fc448bcaf01077d9ac0,
         type: 3}
       propertyPath: m_HDR
@@ -25936,7 +25940,6 @@ MonoBehaviour:
   interactionNotice: {fileID: 220664789}
   endNotice: {fileID: 1717322826}
   noticeDuration: 7
-  ineteractionLayerCount: 2
   isNoticed: 0
   audioSource: {fileID: 2006023464}
   audioClips:
@@ -36615,7 +36618,7 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1192909189}
   m_Enabled: 1
-  m_Alpha: 0
+  m_Alpha: 1
   m_Interactable: 0
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
@@ -42082,7 +42085,6 @@ MonoBehaviour:
   interactionNotice: {fileID: 220664789}
   endNotice: {fileID: 1717322826}
   noticeDuration: 7
-  ineteractionLayerCount: 2
   isNoticed: 0
   audioSource: {fileID: 2006023464}
   audioClips:
@@ -44804,7 +44806,6 @@ MonoBehaviour:
   interactionNotice: {fileID: 220664789}
   endNotice: {fileID: 1717322826}
   noticeDuration: 7
-  ineteractionLayerCount: 2
   isNoticed: 0
   audioSource: {fileID: 2006023464}
   audioClips:
@@ -59026,7 +59027,6 @@ MonoBehaviour:
   interactionNotice: {fileID: 220664789}
   endNotice: {fileID: 1717322826}
   noticeDuration: 7
-  ineteractionLayerCount: 2
   isNoticed: 0
   audioSource: {fileID: 2006023464}
   audioClips:
