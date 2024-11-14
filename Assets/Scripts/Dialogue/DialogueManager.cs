@@ -61,8 +61,11 @@ public class DialogueManager : MonoBehaviour
             finalDialogue.characters[EndDialogueTrigger.dialogueIndex].SetActive(true);
 
         //isPlayCompleted = false;
-        VO.clip = finalDialogue.VO_Audio[EndDialogueTrigger.dialogueIndex];
-        VO.Play();
+        if (finalDialogue.VO_Audio[EndDialogueTrigger.dialogueIndex] != null)
+        {
+            VO.clip = finalDialogue.VO_Audio[EndDialogueTrigger.dialogueIndex];
+            VO.Play();
+        }
 
         foreach (string sentence in finalDialogue.VO_Text[EndDialogueTrigger.dialogueIndex].sentences)
         {
@@ -153,7 +156,7 @@ public class DialogueManager : MonoBehaviour
     public void EndDialogue()
     {
         CleanText();
-        VO.Stop();      
+        VO.Stop();
     }
 
     private void CleanText()

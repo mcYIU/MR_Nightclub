@@ -45,7 +45,8 @@ public class TextAnimator : MonoBehaviour
             angle += rotationSpeed * Time.deltaTime / 100.0f;
 
             // Floating motion on the y-axis
-            float newY = centerPoint.position.y + Mathf.Sin(Time.time * floatSpeed) * floatHeight;
+            //float newY = centerPoint.position.y + Mathf.Sin(Time.time * floatSpeed) * floatHeight;
+            float newY = floatHeight;
             transform.position = new Vector3(transform.position.x, newY, transform.position.z);
 
             yield return null;

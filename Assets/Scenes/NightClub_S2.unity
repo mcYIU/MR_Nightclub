@@ -720,8 +720,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5914037922799018116, guid: 478bc7087c1d9ae42a3e2b7e02c71d8e,
         type: 3}
+      propertyPath: ShapeModule.type
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5914037922799018116, guid: 478bc7087c1d9ae42a3e2b7e02c71d8e,
+        type: 3}
       propertyPath: ShapeModule.angle
-      value: 10
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5914037922799018116, guid: 478bc7087c1d9ae42a3e2b7e02c71d8e,
         type: 3}
@@ -731,12 +736,12 @@ PrefabInstance:
     - target: {fileID: 5914037922799018116, guid: 478bc7087c1d9ae42a3e2b7e02c71d8e,
         type: 3}
       propertyPath: ShapeModule.radius.value
-      value: 0.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5914037922799018116, guid: 478bc7087c1d9ae42a3e2b7e02c71d8e,
         type: 3}
       propertyPath: ShapeModule.radiusThickness
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5914037922799018117, guid: 478bc7087c1d9ae42a3e2b7e02c71d8e,
         type: 3}
@@ -1391,8 +1396,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5914037922799018116, guid: 478bc7087c1d9ae42a3e2b7e02c71d8e,
         type: 3}
+      propertyPath: ShapeModule.type
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5914037922799018116, guid: 478bc7087c1d9ae42a3e2b7e02c71d8e,
+        type: 3}
       propertyPath: ShapeModule.angle
-      value: 10
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5914037922799018116, guid: 478bc7087c1d9ae42a3e2b7e02c71d8e,
         type: 3}
@@ -1402,12 +1412,12 @@ PrefabInstance:
     - target: {fileID: 5914037922799018116, guid: 478bc7087c1d9ae42a3e2b7e02c71d8e,
         type: 3}
       propertyPath: ShapeModule.radius.value
-      value: 0.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5914037922799018116, guid: 478bc7087c1d9ae42a3e2b7e02c71d8e,
         type: 3}
       propertyPath: ShapeModule.radiusThickness
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5914037922799018117, guid: 478bc7087c1d9ae42a3e2b7e02c71d8e,
         type: 3}
@@ -1740,12 +1750,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   textEffect: {fileID: 2118737713}
   centerPoint: {fileID: 0}
-  minPosYOffset: -0.2
-  maxPosYOffset: -0.4
+  minPosYOffset: 1.3
+  maxPosYOffset: 1.5
   minRadius: 2
   maxRadius: 6
   minRotationSpeed: 20
-  maxRotationSpeed: 30
+  maxRotationSpeed: 40
   minFloatSpeed: 1
   maxFloatSpeed: 2
 --- !u!1001 &487104237
@@ -1867,8 +1877,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5914037922799018116, guid: 478bc7087c1d9ae42a3e2b7e02c71d8e,
         type: 3}
+      propertyPath: ShapeModule.type
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5914037922799018116, guid: 478bc7087c1d9ae42a3e2b7e02c71d8e,
+        type: 3}
       propertyPath: ShapeModule.angle
-      value: 10
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5914037922799018116, guid: 478bc7087c1d9ae42a3e2b7e02c71d8e,
         type: 3}
@@ -1878,12 +1893,12 @@ PrefabInstance:
     - target: {fileID: 5914037922799018116, guid: 478bc7087c1d9ae42a3e2b7e02c71d8e,
         type: 3}
       propertyPath: ShapeModule.radius.value
-      value: 0.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5914037922799018116, guid: 478bc7087c1d9ae42a3e2b7e02c71d8e,
         type: 3}
       propertyPath: ShapeModule.radiusThickness
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5914037922799018117, guid: 478bc7087c1d9ae42a3e2b7e02c71d8e,
         type: 3}
@@ -2457,8 +2472,8 @@ MonoBehaviour:
   maxPosYOffset: 0.3
   minRadius: 2
   maxRadius: 6
-  minRotationSpeed: 25
-  maxRotationSpeed: 35
+  minRotationSpeed: 20
+  maxRotationSpeed: 40
   minFloatSpeed: 1
   maxFloatSpeed: 2
 --- !u!1 &644460171
@@ -2744,12 +2759,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   textEffect: {fileID: 1201444816}
   centerPoint: {fileID: 0}
-  minPosYOffset: 0
-  maxPosYOffset: -0.4
+  minPosYOffset: 0.9
+  maxPosYOffset: 1.1
   minRadius: 2
   maxRadius: 6
-  minRotationSpeed: 25
-  maxRotationSpeed: 35
+  minRotationSpeed: 20
+  maxRotationSpeed: 40
   minFloatSpeed: 0.5
   maxFloatSpeed: 1
 --- !u!1001 &979287738
@@ -3278,8 +3293,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5914037922799018116, guid: 478bc7087c1d9ae42a3e2b7e02c71d8e,
         type: 3}
+      propertyPath: ShapeModule.type
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5914037922799018116, guid: 478bc7087c1d9ae42a3e2b7e02c71d8e,
+        type: 3}
       propertyPath: ShapeModule.angle
-      value: 10
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5914037922799018116, guid: 478bc7087c1d9ae42a3e2b7e02c71d8e,
         type: 3}
@@ -3289,12 +3309,12 @@ PrefabInstance:
     - target: {fileID: 5914037922799018116, guid: 478bc7087c1d9ae42a3e2b7e02c71d8e,
         type: 3}
       propertyPath: ShapeModule.radius.value
-      value: 0.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5914037922799018116, guid: 478bc7087c1d9ae42a3e2b7e02c71d8e,
         type: 3}
       propertyPath: ShapeModule.radiusThickness
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5914037922799018117, guid: 478bc7087c1d9ae42a3e2b7e02c71d8e,
         type: 3}
@@ -3662,12 +3682,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   textEffect: {fileID: 487104239}
   centerPoint: {fileID: 0}
-  minPosYOffset: 0.2
-  maxPosYOffset: 0.4
+  minPosYOffset: 1.5
+  maxPosYOffset: 1.6
   minRadius: 2
   maxRadius: 6
-  minRotationSpeed: 25
-  maxRotationSpeed: 35
+  minRotationSpeed: 20
+  maxRotationSpeed: 40
   minFloatSpeed: 1
   maxFloatSpeed: 2
 --- !u!1001 &1201444814
@@ -3789,8 +3809,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5914037922799018116, guid: 478bc7087c1d9ae42a3e2b7e02c71d8e,
         type: 3}
+      propertyPath: ShapeModule.type
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5914037922799018116, guid: 478bc7087c1d9ae42a3e2b7e02c71d8e,
+        type: 3}
       propertyPath: ShapeModule.angle
-      value: 10
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5914037922799018116, guid: 478bc7087c1d9ae42a3e2b7e02c71d8e,
         type: 3}
@@ -3800,12 +3825,12 @@ PrefabInstance:
     - target: {fileID: 5914037922799018116, guid: 478bc7087c1d9ae42a3e2b7e02c71d8e,
         type: 3}
       propertyPath: ShapeModule.radius.value
-      value: 0.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5914037922799018116, guid: 478bc7087c1d9ae42a3e2b7e02c71d8e,
         type: 3}
       propertyPath: ShapeModule.radiusThickness
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5914037922799018117, guid: 478bc7087c1d9ae42a3e2b7e02c71d8e,
         type: 3}
@@ -4348,8 +4373,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5914037922799018116, guid: 478bc7087c1d9ae42a3e2b7e02c71d8e,
         type: 3}
+      propertyPath: ShapeModule.type
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5914037922799018116, guid: 478bc7087c1d9ae42a3e2b7e02c71d8e,
+        type: 3}
       propertyPath: ShapeModule.angle
-      value: 10
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5914037922799018116, guid: 478bc7087c1d9ae42a3e2b7e02c71d8e,
         type: 3}
@@ -4359,12 +4389,12 @@ PrefabInstance:
     - target: {fileID: 5914037922799018116, guid: 478bc7087c1d9ae42a3e2b7e02c71d8e,
         type: 3}
       propertyPath: ShapeModule.radius.value
-      value: 0.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5914037922799018116, guid: 478bc7087c1d9ae42a3e2b7e02c71d8e,
         type: 3}
       propertyPath: ShapeModule.radiusThickness
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5914037922799018117, guid: 478bc7087c1d9ae42a3e2b7e02c71d8e,
         type: 3}
@@ -5470,11 +5500,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   textEffect: {fileID: 1103812606}
   centerPoint: {fileID: 0}
-  minPosYOffset: 0.1
-  maxPosYOffset: 0.2
+  minPosYOffset: 1
+  maxPosYOffset: 1.2
   minRadius: 2
   maxRadius: 6
-  minRotationSpeed: 20
+  minRotationSpeed: 10
   maxRotationSpeed: 30
   minFloatSpeed: 1
   maxFloatSpeed: 2
@@ -5755,8 +5785,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5914037922799018116, guid: 478bc7087c1d9ae42a3e2b7e02c71d8e,
         type: 3}
+      propertyPath: ShapeModule.type
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5914037922799018116, guid: 478bc7087c1d9ae42a3e2b7e02c71d8e,
+        type: 3}
       propertyPath: ShapeModule.angle
-      value: 10
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5914037922799018116, guid: 478bc7087c1d9ae42a3e2b7e02c71d8e,
         type: 3}
@@ -5766,12 +5801,12 @@ PrefabInstance:
     - target: {fileID: 5914037922799018116, guid: 478bc7087c1d9ae42a3e2b7e02c71d8e,
         type: 3}
       propertyPath: ShapeModule.radius.value
-      value: 0.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5914037922799018116, guid: 478bc7087c1d9ae42a3e2b7e02c71d8e,
         type: 3}
       propertyPath: ShapeModule.radiusThickness
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5914037922799018117, guid: 478bc7087c1d9ae42a3e2b7e02c71d8e,
         type: 3}
@@ -6663,11 +6698,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   textEffect: {fileID: 1448055215}
   centerPoint: {fileID: 0}
-  minPosYOffset: -0.2
-  maxPosYOffset: -0.4
+  minPosYOffset: 1.8
+  maxPosYOffset: 2
   minRadius: 2
   maxRadius: 6
-  minRotationSpeed: 20
+  minRotationSpeed: 10
   maxRotationSpeed: 30
   minFloatSpeed: 1
   maxFloatSpeed: 2
@@ -6842,12 +6877,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   textEffect: {fileID: 1649085166}
   centerPoint: {fileID: 0}
-  minPosYOffset: 0.8
-  maxPosYOffset: 0.6
+  minPosYOffset: 1.6
+  maxPosYOffset: 1.7
   minRadius: 2
   maxRadius: 6
-  minRotationSpeed: 25
-  maxRotationSpeed: 35
+  minRotationSpeed: 20
+  maxRotationSpeed: 40
   minFloatSpeed: 1
   maxFloatSpeed: 2
 --- !u!1 &2031169868
@@ -7015,11 +7050,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   textEffect: {fileID: 411812187}
   centerPoint: {fileID: 0}
-  minPosYOffset: 0.1
-  maxPosYOffset: 0.2
+  minPosYOffset: 0.2
+  maxPosYOffset: 0.5
   minRadius: 2
   maxRadius: 6
-  minRotationSpeed: 20
+  minRotationSpeed: 10
   maxRotationSpeed: 30
   minFloatSpeed: 1
   maxFloatSpeed: 2
@@ -7142,8 +7177,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5914037922799018116, guid: 478bc7087c1d9ae42a3e2b7e02c71d8e,
         type: 3}
+      propertyPath: ShapeModule.type
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5914037922799018116, guid: 478bc7087c1d9ae42a3e2b7e02c71d8e,
+        type: 3}
       propertyPath: ShapeModule.angle
-      value: 10
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5914037922799018116, guid: 478bc7087c1d9ae42a3e2b7e02c71d8e,
         type: 3}
@@ -7153,12 +7193,12 @@ PrefabInstance:
     - target: {fileID: 5914037922799018116, guid: 478bc7087c1d9ae42a3e2b7e02c71d8e,
         type: 3}
       propertyPath: ShapeModule.radius.value
-      value: 0.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5914037922799018116, guid: 478bc7087c1d9ae42a3e2b7e02c71d8e,
         type: 3}
       propertyPath: ShapeModule.radiusThickness
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5914037922799018117, guid: 478bc7087c1d9ae42a3e2b7e02c71d8e,
         type: 3}

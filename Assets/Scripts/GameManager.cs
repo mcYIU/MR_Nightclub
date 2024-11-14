@@ -24,9 +24,6 @@ public class GameManager : MonoBehaviour
     public OVRPassthroughLayer passthroughLayers;
     public float passThroughFadeDuration;
 
-    [Header("EndingScene")]
-    public AudioClip welcomeAudio;
-
     private int completedLevelCount = 0;
 
     private void Awake()
@@ -36,18 +33,9 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        transitionNotice.text = "";
-
-        if (SceneManager.GetActiveScene().buildIndex == SceneManager.sceneCountInBuildSettings - 1)
-        {
-            passthroughLayers.textureOpacity = 1;
-            //if (changeSceneAudio != null && dialogueManager.VO != null)
-            //    dialogueManager.VO.PlayOneShot(changeSceneAudio);
-
-            if (transitionMusic.isPlaying) transitionMusic.Stop();
-            if (dialogueManager.VO != null) dialogueManager.VO.PlayOneShot(welcomeAudio);
-        }
+        transitionNotice.text = null;
     }
+
     private void Update()
     {
         if (OVRInput.GetUp(OVRInput.Button.Two) && SceneManager.GetActiveScene().buildIndex == 0)
@@ -73,11 +61,6 @@ public class GameManager : MonoBehaviour
             EndLevel();
     }
 
-    public void Test()
-    {
-        EndLevel();
-    }
-
     public void ChangeToNextScene()
     {
         StartCoroutine(ChangeScene());
@@ -91,15 +74,16 @@ public class GameManager : MonoBehaviour
         triggerPoint.EnableTriggerPoint();
 
         StartCoroutine(ChangePassThroughOpacity());
-        transitionMusic.Play();
-        //StartCoroutine(TypeEndNotice(endNoticeText));
 
-        if (dialogueManager.VO != null) dialogueManager.VO.PlayOneShot(transitionTriggerAudio);    
+        transitionNotice.text = transitionNoticeText;
+        transitionMusic.Play();
+        if (dialogueManager.VO != null) dialogueManager.VO.PlayOneShot(transitionTriggerAudio);
+        //StartCoroutine(TypeEndNotice(endNoticeText));
     }
 
     private IEnumerator TypeEndNotice(string _text)
     {
-        if (transitionNotice.text != null) transitionNotice.text = "";
+        if (transitionNotice.text != null) transitionNotice.text = null;
         int currentIndex = 0;
 
         while (currentIndex < _text.Length)
@@ -117,34 +101,34 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator ChangePassThroughOpacity()
     {
-        float elapsedTime = 0f;
-        float startValue = passthroughLayers.textureOpacity;
-        float endValue = (SceneManager.GetActiveScene().buildIndex == 0) ? 0f : 1f;
-
-        while (elapsedTime < passThroughFadeDuration)
+        if (SceneManager.GetActiveScene().buildIndex == 0)
         {
-            passthroughLayers.textureOpacity = Mathf.Lerp(startValue, endValue, elapsedTime / passThroughFadeDuration);
+            float _startValue = passthroughLayers.textureOpacity;
+            float _endValue = 0f;
 
-            elapsedTime += Time.deltaTime;
-            yield return null;
+            float _elapsedTime = 0f;
+            while (_elapsedTime < passThroughFadeDuration)
+            {
+                passthroughLayers.textureOpacity = Mathf.Lerp(_startValue, _endValue, _elapsedTime / passThroughFadeDuration);
+
+                _elapsedTime += Time.deltaTime;
+                yield return null;
+            }
+
+            passthroughLayers.textureOpacity = _endValue;
         }
-
-        passthroughLayers.textureOpacity = endValue;
     }
 
     private IEnumerator ChangeScene()
     {
-        if (SceneManager.GetActiveScene().buildIndex == 1) triggerInterval += triggerInterval;
-
-        transitionNotice.text = "";
+        transitionNotice.text = null;
 
         sceneTransition.SetBool("IsEyeClosed", true);
+        //StartCoroutine(ChangePassThroughOpacity());
 
         yield return new WaitForSeconds(triggerInterval);
 
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-        
-        StartCoroutine(ChangePassThroughOpacity());
 
         yield return new WaitForSeconds(triggerInterval);
 

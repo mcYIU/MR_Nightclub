@@ -1,7 +1,6 @@
 using UnityEngine;
 using System.Collections;
 using TMPro;
-using static UnityEngine.ParticleSystem;
 
 public class EndDialogueTrigger : MonoBehaviour
 {
