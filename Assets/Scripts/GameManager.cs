@@ -24,25 +24,39 @@ public class GameManager : MonoBehaviour
     public OVRPassthroughLayer passthroughLayers;
     public float passThroughFadeDuration;
 
+    private static GameManager instance;
+
     private int completedLevelCount = 0;
+    private int gameSceneIndex;
 
     private void Awake()
     {
-        DontDestroyOnLoad(gameObject);
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
     private void Start()
     {
         transitionNotice.text = null;
+
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        gameSceneIndex = scene.buildIndex;
     }
 
     private void Update()
     {
-        if (OVRInput.GetUp(OVRInput.Button.Two) && SceneManager.GetActiveScene().buildIndex == 0)
-        {
-            Debug.Log("Press B");
-            EndLevel();
-        }
+        if (OVRInput.GetUp(OVRInput.Button.Two) && gameSceneIndex == 0) EndLevel();
     }
 
     public void CheckGameState()
@@ -101,7 +115,7 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator ChangePassThroughOpacity()
     {
-        if (SceneManager.GetActiveScene().buildIndex == 0)
+        if (gameSceneIndex == 0)
         {
             float _startValue = passthroughLayers.textureOpacity;
             float _endValue = 0f;
@@ -121,14 +135,15 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator ChangeScene()
     {
+        if (gameSceneIndex != 0) triggerInterval++; 
+
         transitionNotice.text = null;
 
         sceneTransition.SetBool("IsEyeClosed", true);
-        //StartCoroutine(ChangePassThroughOpacity());
 
         yield return new WaitForSeconds(triggerInterval);
 
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        SceneManager.LoadScene(gameSceneIndex + 1);
 
         yield return new WaitForSeconds(triggerInterval);
 

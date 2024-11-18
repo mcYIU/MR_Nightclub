@@ -138,6 +138,7 @@ public class DialogueManager : MonoBehaviour
         yield return new WaitForSeconds(dialogueInterval);
 
         finalDialogue.characters[EndDialogueTrigger.dialogueIndex].SetActive(false);
+
         EndDialogueTrigger.dialogueIndex++;
 
         crossfade.SetBool("IsEyeClosed", false);
