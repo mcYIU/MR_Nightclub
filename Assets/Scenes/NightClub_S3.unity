@@ -5017,7 +5017,7 @@ PrefabInstance:
     - target: {fileID: 8477036197162326196, guid: 49403cce7e5bd7444999d517d7a22fee,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -5.8
+      value: -6.28
       objectReference: {fileID: 0}
     - target: {fileID: 8477036197162326196, guid: 49403cce7e5bd7444999d517d7a22fee,
         type: 3}
@@ -5027,7 +5027,7 @@ PrefabInstance:
     - target: {fileID: 8477036197162326196, guid: 49403cce7e5bd7444999d517d7a22fee,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 8.98
+      value: 3.92
       objectReference: {fileID: 0}
     - target: {fileID: 8477036197162326196, guid: 49403cce7e5bd7444999d517d7a22fee,
         type: 3}
@@ -6034,6 +6034,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Cuple_Talk (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3144553610290309639, guid: 28dce9faca84af741a929c7908745c89,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -34600,7 +34605,7 @@ PrefabInstance:
     - target: {fileID: 4303411816741957218, guid: 1110373b197dd354abe838052e957df3,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 4.91
+      value: 8.71
       objectReference: {fileID: 0}
     - target: {fileID: 4303411816741957218, guid: 1110373b197dd354abe838052e957df3,
         type: 3}
@@ -34610,7 +34615,7 @@ PrefabInstance:
     - target: {fileID: 4303411816741957218, guid: 1110373b197dd354abe838052e957df3,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 9.49
+      value: 3.73
       objectReference: {fileID: 0}
     - target: {fileID: 4303411816741957218, guid: 1110373b197dd354abe838052e957df3,
         type: 3}
@@ -44041,6 +44046,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: DanceCuple_4 (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 275360097292891417, guid: 8adc7805a3e66ea4e92780d62317923e,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 535026320903039391, guid: 8adc7805a3e66ea4e92780d62317923e,
         type: 3}
@@ -55925,6 +55935,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: KissCuple (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 7145671438411070441, guid: aac1f5568a9371f49808e5a5bd6663b7,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -63947,7 +63962,7 @@ PrefabInstance:
     - target: {fileID: 2531038680555466636, guid: aac1f5568a9371f49808e5a5bd6663b7,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.44
+      value: 5.16
       objectReference: {fileID: 0}
     - target: {fileID: 2531038680555466636, guid: aac1f5568a9371f49808e5a5bd6663b7,
         type: 3}
@@ -63957,7 +63972,7 @@ PrefabInstance:
     - target: {fileID: 2531038680555466636, guid: aac1f5568a9371f49808e5a5bd6663b7,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 6.02
+      value: 4.68
       objectReference: {fileID: 0}
     - target: {fileID: 2531038680555466636, guid: aac1f5568a9371f49808e5a5bd6663b7,
         type: 3}
@@ -64365,7 +64380,7 @@ PrefabInstance:
     - target: {fileID: 8477036197162326196, guid: 49403cce7e5bd7444999d517d7a22fee,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 3.33
+      value: 7.02
       objectReference: {fileID: 0}
     - target: {fileID: 8477036197162326196, guid: 49403cce7e5bd7444999d517d7a22fee,
         type: 3}
@@ -64375,7 +64390,7 @@ PrefabInstance:
     - target: {fileID: 8477036197162326196, guid: 49403cce7e5bd7444999d517d7a22fee,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 6.77
+      value: 0.93
       objectReference: {fileID: 0}
     - target: {fileID: 8477036197162326196, guid: 49403cce7e5bd7444999d517d7a22fee,
         type: 3}
@@ -64644,6 +64659,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Cuple_Talk
+      objectReference: {fileID: 0}
+    - target: {fileID: 3144553610290309639, guid: 28dce9faca84af741a929c7908745c89,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -65061,7 +65081,7 @@ PrefabInstance:
     - target: {fileID: 4668697134577558900, guid: 8adc7805a3e66ea4e92780d62317923e,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -2.15
+      value: -3.16
       objectReference: {fileID: 0}
     - target: {fileID: 4668697134577558900, guid: 8adc7805a3e66ea4e92780d62317923e,
         type: 3}
@@ -65071,7 +65091,7 @@ PrefabInstance:
     - target: {fileID: 4668697134577558900, guid: 8adc7805a3e66ea4e92780d62317923e,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 6.62
+      value: 5.56
       objectReference: {fileID: 0}
     - target: {fileID: 4668697134577558900, guid: 8adc7805a3e66ea4e92780d62317923e,
         type: 3}
@@ -65402,7 +65422,7 @@ PrefabInstance:
     - target: {fileID: 4303411816741957218, guid: 1110373b197dd354abe838052e957df3,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -6.06
+      value: -6.54
       objectReference: {fileID: 0}
     - target: {fileID: 4303411816741957218, guid: 1110373b197dd354abe838052e957df3,
         type: 3}
@@ -65412,7 +65432,7 @@ PrefabInstance:
     - target: {fileID: 4303411816741957218, guid: 1110373b197dd354abe838052e957df3,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 5.67
+      value: 1.3600006
       objectReference: {fileID: 0}
     - target: {fileID: 4303411816741957218, guid: 1110373b197dd354abe838052e957df3,
         type: 3}
