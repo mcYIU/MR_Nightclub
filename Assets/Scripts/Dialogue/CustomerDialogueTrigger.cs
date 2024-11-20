@@ -1,16 +1,18 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CustomerDialogueTrigger : MonoBehaviour
 {
     public Dialogue dialogue;
     public Canvas dialogueCanvas;
+    public Image dialogueImage;
     public AudioClip dialogueAudio;
 
-    DialogueManager dialogueManager;
+    private DialogueManager dialogueManager;
 
     private void Start()
     {
-        dialogueCanvas.enabled = false;
+        dialogueImage.enabled = true;
 
         dialogueManager = FindObjectOfType<DialogueManager>();
     }
@@ -19,12 +21,9 @@ public class CustomerDialogueTrigger : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player") && dialogueManager != null)
             if (!dialogueManager.VO.isPlaying)
+            {
+                dialogueImage.enabled = false;
                 dialogueManager.StartDialogue(dialogue, dialogueCanvas, dialogueAudio, null);
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.gameObject.CompareTag("Player") && dialogueManager != null)
-            dialogueManager.EndDialogue();
+            }
     }
 }
