@@ -1750,8 +1750,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   textEffect: {fileID: 2118737713}
   centerPoint: {fileID: 0}
-  minPosYOffset: 1.3
-  maxPosYOffset: 1.5
+  minPosYOffset: 1.6
+  maxPosYOffset: 1.6
   minRadius: 2
   maxRadius: 6
   minRotationSpeed: 20
@@ -2468,7 +2468,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   textEffect: {fileID: 258572929}
   centerPoint: {fileID: 0}
-  minPosYOffset: 0
+  minPosYOffset: 0.3
   maxPosYOffset: 0.3
   minRadius: 2
   maxRadius: 6
@@ -2759,8 +2759,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   textEffect: {fileID: 1201444816}
   centerPoint: {fileID: 0}
-  minPosYOffset: 0.9
-  maxPosYOffset: 1.1
+  minPosYOffset: 1.9
+  maxPosYOffset: 1.9
   minRadius: 2
   maxRadius: 6
   minRotationSpeed: 20
@@ -3682,8 +3682,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   textEffect: {fileID: 487104239}
   centerPoint: {fileID: 0}
-  minPosYOffset: 1.5
-  maxPosYOffset: 1.6
+  minPosYOffset: 1.3
+  maxPosYOffset: 1.3
   minRadius: 2
   maxRadius: 6
   minRotationSpeed: 20
@@ -5501,7 +5501,7 @@ MonoBehaviour:
   textEffect: {fileID: 1103812606}
   centerPoint: {fileID: 0}
   minPosYOffset: 1
-  maxPosYOffset: 1.2
+  maxPosYOffset: 1
   minRadius: 2
   maxRadius: 6
   minRotationSpeed: 10
@@ -6698,8 +6698,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   textEffect: {fileID: 1448055215}
   centerPoint: {fileID: 0}
-  minPosYOffset: 1.8
-  maxPosYOffset: 2
+  minPosYOffset: 2.2
+  maxPosYOffset: 2.2
   minRadius: 2
   maxRadius: 6
   minRotationSpeed: 10
@@ -6877,8 +6877,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   textEffect: {fileID: 1649085166}
   centerPoint: {fileID: 0}
-  minPosYOffset: 1.6
-  maxPosYOffset: 1.7
+  minPosYOffset: 0.7
+  maxPosYOffset: 0.7
   minRadius: 2
   maxRadius: 6
   minRotationSpeed: 20
@@ -7050,8 +7050,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   textEffect: {fileID: 411812187}
   centerPoint: {fileID: 0}
-  minPosYOffset: 0.2
-  maxPosYOffset: 0.5
+  minPosYOffset: 0
+  maxPosYOffset: 0
   minRadius: 2
   maxRadius: 6
   minRotationSpeed: 10
