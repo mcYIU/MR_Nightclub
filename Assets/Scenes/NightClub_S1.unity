@@ -22462,7 +22462,7 @@ MonoBehaviour:
   dialogueManager: {fileID: 1033205019}
   triggerPoint: {fileID: 435156572}
   sceneTransition: {fileID: 1192909192}
-  triggerInterval: 2.5
+  triggerInterval: 3
   transitionNoticeText: "\u56DE\u53BB\u5C0B\u627E\u6A02\u968A\u9818\u73ED\u7D04\u7FF0\u751F\uFF0C\u4ED6\u70BA\u4F60\u6E96\u5099\u4E86\u5C6C\u65BC\u9019\u500B\u661F\u671F\u516D\u7684\u6A02\u66F2\u3002"
   transitionNotice: {fileID: 1717322826}
   transitionTriggerAudio: {fileID: 8300000, guid: e5f37b91fa2e0234183cc711b1b71677,
