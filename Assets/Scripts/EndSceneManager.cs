@@ -25,8 +25,8 @@ public class EndSceneManager : MonoBehaviour
 
         if (dialogueManager.VO != null) dialogueManager.VO.PlayOneShot(welcomeAudio);
 
-        yield return new WaitForSeconds(welcomeAudio.length);
+        //yield return new WaitForSeconds(welcomeAudio.length);
 
-        welcomeCharacter.SetActive(false);
+        //welcomeCharacter.SetActive(false);
     }
 }
