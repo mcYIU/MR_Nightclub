@@ -2,241 +2,212 @@ using Oculus.Interaction;
 using Oculus.Interaction.HandGrab;
 using System;
 using System.Collections;
+using System.Text;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 
-[System.Serializable]
-public class IntEvent : UnityEvent<int> { }
+[Serializable]
+public struct InteractionLayer
+{
+    public HandGrabInteractable[] grabInteractables;
+    public PokeInteractable[] pokeInteractables;
+    public Canvas[] interactionUI;
+    public string[] interactableNames;
+}
+
+[Serializable]
+public class AudioData
+{
+    public AudioSource source;
+    public AudioClip[] clips;
+}
 
 public class InteractionManager : MonoBehaviour
 {
-    [Header("Interactables")]
-    public HandGrabInteractable[] grabInteractables_LV1;
-    public PokeInteractable[] pokeInteractables_LV1;
-    public Canvas[] interactionUI_LV1;
+    [Header("Interaction Layers")]
+    public InteractionLayer[] interactionLayers;
 
-    public HandGrabInteractable[] grabInteractables_LV2;
-    public PokeInteractable[] pokeInteractables_LV2;
-    public Canvas[] interactionUI_LV2;
+    [Header("Notice System")]
+    [SerializeField] public NoticeSystem noticeSystem;
 
-    [Header("Notice")]
-    public string[] noticeText;
-    public TextMeshProUGUI interactionNotice;
-    public TextMeshProUGUI endNotice;
-    public float noticeDuration;
-    [HideInInspector] public bool isNoticed = false;
+    [Header("Audio")]
+    [SerializeField] private AudioData audioData;
 
-    [Header("Voiceover")]
-    public AudioSource audioSource;
-    public AudioClip[] audioClips;
+    private int levelIndex;
+    private DialogueTrigger dialogueTrigger;
 
-    private string[] interactablesNames_LV1;
-    private string[] interactablesNames_LV2;
+    [System.Serializable]
+    public class NoticeSystem
+    {
+        public string[] noticeText;
+        public TextMeshProUGUI interactionNotice;
+        public TextMeshProUGUI endNotice;
+        public float noticeDuration;
+        [HideInInspector] public bool isNoticed;
 
-    public static int ineteractionLayerCount = 2;
-    private int levelIndex = 0;
+        public void Initialize()
+        {
+            interactionNotice.text = string.Empty;
+            endNotice.text = string.Empty;
+            isNoticed = false;
+        }
 
-    //private List<string> interactablesNames_LV1 = new List<string>();
-    //private List<string> interactablesNames_LV2 = new List<string>();
-
-    GameManager gameManager;
-    DialogueTrigger dialogueTrigger;
+        public void CleanNotices()
+        {
+            interactionNotice.text = string.Empty;
+            endNotice.text = string.Empty;
+        }
+    }
 
     public int LevelIndex
     {
-        get { return levelIndex; }
+        get => levelIndex;
         set
         {
-            if (levelIndex != value)
+            if (levelIndex == value) return;
+
+            levelIndex = value;
+            HandleLevelChange();
+        }
+    }
+
+    private void Start()
+    {
+        InitializeComponents();
+        ResetInteraction();
+        noticeSystem.Initialize();
+    }
+
+    private void InitializeComponents()
+    {
+        dialogueTrigger = GetComponent<DialogueTrigger>();
+    }
+
+    public void ChangeLevelIndex(string objName)
+    {
+        for (int i = 0; i < interactionLayers.Length; i++)
+        {
+            if (Array.Exists(interactionLayers[i].interactableNames, name => name == objName))
             {
-                levelIndex = value;
-
-                CleanNotice();
-                isNoticed = false;
-
-                if (value < ineteractionLayerCount)
-                {
-                    dialogueTrigger.StartDialogue(levelIndex);
-                }
-                else
-                {
-                    dialogueTrigger.EndDialogue();
-                    PlayAudio();
-                    gameManager.CheckGameState();
-                }
+                LevelIndex = i + 1;
+                return;
             }
         }
     }
 
-    void Start()
+    private void HandleLevelChange()
     {
-        gameManager = FindAnyObjectByType<GameManager>();
-        dialogueTrigger = GetComponent<DialogueTrigger>();
+        noticeSystem.CleanNotices();
+        noticeSystem.isNoticed = false;
 
-        ResetInteraction();
-
-        interactionNotice.text = "";
-        endNotice.text = "";
-    }
-
-    public void ChangeLevelIndex(string _objName)
-    {
-        //if (interactablesNames_LV1.Contains(_objName))
-        if (Array.Exists(interactablesNames_LV1, name => name == _objName))
+        if (levelIndex < interactionLayers.Length)
         {
-            LevelIndex = 1;
-            Debug.Log(levelIndex);
+            dialogueTrigger.StartDialogue(levelIndex);
         }
-        //else if (interactablesNames_LV2.Contains(_objName))
-        else if (Array.Exists(interactablesNames_LV2, name => name == _objName))
-        {
-            LevelIndex = 2;
-            Debug.Log(levelIndex);
-        }
-    }
-
-    public void PlayAudio()
-    {
-        StartCoroutine(DelayPlayAudio());
-    }
-
-    public void DisplayNotice(string _noticeText)
-    {
-        if (levelIndex < ineteractionLayerCount)
-            interactionNotice.text = _noticeText;
         else
-            StartCoroutine(TypeEndNotice(_noticeText));
-
-        isNoticed = true;
+        {
+            dialogueTrigger.EndDialogue();
+            PlayAudio();
+            GameManager.CheckGameState();
+        }
     }
 
-    public void CleanNotice()
+    public void DisplayNotice(string noticeText)
     {
-        interactionNotice.text = "";
-        endNotice.text = "";
-        audioSource.Stop();
-        StopAllCoroutines();
+        if (levelIndex < interactionLayers.Length)
+        {
+            noticeSystem.interactionNotice.text = noticeText;
+        }
+        else
+        {
+            StartCoroutine(TypeEndNotice(noticeText));
+        }
+        noticeSystem.isNoticed = true;
     }
 
     public void ResetInteraction()
     {
-        DisableUI(interactionUI_LV1);
-
-        if (grabInteractables_LV1.Length > 0 && pokeInteractables_LV1.Length == 0)
-            interactablesNames_LV1 = new string[grabInteractables_LV1.Length];
-        else if (pokeInteractables_LV1.Length > 0 && grabInteractables_LV1.Length == 0)
-            interactablesNames_LV1 = new string[pokeInteractables_LV1.Length];
-        else return;
-        AddandDisableInteractables(grabInteractables_LV1, pokeInteractables_LV1, ref interactablesNames_LV1);
-
-        DisableUI(interactionUI_LV2);
-
-        if (grabInteractables_LV2.Length > 0 && pokeInteractables_LV2.Length == 0)
-            interactablesNames_LV2 = new string[grabInteractables_LV2.Length];
-        else if (pokeInteractables_LV2.Length > 0 && grabInteractables_LV2.Length == 0)
-            interactablesNames_LV2 = new string[pokeInteractables_LV2.Length];
-        else return;
-        AddandDisableInteractables(grabInteractables_LV2, pokeInteractables_LV2, ref interactablesNames_LV2);
-
-
-        /*interactablesNames_LV1.Clear();
-        AddandDisableInteractables(grabInteractables_LV1, pokeInteractables_LV1, interactablesNames_LV1);
-        DisableUI(interactionUI_LV1);
-
-        interactablesNames_LV2.Clear();
-        AddandDisableInteractables(grabInteractables_LV2, pokeInteractables_LV2, interactablesNames_LV2);
-        DisableUI(interactionUI_LV2);*/
-    }
-
-    public void DisableUI(Canvas[] _interactionUI)
-    {
-        if (_interactionUI.Length > 0)
-            foreach (var _icon in _interactionUI)
-                _icon.enabled = false;
-    }
-
-    private IEnumerator TypeEndNotice(string _text)
-    {
-        int _currentIndex = 0;
-
-        while (_currentIndex < _text.Length)
+        foreach (var layer in interactionLayers)
         {
-            char _currentChar = _text[_currentIndex];
+            DisableUI(layer.interactionUI);
+            InitializeInteractableNames(ref layer);
+            DisableInteractables(layer);
+        }
+    }
 
-            if (_currentChar == '.')
-                endNotice.text += "\n";
-            else
-                endNotice.text += _currentChar;
+    private void InitializeInteractableNames(ref InteractionLayer layer)
+    {
+        int totalCount = layer.grabInteractables.Length + layer.pokeInteractables.Length;
+        if (totalCount > 0)
+        {
+            layer.interactableNames = new string[totalCount];
+        }
+    }
 
-            _currentIndex++;
+    private void DisableInteractables(InteractionLayer layer)
+    {
+        int index = 0;
+
+        foreach (var obj in layer.grabInteractables)
+        {
+            layer.interactableNames[index++] = obj.name;
+            obj.enabled = false;
         }
 
-        yield return null;
-    }
-
-    //private void AddandDisableInteractables(HandGrabInteractable[] _grabObjs, PokeInteractable[] _pokeObjs, List<string> _interactablesNames)
-    private void AddandDisableInteractables(HandGrabInteractable[] _grabObjs, PokeInteractable[] _pokeObjs, ref string[] _interactablesNames)
-    {
-        int _index = 0;
-
-        if (_grabObjs.Length > 0)
-            foreach (var _obj in _grabObjs)
-            {
-                //_interactablesNames.Add(_obj.name);
-                _interactablesNames[_index++] = _obj.name;
-                _obj.enabled = false;
-            }
-
-        if (_pokeObjs.Length > 0)
-            foreach (var _obj in _pokeObjs)
-            {
-                //_interactablesNames.Add(_obj.name);
-                _interactablesNames[_index++] = _obj.name;
-                _obj.enabled = false;
-            }
-    }
-
-    private void EnableGrabInteractables(HandGrabInteractable[] _interactables, Canvas[] _interactionUI)
-    {
-        if (_interactables.Length > 0)
-            foreach (var _interactable in _interactables)
-                _interactable.enabled = true;
-
-        if (_interactionUI.Length > 0)
-            foreach (var _icon in _interactionUI)
-                _icon.enabled = true;
-    }
-
-    private void EnablePokeInteractables(PokeInteractable[] _interactables, Canvas[] _interactionUI)
-    {
-        if (_interactables.Length > 0)
-            foreach (var _interactable in _interactables)
-                _interactable.enabled = true;
-
-        if (_interactionUI.Length > 0)
-            foreach (var _icon in _interactionUI)
-                _icon.enabled = true;
-    }
-
-    private IEnumerator EnableInteraction(float _intervalDuration)
-    {
-        yield return new WaitForSeconds(_intervalDuration);
-
-        DisplayNotice(noticeText[levelIndex]);
-
-        switch (levelIndex)
+        foreach (var obj in layer.pokeInteractables)
         {
-            case 0:
-                EnableGrabInteractables(grabInteractables_LV1, interactionUI_LV1);
-                EnablePokeInteractables(pokeInteractables_LV1, interactionUI_LV1);
-                break;
-            case 1:
-                EnableGrabInteractables(grabInteractables_LV2, interactionUI_LV2);
-                EnablePokeInteractables(pokeInteractables_LV2, interactionUI_LV2);
-                break;
-            default:
-                break;
+            layer.interactableNames[index++] = obj.name;
+            obj.enabled = false;
+        }
+    }
+
+    private void EnableInteractables(InteractionLayer layer)
+    {
+        foreach (var interactable in layer.grabInteractables)
+        {
+            interactable.enabled = true;
+        }
+
+        foreach (var interactable in layer.pokeInteractables)
+        {
+            interactable.enabled = true;
+        }
+
+        foreach (var ui in layer.interactionUI)
+        {
+            ui.enabled = true;
+        }
+    }
+
+    private IEnumerator TypeEndNotice(string text)
+    {
+        StringBuilder builder = new StringBuilder();
+
+        foreach (char c in text)
+        {
+            if (c == '.')
+            {
+                builder.Append('\n');
+            }
+            else
+            {
+                builder.Append(c);
+            }
+            noticeSystem.endNotice.text = builder.ToString();
+            yield return null;
+        }
+    }
+
+    private IEnumerator EnableInteraction(float intervalDuration)
+    {
+        yield return new WaitForSeconds(intervalDuration);
+
+        DisplayNotice(noticeSystem.noticeText[levelIndex]);
+
+        if (levelIndex < interactionLayers.Length)
+        {
+            EnableInteractables(interactionLayers[levelIndex]);
         }
     }
 
@@ -244,12 +215,32 @@ public class InteractionManager : MonoBehaviour
     {
         yield return new WaitForSeconds(1.0f);
 
-        if (audioSource != null && !audioSource.isPlaying) audioSource.PlayOneShot(audioClips[levelIndex]);
-
-        if (levelIndex < ineteractionLayerCount)
+        if (audioData.source != null && !audioData.source.isPlaying)
         {
-            float _playTime = audioClips[levelIndex].length;
-            StartCoroutine(EnableInteraction(_playTime));
+            audioData.source.PlayOneShot(audioData.clips[levelIndex]);
         }
+
+        if (levelIndex < interactionLayers.Length)
+        {
+            float playTime = audioData.clips[levelIndex].length;
+            StartCoroutine(EnableInteraction(playTime));
+        }
+    }
+
+    private void DisableUI(Canvas[] interactionUI)
+    {
+        foreach (var icon in interactionUI)
+        {
+            icon.enabled = false;
+        }
+    }
+
+    public void PlayAudio() => StartCoroutine(DelayPlayAudio());
+
+    public void CleanNotice()
+    {
+        noticeSystem.CleanNotices();
+        audioData.source.Stop();
+        StopAllCoroutines();
     }
 }
