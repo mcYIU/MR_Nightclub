@@ -5,44 +5,56 @@ using UnityEngine;
 
 public class DialogueManager : MonoBehaviour
 {
+    public static DialogueManager instance;
+
     public AudioSource VO;
     public TextMeshProUGUI finalText;
-    public float dialogueInterval;
-    public Animator crossfade;
+    [SerializeField] private float dialogueInterval;
+    [SerializeField] private Animator crossfade;
 
-    //private bool isPlayCompleted = false;
-    private float dialogueTime;
+    private static float dialogueTime;
     private readonly float defaultSentenceTime = 6.0f;
-    private Queue<string> dialogueQueue;
-    private Canvas dialogueCanvas;
-    private TextMeshProUGUI dialogueText;
+    private static Queue<string> dialogueQueue;
+    private static Canvas dialogueCanvas;
+    private static TextMeshProUGUI dialogueText;
 
     InteractionManager interactionManager;
     EndDialogueTrigger finalDialogue;
+
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
 
     private void Start()
     {
         dialogueQueue = new Queue<string>();
 
-        finalText.text = "";
+        instance.finalText.text = null;
     }
 
-    public void StartDialogue(Dialogue _dialogue, Canvas _canvas, AudioClip _audio, InteractionManager _manager)
+    public static void StartDialogue(Dialogue _dialogue, Canvas _canvas, AudioClip _audio, InteractionManager _manager)
     {
         if (_manager != null)
         {
-            if (_manager.isNoticed)
+            if (_manager.noticeSystem.isNoticed)
             {
-                _manager.DisplayNotice(_manager.noticeText[_manager.LevelIndex]);
+                _manager.DisplayNotice(_manager.noticeSystem.noticeText[_manager.LevelIndex]);
                 return;
             }
-            interactionManager = _manager;
+            instance.interactionManager = _manager;
         }
 
         if (_dialogue == null) return;
 
-        //isPlayCompleted = false;
-        if (VO != null) VO.PlayOneShot(_audio);
+        if (instance.VO != null) instance.VO.PlayOneShot(_audio);
 
         foreach (string _sentence in _dialogue.sentences)
         {
@@ -79,34 +91,32 @@ public class DialogueManager : MonoBehaviour
         NextSentence();
     }
 
-    public void NextSentence()
+    private static void NextSentence()
     {
         if (dialogueQueue.Count == 0)
         {
-            //isPlayCompleted = true;
             EndDialogue();
 
-            if (interactionManager != null)
-                interactionManager.PlayAudio();
-            else if (finalDialogue != null)
-                StartCoroutine(NextFinalDialogue());
+            if (instance.interactionManager != null)
+                instance.interactionManager.PlayAudio();
+            else if (instance.finalDialogue != null)
+                instance.StartCoroutine(instance.NextFinalDialogue());
         }
         else
         {
             string sentence = dialogueQueue.Dequeue();
-            StopAllCoroutines();
-            StartCoroutine(Type(sentence));
+            instance.StopAllCoroutines();
+            instance.StartCoroutine(Type(sentence));
         }
     }
 
-    private IEnumerator Type(string sentence)
+    private static IEnumerator Type(string sentence)
     {
         if (dialogueCanvas != null)
         {
             dialogueText = dialogueCanvas.GetComponentInChildren<TextMeshProUGUI>();
             dialogueText.text = "";
             dialogueCanvas.enabled = true;
-            //dialogueText.text += sentence;
 
             int currentIndex = 0;
 
@@ -122,7 +132,7 @@ public class DialogueManager : MonoBehaviour
         }
         else
         {
-            finalText.text = sentence;
+            instance.finalText.text = sentence;
         }
 
         yield return new WaitForSeconds(dialogueTime);
@@ -154,15 +164,15 @@ public class DialogueManager : MonoBehaviour
         }
     }
 
-    public void EndDialogue()
+    public static void EndDialogue()
     {
         CleanText();
-        VO.Stop();
+        instance.VO.Stop();
     }
 
-    private void CleanText()
+    private static void CleanText()
     {
-        StopAllCoroutines();
+        instance.StopAllCoroutines();
         dialogueQueue.Clear();
         if (dialogueCanvas != null)
         {
@@ -172,7 +182,7 @@ public class DialogueManager : MonoBehaviour
         }
         else
         {
-            finalText.text = "";
+            instance.finalText.text = null;
         }
     }
 }
