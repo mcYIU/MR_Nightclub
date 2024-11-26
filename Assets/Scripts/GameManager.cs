@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    public static GameManager Instance;
     public static bool isStarted = false;
     public static bool isCompleted = false;
 
@@ -49,7 +50,28 @@ public class GameManager : MonoBehaviour
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
-    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    public static void CheckGameState()
+    {
+        float completedLevelCount = 0;
+
+        if (instance.interactionManagers.Length > 0)
+            for (int i = 0; i < instance.interactionManagers.Length; i++)
+                // if all the character's interactions are completed
+                if (instance.interactionManagers[i].LevelIndex == instance.interactionManagers[i].interactionLayers.Length)
+                {
+                    completedLevelCount++;
+                }
+
+        if (completedLevelCount == instance.interactionManagers.Length)
+            EndLevel();
+    }
+
+    public void ChangeToNextScene()
+    {
+        StartCoroutine(ChangeScene());
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         gameSceneIndex = scene.buildIndex;
     }
@@ -59,28 +81,7 @@ public class GameManager : MonoBehaviour
         if (OVRInput.GetUp(OVRInput.Button.Two) && gameSceneIndex == 0) EndLevel();
     }
 
-    public void CheckGameState()
-    {
-        completedLevelCount = 0;
-
-        if (interactionManagers.Length > 0)
-            for (int i = 0; i < interactionManagers.Length; i++)
-                // if all the character's interactions are completed
-                if (interactionManagers[i].LevelIndex == InteractionManager.ineteractionLayerCount)
-                {
-                    completedLevelCount++;
-                }
-
-        if (completedLevelCount == interactionManagers.Length)
-            EndLevel();
-    }
-
-    public void ChangeToNextScene()
-    {
-        StartCoroutine(ChangeScene());
-    }
-
-    private void EndLevel()
+    private static void EndLevel()
     {
         isCompleted = true;
 
