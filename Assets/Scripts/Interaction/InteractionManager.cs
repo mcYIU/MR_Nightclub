@@ -1,49 +1,30 @@
-using Oculus.Interaction;
-using Oculus.Interaction.HandGrab;
 using System;
 using System.Collections;
 using System.Text;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Events;
 
 [Serializable]
 public struct InteractionLayer
 {
-    public HandGrabInteractable[] grabInteractables;
-    public PokeInteractable[] pokeInteractables;
-    public Canvas[] interactionUI;
-    public string[] interactableNames;
-}
-
-[Serializable]
-public class AudioData
-{
-    public AudioSource source;
-    public AudioClip[] clips;
+    public Interactable[] interactables;
+    public Canvas[] UI;
+    public string noticeText;
 }
 
 public class InteractionManager : MonoBehaviour
 {
-    [Header("Interaction Layers")]
     public InteractionLayer[] interactionLayers;
-
-    [Header("Notice System")]
     [SerializeField] public NoticeSystem noticeSystem;
-
-    [Header("Audio")]
-    [SerializeField] private AudioData audioData;
+    [SerializeField] private DialogueTrigger dialogueTrigger;
 
     private int levelIndex;
-    private DialogueTrigger dialogueTrigger;
 
     [System.Serializable]
     public class NoticeSystem
     {
-        public string[] noticeText;
         public TextMeshProUGUI interactionNotice;
         public TextMeshProUGUI endNotice;
-        public float noticeDuration;
         [HideInInspector] public bool isNoticed;
 
         public void Initialize()
@@ -74,26 +55,13 @@ public class InteractionManager : MonoBehaviour
 
     private void Start()
     {
-        InitializeComponents();
         ResetInteraction();
         noticeSystem.Initialize();
     }
 
-    private void InitializeComponents()
+    public void ChangeLevelIndex(int index)
     {
-        dialogueTrigger = GetComponent<DialogueTrigger>();
-    }
-
-    public void ChangeLevelIndex(string objName)
-    {
-        for (int i = 0; i < interactionLayers.Length; i++)
-        {
-            if (Array.Exists(interactionLayers[i].interactableNames, name => name == objName))
-            {
-                LevelIndex = i + 1;
-                return;
-            }
-        }
+        LevelIndex = index;
     }
 
     private void HandleLevelChange()
@@ -108,75 +76,52 @@ public class InteractionManager : MonoBehaviour
         else
         {
             dialogueTrigger.EndDialogue();
-            PlayAudio();
             GameManager.CheckGameState();
         }
     }
 
-    public void DisplayNotice(string noticeText)
+    public void DisplayNotice()
     {
         if (levelIndex < interactionLayers.Length)
         {
-            noticeSystem.interactionNotice.text = noticeText;
+            noticeSystem.interactionNotice.text = interactionLayers[levelIndex].noticeText;
+            noticeSystem.isNoticed = true;
+
+            foreach (var canvas in interactionLayers[levelIndex].UI)
+            {
+                SetUI(canvas, true);
+            }
         }
-        else
-        {
-            StartCoroutine(TypeEndNotice(noticeText));
-        }
-        noticeSystem.isNoticed = true;
     }
 
     public void ResetInteraction()
     {
-        foreach (var layer in interactionLayers)
+        for (int i = 0; i < interactionLayers.Length; i++)
         {
-            DisableUI(layer.interactionUI);
-            InitializeInteractableNames(ref layer);
-            DisableInteractables(layer);
+            foreach (var interactable in interactionLayers[i].interactables)
+            {
+                interactable.SetInteraction(false);
+                interactable.SetInteractionLevel(i);
+            }
+        }
+
+    }
+
+    public void EnableInteraction()
+    {
+        DisplayNotice();
+
+        if (levelIndex < interactionLayers.Length)
+        {
+            EnableInteractables(levelIndex);
         }
     }
 
-    private void InitializeInteractableNames(ref InteractionLayer layer)
+    private void EnableInteractables(int levelIndex)
     {
-        int totalCount = layer.grabInteractables.Length + layer.pokeInteractables.Length;
-        if (totalCount > 0)
+        foreach (var interactable in interactionLayers[levelIndex].interactables)
         {
-            layer.interactableNames = new string[totalCount];
-        }
-    }
-
-    private void DisableInteractables(InteractionLayer layer)
-    {
-        int index = 0;
-
-        foreach (var obj in layer.grabInteractables)
-        {
-            layer.interactableNames[index++] = obj.name;
-            obj.enabled = false;
-        }
-
-        foreach (var obj in layer.pokeInteractables)
-        {
-            layer.interactableNames[index++] = obj.name;
-            obj.enabled = false;
-        }
-    }
-
-    private void EnableInteractables(InteractionLayer layer)
-    {
-        foreach (var interactable in layer.grabInteractables)
-        {
-            interactable.enabled = true;
-        }
-
-        foreach (var interactable in layer.pokeInteractables)
-        {
-            interactable.enabled = true;
-        }
-
-        foreach (var ui in layer.interactionUI)
-        {
-            ui.enabled = true;
+            interactable.SetInteraction(true);
         }
     }
 
@@ -199,48 +144,15 @@ public class InteractionManager : MonoBehaviour
         }
     }
 
-    private IEnumerator EnableInteraction(float intervalDuration)
-    {
-        yield return new WaitForSeconds(intervalDuration);
-
-        DisplayNotice(noticeSystem.noticeText[levelIndex]);
-
-        if (levelIndex < interactionLayers.Length)
-        {
-            EnableInteractables(interactionLayers[levelIndex]);
-        }
-    }
-
-    private IEnumerator DelayPlayAudio()
-    {
-        yield return new WaitForSeconds(1.0f);
-
-        if (audioData.source != null && !audioData.source.isPlaying)
-        {
-            audioData.source.PlayOneShot(audioData.clips[levelIndex]);
-        }
-
-        if (levelIndex < interactionLayers.Length)
-        {
-            float playTime = audioData.clips[levelIndex].length;
-            StartCoroutine(EnableInteraction(playTime));
-        }
-    }
-
-    private void DisableUI(Canvas[] interactionUI)
-    {
-        foreach (var icon in interactionUI)
-        {
-            icon.enabled = false;
-        }
-    }
-
-    public void PlayAudio() => StartCoroutine(DelayPlayAudio());
-
-    public void CleanNotice()
+    public void CleanInteraction()
     {
         noticeSystem.CleanNotices();
-        audioData.source.Stop();
+
+        foreach (var interactable in interactionLayers[levelIndex--].interactables)
+        {
+            interactable.SetUI(false);
+        }
+
         StopAllCoroutines();
     }
 }
