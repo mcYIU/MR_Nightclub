@@ -3,13 +3,12 @@ using UnityEngine;
 
 public class Letter_Fire : MonoBehaviour
 {
-    public ParticleSystem fireVFX;
-    public float burningDuration;
-    public float burningDelay;
-    public string alphaClipPropertyName = "_Cutoff";
-    public float targetAlphaThreshold = 1.0f;
-    public AudioSource fireSFX;
-    public Canvas interactionUI;
+    [SerializeField] private ParticleSystem fire;
+    [SerializeField] private float burningDuration;
+    [SerializeField] private float burningDelay;
+    [SerializeField] private string alphaClipPropertyName = "_Cutoff";
+    [SerializeField] private float targetAlphaThreshold = 1.0f;
+    [SerializeField] private AudioClip SFX;
 
     private Renderer objectRenderer;
     private float initialAlphaThreshold;
@@ -26,19 +25,24 @@ public class Letter_Fire : MonoBehaviour
             initialColor = objectRenderer.material.color;
             initialAlphaThreshold = objectRenderer.material.GetFloat(alphaClipPropertyName);
         }  
-
-        fireVFX.Stop();
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.TryGetComponent<Match_Fire>(out Match_Fire fire))
-            if (fire.isFired && !isLighted)
+        if (other.gameObject.TryGetComponent<Match_Fire>(out Match_Fire matchFire))
+        {
+            if (matchFire.fireInstance != null && !isLighted)
             {
-                interactionUI.enabled = false;
-                StartCoroutine(Burn(fire));
-                isLighted = true;
+                Fire(matchFire);
             }
+        }
+    }
+
+    private void Fire(Match_Fire matchFire)
+    {
+        isLighted = true;
+        matchFire.OverideInteractionUI(false);
+        StartCoroutine(Burn(matchFire));
     }
 
     private IEnumerator FadeToAsh()
@@ -65,16 +69,17 @@ public class Letter_Fire : MonoBehaviour
         objectRenderer.material.SetFloat(alphaClipPropertyName, targetAlphaThreshold);
     }
 
-    private IEnumerator Burn(Match_Fire fire)
+    private IEnumerator Burn(Match_Fire _fire)
     {
-        fireVFX.Play();
-        fireSFX.Play();
+        fire.Play();
+        SoundEffectManager.PlaySFXLoop(SFX);
         StartCoroutine(FadeToAsh());
 
         yield return new WaitForSeconds(burningDuration);
-        fireVFX.Stop();
-        fireSFX.Stop();
 
-        fire.ChangeLevelIndex();
+        fire.Stop();
+        SoundEffectManager.StopSFXLoop();
+
+        _fire.ChangeLevelIndex();
     }
 }
