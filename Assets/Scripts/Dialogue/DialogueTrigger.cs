@@ -1,114 +1,147 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using System;
 
 public class DialogueTrigger : MonoBehaviour
 {
-    [HideInInspector] public bool isPlayerOut = true;
+    [Serializable]
+    private struct DialogueUIElements
+    {
+        public Image noticeUI;
+        public Canvas dialogueCanvas;
+    }
 
-    public Dialogue[] VO_Text;
-    public AudioClip[] VO_Audio;
-    public string transitionText;
+    [Header("Dialogue")]
+    [SerializeField] private Dialogue[] dialogues;
+    [SerializeField] private AudioClip completedLevelAudio;
+    [Header("Dialogue UI")]
+    [SerializeField] private DialogueUIElements uiElements;
+    [Header("Interaction Manager")]
+    [SerializeField] private InteractionManager interactionManager;
+    private DialogueState currentState;
 
-    public Image dialogueNoticeUI;
-    public Canvas dialogueCanvas;
-    public Transform player;
-    public InteractionManager interactionManager;
+    private enum DialogueState
+    {
+        Inactive,
+        Active,
+    }
 
-    DialogueManager dialogueManager;
+    [HideInInspector]
+    public bool IsPlayerOut
+    {
+        get => currentState == DialogueState.Inactive;
+        private set => currentState = value ? DialogueState.Inactive : DialogueState.Active;
+    }
 
     private void Start()
     {
-        dialogueManager = FindAnyObjectByType<DialogueManager>();
-        dialogueCanvas.enabled = false;
+        InitializeDialogue();
+    }
+
+    private void InitializeDialogue()
+    {
+        uiElements.dialogueCanvas.enabled = false;
+        currentState = DialogueState.Inactive;
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Player") && GameManager.isStarted && !GameManager.isCompleted)
-            if (interactionManager.LevelIndex < InteractionManager.ineteractionLayerCount)
-            {
-                if (isPlayerOut)
-                {
-                    isPlayerOut = false;
+        if (!IsValidTrigger(other)) return;
 
-                    StartDialogue(interactionManager.LevelIndex);
-                }
-            }
-            else
-            {
-                interactionManager.PlayAudio();
-                //interactionManager.DisplayNotice(transitionText);
-            }
+        HandleTriggerEnter();
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.CompareTag("Player") && GameManager.isStarted && !GameManager.isCompleted)
+        if (!IsValidTrigger(other)) return;
+
+        HandleTriggerExit();
+    }
+
+    private bool IsValidTrigger(Collider other)
+    {
+        return other.CompareTag("Player") &&
+               GameManager.IsStarted &&
+               !GameManager.IsCompleted;
+    }
+
+    private void HandleTriggerEnter()
+    {
+        if (IsWithinInteractionLimit())
         {
-            interactionManager.CleanNotice();
-
-            if (interactionManager.LevelIndex < InteractionManager.ineteractionLayerCount)
+            if (IsPlayerOut)
             {
-                if (!isPlayerOut)
-                {
-                    EndDialogue();
-
-                    isPlayerOut = true;
-                }
+                IsPlayerOut = false;
+                StartDialogue(interactionManager.LevelIndex);
             }
         }
+        else
+        {
+            HandleCompletedInteraction();
+        }
+    }
+
+    private void HandleTriggerExit()
+    {
+        interactionManager.CleanInteraction();
+
+        if (IsWithinInteractionLimit() && !IsPlayerOut)
+        {
+            EndDialogue();
+            IsPlayerOut = true;
+        }
+    }
+
+    private bool IsWithinInteractionLimit()
+    {
+        return interactionManager.LevelIndex < interactionManager.interactionLayers.Length;
+    }
+
+    private void HandleCompletedInteraction()
+    {
+        DialogueManager.OverrideInstructionAudio(completedLevelAudio);
     }
 
     public void StartDialogue(int index)
     {
-        dialogueNoticeUI.enabled = false;
-        dialogueManager.StartDialogue(VO_Text[index], dialogueCanvas, VO_Audio[index], interactionManager);
+        if (!IsValidDialogueIndex(index)) return;
+
+        SetupDialogueUI(false);
+        InitiateDialogue(index);
+    }
+
+    private bool IsValidDialogueIndex(int index)
+    {
+        return index >= 0 && index < dialogues.Length;
+    }
+
+    private void SetupDialogueUI(bool isNoticeVisible)
+    {
+        if (IsWithinInteractionLimit())
+        {
+            uiElements.noticeUI.enabled = isNoticeVisible;
+        }
+        else
+        {
+            uiElements.noticeUI.enabled = false;
+        }
+
+    }
+
+    private void InitiateDialogue(int index)
+    {
+        DialogueManager.StartDialogue
+            (
+            dialogues[index],
+            uiElements.dialogueCanvas, 
+            interactionManager
+            );
     }
 
     public void EndDialogue()
     {
-        if (interactionManager.LevelIndex < InteractionManager.ineteractionLayerCount)
-        {
-            dialogueNoticeUI.enabled = true;
-            dialogueManager.EndDialogue();
-        }
-        else
-        {
-            dialogueNoticeUI.enabled = false;
-            dialogueManager.EndDialogue();
-        }
+        SetupDialogueUI(true);
+
+        DialogueManager.EndDialogue();
     }
 }
-
-//BackUp//
-/*private void Update()
-{
- if (interactionManager.LevelIndex < interactionManager.ineteractionLayerCount)
- {
-     float distance = Vector3.Distance(player.position, gameObject.transform.position);
-     if (distance < triggerDistance)
-     {
-         if (!isPlayerStaying)
-         {
-             isPlayerStaying = true;
-
-             lightingManager.LightSwitch_Enter(gameObject.name);
-             StartDialogue(interactionManager.LevelIndex);
-         }
-     }
-     else
-     {
-         if (isPlayerStaying)
-         {
-             EndDialogue();
-
-             lightingManager.LightSwitch_Exit(gameObject.name);
-             interactionManager.CleanNotice();
-
-             isPlayerStaying = false;
-         }
-     }
- }         
-}*/
-
-
