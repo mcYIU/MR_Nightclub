@@ -2,39 +2,63 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System;
 
 public class GameManager : MonoBehaviour
 {
-    public static GameManager Instance;
-    public static bool isStarted = false;
-    public static bool isCompleted = false;
+    [Serializable]
+    private struct InteractionConfig
+    {
+        public InteractionManager[] managers;
+    }
 
-    public InteractionManager[] interactionManagers;
-    public DialogueManager dialogueManager;
+    [Serializable]
+    private struct TransitionConfig
+    {
+        public GameLevelTrigger triggerPoint;
+        public float interval;
+        public string noticeText;
+        public TextMeshProUGUI noticeUI;
+        public AudioClip guideAudio;
+        public AudioSource music;
+    }
 
-    [Header("SceneTransition")]
-    public GameLevelTrigger triggerPoint;
-    public Animator sceneTransition;
-    public float triggerInterval;
-    public string transitionNoticeText;
-    public TextMeshProUGUI transitionNotice;
-    public AudioClip transitionTriggerAudio;
-    public AudioSource transitionMusic;
+    [Serializable]
+    private struct PassthroughConfig
+    {
+        public OVRPassthroughLayer layers;
+        public float fadeDuration;
+    }
 
-    [Header("Passthrough")]
-    public OVRPassthroughLayer passthroughLayers;
-    public float passThroughFadeDuration;
+    public static GameManager Instance { get; private set; }
+    public static bool IsStarted { get; set; }
+    public static bool IsCompleted { get; private set; }
 
-    private static GameManager instance;
+    [Header("Configurations")]
+    [SerializeField] private InteractionConfig interactionConfig;
+    [SerializeField] private TransitionConfig transitionConfig;
+    [SerializeField] private PassthroughConfig passthroughConfig;
 
-    private int completedLevelCount = 0;
     private int gameSceneIndex;
+    private const float FADE_END_VALUE = 0f;
+
+    #region Initialization
 
     private void Awake()
     {
-        if (instance == null)
+        InitializeSingleton();
+    }
+
+    private void Start()
+    {
+        InitializeGame();
+    }
+
+    private void InitializeSingleton()
+    {
+        if (Instance == null)
         {
-            instance = this;
+            Instance = this;
             DontDestroyOnLoad(gameObject);
         }
         else
@@ -43,111 +67,162 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void Start()
+    private void InitializeGame()
     {
-        transitionNotice.text = null;
-
+        transitionConfig.noticeUI.text = null;
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
+    #endregion
+
+    #region Game State Management
+
     public static void CheckGameState()
     {
-        float completedLevelCount = 0;
+        if (!HasInteractionManagers()) return;
 
-        if (instance.interactionManagers.Length > 0)
-            for (int i = 0; i < instance.interactionManagers.Length; i++)
-                // if all the character's interactions are completed
-                if (instance.interactionManagers[i].LevelIndex == instance.interactionManagers[i].interactionLayers.Length)
-                {
-                    completedLevelCount++;
-                }
-
-        if (completedLevelCount == instance.interactionManagers.Length)
+        if (AreAllInteractionsCompleted())
+        {
             EndLevel();
+        }
     }
 
-    public void ChangeToNextScene()
+    private static bool HasInteractionManagers()
     {
-        StartCoroutine(ChangeScene());
+        return Instance.interactionConfig.managers.Length > 0;
     }
+
+    private static bool AreAllInteractionsCompleted()
+    {
+        int completedCount = 0;
+        foreach (var manager in Instance.interactionConfig.managers)
+        {
+            if (manager.LevelIndex == manager.interactionLayers.Length)
+            {
+                completedCount++;
+            }
+        }
+        return completedCount == Instance.interactionConfig.managers.Length;
+    }
+
+    private static void EndLevel()
+    {
+        IsCompleted = true;
+        DialogueManager.EndDialogue();
+
+        Instance.StartCoroutine(Instance.ChangePassThroughOpacity());
+        Instance.DisplayTransitionNotice();
+    }
+
+    private void DisplayTransitionNotice()
+    {
+        transitionConfig.noticeUI.text = transitionConfig.noticeText;
+        transitionConfig.music.Play();
+        DialogueManager.OverrideInstructionAudio(transitionConfig.guideAudio);
+    }
+
+    #endregion
+
+    #region Scene Management
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         gameSceneIndex = scene.buildIndex;
     }
 
-    private void Update()
+    public static void ChangeToNextScene()
     {
-        if (OVRInput.GetUp(OVRInput.Button.Two) && gameSceneIndex == 0) EndLevel();
+        Instance.StartCoroutine(Instance.PerformSceneTransition());
     }
 
-    private static void EndLevel()
+    private IEnumerator PerformSceneTransition()
     {
-        isCompleted = true;
+        HandleTransitionMusic();
+        ClearTransitionNotice();
 
-        dialogueManager.EndDialogue();
-        triggerPoint.EnableTriggerPoint();
-
-        StartCoroutine(ChangePassThroughOpacity());
-
-        transitionNotice.text = transitionNoticeText;
-        transitionMusic.Play();
-        if (dialogueManager.VO != null) dialogueManager.VO.PlayOneShot(transitionTriggerAudio);
-        //StartCoroutine(TypeEndNotice(endNoticeText));
+        yield return ExecuteSceneChange();
     }
 
-    private IEnumerator TypeEndNotice(string _text)
+    private void HandleTransitionMusic()
     {
-        if (transitionNotice.text != null) transitionNotice.text = null;
-        int currentIndex = 0;
-
-        while (currentIndex < _text.Length)
+        if (gameSceneIndex != 0)
         {
-            char currentChar = _text[currentIndex];
-            if (currentChar == '.')
-                transitionNotice.text += "\n";
+            transitionConfig.interval++;
+            transitionConfig.music.Stop();
+        }
+    }
+
+    private void ClearTransitionNotice()
+    {
+        transitionConfig.noticeUI.text = null;
+    }
+
+    private IEnumerator ExecuteSceneChange()
+    {
+        FaderController.FadeOut();
+        yield return new WaitForSeconds(transitionConfig.interval);
+
+        SceneManager.LoadScene(gameSceneIndex + 1);
+        yield return new WaitForSeconds(transitionConfig.interval);
+
+        FaderController.FadeIn();
+    }
+
+    #endregion
+
+    #region Visual Effects
+
+    private IEnumerator ChangePassThroughOpacity()
+    {
+        if (gameSceneIndex != 0) yield break;
+
+        float startValue = passthroughConfig.layers.textureOpacity;
+        float elapsedTime = 0f;
+
+        while (elapsedTime < passthroughConfig.fadeDuration)
+        {
+            passthroughConfig.layers.textureOpacity = Mathf.Lerp(
+                startValue,
+                FADE_END_VALUE,
+                elapsedTime / passthroughConfig.fadeDuration
+            );
+
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        passthroughConfig.layers.textureOpacity = FADE_END_VALUE;
+    }
+
+    private IEnumerator TypeEndNotice(string text)
+    {
+        if (transitionConfig.noticeUI.text != null)
+        {
+            transitionConfig.noticeUI.text = null;
+        }
+
+        for (int i = 0; i < text.Length; i++)
+        {
+            if (text[i] == '.')
+            {
+                transitionConfig.noticeUI.text += "\n";
+            }
             else
-                transitionNotice.text += currentChar;
-            currentIndex++;
+            {
+                transitionConfig.noticeUI.text += text[i];
+            }
         }
 
         yield return null;
     }
 
-    private IEnumerator ChangePassThroughOpacity()
+    #endregion
+
+    private void Update()
     {
-        if (gameSceneIndex == 0)
+        if (OVRInput.GetUp(OVRInput.Button.Two) && gameSceneIndex == 0)
         {
-            float _startValue = passthroughLayers.textureOpacity;
-            float _endValue = 0f;
-
-            float _elapsedTime = 0f;
-            while (_elapsedTime < passThroughFadeDuration)
-            {
-                passthroughLayers.textureOpacity = Mathf.Lerp(_startValue, _endValue, _elapsedTime / passThroughFadeDuration);
-
-                _elapsedTime += Time.deltaTime;
-                yield return null;
-            }
-
-            passthroughLayers.textureOpacity = _endValue;
+            EndLevel();
         }
-    }
-
-    private IEnumerator ChangeScene()
-    {
-        if (gameSceneIndex != 0) triggerInterval++; 
-
-        transitionNotice.text = null;
-
-        sceneTransition.SetBool("IsEyeClosed", true);
-
-        yield return new WaitForSeconds(triggerInterval);
-
-        SceneManager.LoadScene(gameSceneIndex + 1);
-
-        yield return new WaitForSeconds(triggerInterval);
-
-        sceneTransition.SetBool("IsEyeClosed", false);
     }
 }
