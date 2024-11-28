@@ -21,27 +21,20 @@ public class EndDialogueTrigger : MonoBehaviour
 
     private readonly float startTime = 3.5f;
     private ParticleSystem[] sceneParticles;
-    private DialogueManager dialogueManager;
-    private GameManager gameManager;
 
     private void Start()
     {
-        dialogueManager = FindObjectOfType<DialogueManager>();
-        gameManager = FindObjectOfType<GameManager>();
-
         sceneParticles = FindObjectsOfType<ParticleSystem>();
         if (sceneParticles.Length > 0) foreach (ParticleSystem _particle in sceneParticles) _particle.Stop();
 
         textCanvasMask.alpha = 0f;
         //if (TMP != null) TMP.enabled = false;
 
-        if (dialogueManager != null) Invoke(nameof(StartDialogue), startTime);
+        Invoke(nameof(StartDialogue), startTime);
     }
 
     public void StartChangeSceneDialogue()
     {
-        if (gameManager != null) gameManager.transitionMusic.Stop();
-
         StartCoroutine(Type());
         //if(gameManager != null) gameManager.transitionMusic.Stop();
         //if (TMP != null) TMP.enabled = true;
@@ -51,7 +44,7 @@ public class EndDialogueTrigger : MonoBehaviour
 
     private void StartDialogue()
     {
-        dialogueManager.StartFinalDialogue(this);
+        DialogueManager.StartFinalDialogue(this);
     }
 
     private IEnumerator Type()
@@ -68,6 +61,6 @@ public class EndDialogueTrigger : MonoBehaviour
 
         yield return new WaitForSeconds(dialogueTime);
 
-        gameManager.ChangeToNextScene();
+        GameManager.ChangeToNextScene();
     }
 }
