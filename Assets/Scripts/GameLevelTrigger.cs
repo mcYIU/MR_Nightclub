@@ -1,64 +1,157 @@
 using UnityEngine;
+using System;
 
 public class GameLevelTrigger : MonoBehaviour
 {
-    public ParticleSystem startPoint;
-    public GameObject footUI;
-    public GameObject textUI;
-    public GameObject lights;
-    public AudioSource particleSound;
-    public GameObject NPC;
+    [Serializable]
+    private struct VisualElements
+    {
+        public ParticleSystem visual;
+        public GameObject UI;
+        public GameObject NPC;
+    }
 
-    private GameManager gameManager;
+    [Serializable]
+    private struct AudioElements
+    {
+        public AudioSource audioSource;
+        public AudioClip audioClip;
+    }
+
+    [SerializeField] private VisualElements visualElements;
+    [SerializeField] private AudioElements audioElements;
+    [SerializeField, Header("Start Scene")] private AudioClip welcomeDialogue;
+
     private Collider triggerCollider;
+
+    private enum TriggerState
+    {
+        Active,
+        Inactive
+    }
+
+    #region Initialization
 
     private void Start()
     {
-        gameManager = FindAnyObjectByType<GameManager>();
-        triggerCollider = GetComponent<Collider>();
-
-        if (NPC != null) NPC.SetActive(false);
-        if (lights != null) lights.SetActive(false);
-
+        InitializeComponents();
+        SetInitialState();
         EnableTriggerPoint();
     }
 
+    private void InitializeComponents()
+    {
+        triggerCollider = GetComponent<Collider>();
+    }
+
+    private void SetInitialState()
+    {
+        SetGameObjectState(visualElements.NPC, false);
+    }
+
+    #endregion
+
+    #region Trigger Handling
+
     private void OnTriggerEnter(Collider other)
     {
-        if (GameManager.isStarted) gameManager.ChangeToNextScene();
-        else
-        {
-            StartFirstScene();
-            GameManager.isStarted = true;
-        }
+        SetTriggerState(TriggerState.Inactive);
 
-        DisableTriggerPoint();
+        if (GameManager.IsStarted) 
+            HandleGameStarted();
+        else 
+            HandleFirstStart();
+    }
+
+    private void HandleGameStarted()
+    {
+        GameManager.ChangeToNextScene();
+    }
+
+    private void HandleFirstStart()
+    {
+        StartFirstScene();
+        GameManager.IsStarted = true;
     }
 
     private void StartFirstScene()
     {
-        lights.SetActive(true);
-
-        NPC.SetActive(true);
-        NPC.TryGetComponent<AudioSource>(out AudioSource AS_Wellcome);
-        if (AS_Wellcome != null) AS_Wellcome.Play();
+        SetGameObjectState(visualElements.NPC, true);
+        PlayWelcomeAudio();
     }
+
+    private void PlayWelcomeAudio()
+    {
+        SetAudioState(audioElements.audioSource, welcomeDialogue, true);
+    }
+
+    #endregion
+
+    #region Trigger State Management
 
     public void EnableTriggerPoint()
     {
-        triggerCollider.enabled = true;
-        if (footUI != null) footUI.SetActive(true);
-        if (textUI != null) textUI.SetActive(true);
-        if (startPoint != null) startPoint.Play();
-        if (particleSound != null) particleSound.Play();
+        SetTriggerState(TriggerState.Active);
     }
 
-    private void DisableTriggerPoint()
+    private void SetTriggerState(TriggerState state)
     {
-        triggerCollider.enabled = false;
-        if (footUI != null) footUI.SetActive(false);
-        if (textUI != null) textUI.SetActive(false);
-        if (startPoint != null) startPoint.Stop();
-        if (particleSound != null) particleSound.Stop();
+        bool isActive = state == TriggerState.Active;
+
+        SetTriggerComponents(isActive);
+        SetVisualElements(isActive);
+        SetAudioElements(isActive);
     }
+
+    private void SetTriggerComponents(bool isActive)
+    {
+        triggerCollider.enabled = isActive;
+    }
+
+    private void SetVisualElements(bool isActive)
+    {
+        SetGameObjectState(visualElements.UI, isActive);
+        SetParticleState(visualElements.visual, isActive);
+    }
+
+    private void SetAudioElements(bool isActive)
+    {
+        SetAudioState(audioElements.audioSource, audioElements.audioClip, isActive);
+    }
+
+    #endregion
+
+    #region Helper Methods
+
+    private void SetGameObjectState(GameObject obj, bool state)
+    {
+        if (obj != null) obj.SetActive(state);
+    }
+
+    private void SetParticleState(ParticleSystem particles, bool isActive)
+    {
+        if (particles != null)
+        {
+            if (isActive) particles.Play();
+            else particles.Stop();
+        }
+    }
+
+    private void SetAudioState(AudioSource source, AudioClip audio, bool isActive)
+    {
+        if (source != null && audio != null)
+        {
+            if (isActive)
+            {
+                source.clip = audio;
+                source.Play();
+            }
+            else
+            {
+                source.Stop();
+            }
+        }
+    }
+
+    #endregion
 }
