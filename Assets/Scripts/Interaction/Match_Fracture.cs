@@ -3,32 +3,8 @@ using UnityEngine;
 
 public class Match_Fracture : MonoBehaviour
 {
-    public GameObject fracturedObjectPrefab;
-    public HandGrabInteractable[] interactables;
-    //public HandGrabInteractor leftInteractor;
-    //public HandGrabInteractor rightInteractor;
-
-    //HandGrabInteractable interactable;
-
-    private void Start()
-    {
-        //interactable = GetComponent<HandGrabInteractable>();
-    }
-
-    /*private void Update()
-    {
-        if (leftInteractor != null && rightInteractor != null)
-            if (leftInteractor.SelectedInteractable == interactable && rightInteractor.SelectedInteractable == interactable)
-            {
-                CreateFracturedObject();
-            }
-    }*/
-
-    private void CreateFracturedObject()
-    {
-        Instantiate(fracturedObjectPrefab, transform.position, transform.rotation);
-        Destroy(gameObject);
-    }
+    [SerializeField] private GameObject fracturedMatch;
+    [SerializeField] private HandGrabInteractable[] interactables;
 
     public void Fracture()
     {
@@ -40,7 +16,7 @@ public class Match_Fracture : MonoBehaviour
 
         if (grabCount == interactables.Length)
         {
-            Instantiate(fracturedObjectPrefab, transform.position, transform.rotation);
+            Instantiate(fracturedMatch, transform.position, transform.rotation);
             Destroy(gameObject);
         }
     }
