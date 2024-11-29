@@ -2,13 +2,13 @@ using UnityEngine;
 
 public class Whiskey_Pour : MonoBehaviour
 {
-    public ParticleSystem fluid;
-    public float pouringAngle;
-    public InteractionManager interactionManager;
+    public bool isBottleHeld = false;   
+    [SerializeField] private ParticleSystem fluidVisual;
+    [SerializeField] private float pouringAngle;
+    [SerializeField] private Interactable interactable;
 
     private Quaternion initialRotation;
     private bool isPouring = false;
-    private bool isBottleHeld = false;
 
     private void Start()
     {
@@ -23,63 +23,25 @@ public class Whiskey_Pour : MonoBehaviour
             if (isPouring != pourCheck)
             {
                 isPouring = pourCheck;
+
                 if (isPouring)
                 {
-                    fluid.Play();
+                    fluidVisual.Play();
                 }
                 else
                 {
-                    fluid.Stop();
+                    fluidVisual.Stop();
                 }
             }
         }
         else
         {
-            fluid.Stop();
+            fluidVisual.Stop();
         }
-    }
-
-    public void HoldBottle()
-    {
-        isBottleHeld = true;
-    }
-
-    public void ReleaseBottle()
-    {
-        isBottleHeld = false;
     }
 
     private float CalculatePourAngle()
     {
         return Quaternion.Angle(initialRotation, transform.localRotation);
     }
-
-    public void ChangeLevelIndex()
-    {
-        if(interactionManager != null)
-            interactionManager.ChangeLevelIndex(gameObject.name);
-    }
 }
-
-//backup
-/*private void OnCollisionEnter(Collision collision)
-{
-if (collision.collider.gameObject.CompareTag("Environment"))
-{
-    AS_DropCap.Play();
-}
-}
-
-public void CapPhysics()
-{
-if (!isOpened)
-{
-    isOpened = true;
-
-    AS_OpenCap.Play();
-
-    rb.isKinematic = false;
-    rb.useGravity = true;
-    transform.SetParent(null);
-}
-}*/
