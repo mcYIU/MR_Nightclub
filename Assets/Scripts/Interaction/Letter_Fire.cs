@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class Letter_Fire : MonoBehaviour
 {
-    [SerializeField] private ParticleSystem fire;
+    [SerializeField] private ParticleSystem fireVisual;
     [SerializeField] private float burningDuration;
     [SerializeField] private float burningDelay;
     [SerializeField] private string alphaClipPropertyName = "_Cutoff";
@@ -71,13 +71,13 @@ public class Letter_Fire : MonoBehaviour
 
     private IEnumerator Burn(Match_Fire _fire)
     {
-        fire.Play();
+        fireVisual.Play();
         SoundEffectManager.PlaySFXLoop(SFX);
         StartCoroutine(FadeToAsh());
 
         yield return new WaitForSeconds(burningDuration);
 
-        fire.Stop();
+        fireVisual.Stop();
         SoundEffectManager.StopSFXLoop();
 
         _fire.ChangeLevelIndex();
