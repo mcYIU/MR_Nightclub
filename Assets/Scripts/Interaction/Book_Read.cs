@@ -4,43 +4,42 @@ using UnityEngine;
 
 public class Book_Read : MonoBehaviour
 {
-    public InteractionManager interactionManager;
-    public TextMeshProUGUI bookText;
-    public float animationDurationOffset;
-    public string[] sentences;
-    public float typeInterval;
-    public float readingDuration;
-    public AudioSource sFx_TurnPage;
-    public TextMeshProUGUI noticeText;
-
-    private Animator animator;
+    [SerializeField] private Animator animator;
+    [SerializeField] private string[] sentences;
+    [SerializeField] private TextMeshProUGUI bookText;
+    [SerializeField] private float animationDurationOffset;
+    [SerializeField] private float typeInterval;
+    [SerializeField] private float readingDuration;
+    [SerializeField] private AudioClip SFX;
+    [SerializeField] private TextMeshProUGUI noticeText;
+    [SerializeField] private Interactable interactable;
 
     private void Start()
     {
-        animator = GetComponent<Animator>();
-
-        bookText.text = "";
+        bookText.text = string.Empty;
     }
 
     public void ReadText()
     {
-        if(bookText != null)
-        {
-            noticeText.text = "";
-            StartCoroutine(Type());
-        }
+        noticeText.text = string.Empty;
+        interactable.SetUI(false);
+
+        StartCoroutine(Type());
     }
 
-    IEnumerator Type()
+    private IEnumerator Type()
     {
+        animator.SetTrigger("Open");
+
         yield return new WaitForSeconds(animationDurationOffset);
-        for(int i = 0; i < sentences.Length; i++)
+
+        for (int i = 0; i < sentences.Length; i++)
         {
             string textBuffer = null;
             foreach (char c in sentences[i])
             {
                 textBuffer += c;
-                if(c == '.')
+                if (c == '.')
                 {
                     textBuffer += "<br>";
                 }
@@ -50,12 +49,15 @@ public class Book_Read : MonoBehaviour
             }
 
             yield return new WaitForSeconds(readingDuration);
-            sFx_TurnPage.Play();
-            textBuffer = "";
-            bookText.text = "";
+
+            SoundEffectManager.PlaySFXOnce(SFX);
+
+            textBuffer = string.Empty;
+            bookText.text = string.Empty;
         }
 
         animator.SetTrigger("Close");
-        interactionManager.ChangeLevelIndex(gameObject.name);
+
+        interactable.IncreaseInteractionLevel();
     }
 }
