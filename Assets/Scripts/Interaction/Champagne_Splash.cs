@@ -1,33 +1,27 @@
-using Oculus.Interaction.HandGrab;
 using UnityEngine;
 
 public class Champagne_Splash : MonoBehaviour
 {
-    public GameObject attachPoint;
-    public ParticleSystem pouringVFX;
-    public float pushForce;
-    public float pouringThreadhold = 6f;
-    public AudioSource openCapSound;
-    public InteractionManager interactionManager;
+    public bool isBottleOpened = false;
 
+    [SerializeField] private ParticleSystem pouringVisual;
+    [SerializeField] private float pushForce;
+    [SerializeField] private AudioClip SFX; 
+    [SerializeField] private Interactable interactable;
     private Rigidbody rb;
-    private HandGrabInteractable handGrab;
-    private bool isOpened = false;
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        handGrab = GetComponent<HandGrabInteractable>();
     }
 
     void FixedUpdate()
     {
-        if(isOpened)
+        if(isBottleOpened && transform.parent != null)
         {
             transform.SetParent(null);
             rb.isKinematic = false;
             rb.useGravity = true;
-            handGrab.enabled = false;
 
             rb.AddForce(gameObject.transform.up * pushForce, ForceMode.Impulse);
         }
@@ -35,11 +29,9 @@ public class Champagne_Splash : MonoBehaviour
 
     public void Pouring()
     {
-        isOpened = true;
-
-        openCapSound.Play();
-        pouringVFX.Play();
-        interactionManager.ChangeLevelIndex(gameObject.name);
+        pouringVisual.Play();
+        SoundEffectManager.PlaySFXOnce(SFX);
+        interactable.IncreaseInteractionLevel();
     }
 
 }
