@@ -87,9 +87,9 @@ public class InteractionManager : MonoBehaviour
             noticeSystem.interactionNotice.text = interactionLayers[levelIndex].noticeText;
             noticeSystem.isNoticed = true;
 
-            foreach (var canvas in interactionLayers[levelIndex].UI)
+            foreach (var interactable in interactionLayers[levelIndex].interactables)
             {
-                SetUI(canvas, true);
+                interactable.SetUI(true);
             }
         }
     }
