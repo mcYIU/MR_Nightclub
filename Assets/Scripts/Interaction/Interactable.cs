@@ -8,7 +8,8 @@ public class Interactable : MonoBehaviour
     public enum InteractableType
     {
         Grab,
-        Poke
+        Poke,
+        None
     }
 
     public InteractionManager interactionManager;
@@ -18,18 +19,18 @@ public class Interactable : MonoBehaviour
 
     [SerializeField]
     [ShowIfEnum("type", (int)InteractableType.Grab)]
-    private Grabbable grabInteractable;
+    private Grabbable[] grabbables;
 
     [SerializeField]
     [ShowIfEnum("type", (int)InteractableType.Poke)]
-    private PokeInteractable pokeInteractable;
+    private PokeInteractable[] pokeInteractables;
 
     private int interactionLevel;
 
     public void SetInteraction(bool isEnabled)
     {
-        if (grabInteractable != null) grabInteractable.enabled = isEnabled;
-        if (pokeInteractable != null) pokeInteractable.enabled = isEnabled;
+        foreach (var grab in  grabbables) grab.enabled = isEnabled;
+        foreach (var poke in pokeInteractables) poke.enabled = isEnabled;
 
         SetUI(isEnabled);
 
