@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class Match_Fire : MonoBehaviour
 {
+    [SerializeField] private GameObject firePoint;
     [SerializeField] private GameObject matchBox;
     [SerializeField] private GameObject firePrefab;
     [SerializeField] private AudioClip SFX;
@@ -13,7 +14,7 @@ public class Match_Fire : MonoBehaviour
     {
         if (interactable.isInteractionEnabled)
         {
-            if (CheckCollision(gameObject, matchBox))
+            if (CheckCollision(firePoint, matchBox))
             {
                 if (fireInstance == null)
                 {
