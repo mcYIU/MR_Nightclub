@@ -1,8 +1,9 @@
 using Oculus.Interaction;
 using UnityEditor;
 using UnityEngine;
+using System;
 
-[System.Serializable]
+[Serializable]
 public class Interactable : MonoBehaviour
 {
     public enum InteractableType
@@ -17,20 +18,24 @@ public class Interactable : MonoBehaviour
     [SerializeField] private Canvas[] interactionUI;
     [HideInInspector] public bool isInteractionEnabled;
 
-    [SerializeField]
-    [ShowIfEnum("type", (int)InteractableType.Grab)]
-    private Grabbable[] grabbables;
-
-    [SerializeField]
-    [ShowIfEnum("type", (int)InteractableType.Poke)]
-    private PokeInteractable[] pokeInteractables;
+    [SerializeField] private Grabbable[] grabbables;
+    [SerializeField] private PokeInteractable[] pokeInteractables;
 
     private int interactionLevel;
 
     public void SetInteraction(bool isEnabled)
     {
-        foreach (var grab in  grabbables) grab.enabled = isEnabled;
-        foreach (var poke in pokeInteractables) poke.enabled = isEnabled;
+        switch (type)
+        {
+            case InteractableType.None:
+                break;
+            case InteractableType.Grab:
+                foreach (var grab in grabbables) grab.enabled = isEnabled;
+                break;
+            case InteractableType.Poke:
+                foreach (var poke in pokeInteractables) poke.enabled = isEnabled;
+                break;
+        }
 
         SetUI(isEnabled);
 
@@ -45,9 +50,9 @@ public class Interactable : MonoBehaviour
     public void SetUI(bool isActive)
     {
         foreach (Canvas c in interactionUI)
-        { 
-            if (c != null) c.enabled = isActive; 
-        } 
+        {
+            if (c != null) c.enabled = isActive;
+        }
     }
 
     public void IncreaseInteractionLevel()
@@ -65,45 +70,50 @@ public class Interactable : MonoBehaviour
     }
 }
 
-// Custom PropertyAttribute for showing/hiding fields based on enum value
-public class ShowIfEnumAttribute : PropertyAttribute
+[CustomEditor(typeof(Interactable))]
+public class InteractableEditor : Editor
 {
-    public string enumVariable;
-    public int enumValue;
+    SerializedProperty manager;
+    SerializedProperty ui;
+    SerializedProperty typeProp;
+    SerializedProperty grabbablesProp;
+    SerializedProperty pokeInteractablesProp;
 
-    public ShowIfEnumAttribute(string enumVariable, int enumValue)
+    void OnEnable()
     {
-        this.enumVariable = enumVariable;
-        this.enumValue = enumValue;
+        manager = serializedObject.FindProperty("interactionManager");
+        ui = serializedObject.FindProperty("interactionUI");
+        typeProp = serializedObject.FindProperty("type");
+        grabbablesProp = serializedObject.FindProperty("grabbables");
+        pokeInteractablesProp = serializedObject.FindProperty("pokeInteractables");
+    }
+
+    public override void OnInspectorGUI()
+    {
+        serializedObject.Update();
+
+        EditorGUILayout.PropertyField(manager);
+        EditorGUILayout.PropertyField(ui);
+        EditorGUILayout.PropertyField(typeProp);
+
+        Interactable.InteractableType currentType = (Interactable.InteractableType)typeProp.enumValueIndex;
+
+        switch (currentType)
+        {
+            case Interactable.InteractableType.Grab:
+                EditorGUILayout.PropertyField(grabbablesProp, true);
+                pokeInteractablesProp.isExpanded = false;
+                break;
+            case Interactable.InteractableType.Poke:
+                EditorGUILayout.PropertyField(pokeInteractablesProp, true);
+                grabbablesProp.isExpanded = false;
+                break;
+            case Interactable.InteractableType.None:
+                grabbablesProp.isExpanded = false;
+                pokeInteractablesProp.isExpanded = false;
+                break;
+        }
+
+        serializedObject.ApplyModifiedProperties();
     }
 }
-
-#if UNITY_EDITOR
-
-[CustomPropertyDrawer(typeof(ShowIfEnumAttribute))]
-public class ShowIfEnumDrawer : PropertyDrawer
-{
-    public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
-    {
-        ShowIfEnumAttribute showIfAttribute = (ShowIfEnumAttribute)attribute;
-        SerializedProperty enumProperty = property.serializedObject.FindProperty(showIfAttribute.enumVariable);
-
-        if (enumProperty != null && enumProperty.enumValueIndex == showIfAttribute.enumValue)
-        {
-            EditorGUI.PropertyField(position, property, label, true);
-        }
-    }
-
-    public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
-    {
-        ShowIfEnumAttribute showIfAttribute = (ShowIfEnumAttribute)attribute;
-        SerializedProperty enumProperty = property.serializedObject.FindProperty(showIfAttribute.enumVariable);
-
-        if (enumProperty != null && enumProperty.enumValueIndex == showIfAttribute.enumValue)
-        {
-            return EditorGUI.GetPropertyHeight(property, label);
-        }
-        return 0;
-    }
-}
-#endif
