@@ -1,13 +1,13 @@
 using UnityEngine;
 
 public class Whiskey_Pour : MonoBehaviour
-{
-    public bool isBottleHeld = false;   
+{ 
     [SerializeField] private ParticleSystem fluidVisual;
     [SerializeField] private float pouringAngle;
     [SerializeField] private Interactable interactable;
 
     private Quaternion initialRotation;
+    private bool isBottleHeld = false;
     private bool isPouring = false;
 
     private void Start()
@@ -43,5 +43,10 @@ public class Whiskey_Pour : MonoBehaviour
     private float CalculatePourAngle()
     {
         return Quaternion.Angle(initialRotation, transform.localRotation);
+    }
+
+    public void ToggleBottle()
+    {
+        isBottleHeld |= !isBottleHeld;
     }
 }
