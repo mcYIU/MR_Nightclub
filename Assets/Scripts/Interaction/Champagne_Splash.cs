@@ -2,13 +2,12 @@ using UnityEngine;
 
 public class Champagne_Splash : MonoBehaviour
 {
-    public bool isBottleOpened = false;
-
     [SerializeField] private ParticleSystem pouringVisual;
     [SerializeField] private float pushForce;
     [SerializeField] private AudioClip SFX; 
     [SerializeField] private Interactable interactable;
     private Rigidbody rb;
+    private bool isBottleOpened = false;
 
     void Start()
     {
@@ -29,6 +28,8 @@ public class Champagne_Splash : MonoBehaviour
 
     public void Pouring()
     {
+        isBottleOpened = true;
+
         pouringVisual.Play();
         SoundEffectManager.PlaySFXOnce(SFX);
         interactable.IncreaseInteractionLevel();
