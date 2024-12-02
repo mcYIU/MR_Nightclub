@@ -9,8 +9,9 @@ public class Balloon_Pop : MonoBehaviour
 
     public void Poke()
     {
-        explosionVisual.Play();
+        Instantiate(explosionVisual);
         SoundEffectManager.PlaySFXOnce(SFX);
+
         interactable.IncreaseInteractionLevel();
 
         Destroy(gameObject);
