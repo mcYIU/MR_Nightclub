@@ -5,7 +5,6 @@ public class Rose_Pluck : MonoBehaviour
     [SerializeField] Transform detechPoint;
     [SerializeField] float detachDistance;
     [SerializeField] AudioClip SFX;
-    [SerializeField] Interactable interactable;
 
     private Rigidbody rb;
 
