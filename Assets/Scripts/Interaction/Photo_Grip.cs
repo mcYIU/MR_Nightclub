@@ -1,7 +1,7 @@
 using Oculus.Interaction.HandGrab;
 using UnityEngine;
 
-public class Photo_Grip : Interactable
+public class Photo_Grip : MonoBehaviour
 {
     [SerializeField] private Animator animator;
     [SerializeField] private AudioClip SFX;
