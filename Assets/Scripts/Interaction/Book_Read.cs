@@ -10,7 +10,7 @@ public class Book_Read : MonoBehaviour
     [SerializeField] private float animationDurationOffset;
     [SerializeField] private float typeInterval;
     [SerializeField] private float readingDuration;
-    [SerializeField] private AudioClip SFX;
+    [SerializeField] private AudioClip[] SFX;
     [SerializeField] private TextMeshProUGUI noticeText;
     [SerializeField] private Interactable interactable;
 
@@ -50,7 +50,8 @@ public class Book_Read : MonoBehaviour
 
             yield return new WaitForSeconds(readingDuration);
 
-            SoundEffectManager.PlaySFXOnce(SFX);
+            int _i = Random.Range(0, SFX.Length);
+            SoundEffectManager.PlaySFXOnce(SFX[_i]);
 
             textBuffer = string.Empty;
             bookText.text = string.Empty;
