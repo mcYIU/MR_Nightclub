@@ -3,7 +3,7 @@ using UnityEngine;
 public class SoundEffectManager : MonoBehaviour
 {
     public static SoundEffectManager Instance;
-    public static AudioSource audioSource;
+    [SerializeField] private AudioSource audioSource;
 
     private void Awake()
     {
@@ -12,19 +12,19 @@ public class SoundEffectManager : MonoBehaviour
 
     public static void PlaySFXOnce(AudioClip clip)
     {
-        audioSource.PlayOneShot(clip);
+        Instance.audioSource.PlayOneShot(clip);
     }
 
     public static void PlaySFXLoop(AudioClip clip)
     {
-        audioSource.loop = true;
-        audioSource.clip = clip;
-        audioSource.Play();
+        Instance.audioSource.loop = true;
+        Instance.audioSource.clip = clip;
+        Instance.audioSource.Play();
     }
 
     public static void StopSFXLoop()
     {
-        audioSource.Stop();
-        audioSource.loop = false;
+        Instance.audioSource.Stop();
+        Instance.audioSource.loop = false;
     }
 }
