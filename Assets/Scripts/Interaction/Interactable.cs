@@ -57,10 +57,10 @@ public class Interactable : MonoBehaviour
 
     public void IncreaseInteractionLevel()
     {
-        if (interactionManager.LevelIndex != interactionLevel)
+        if (interactionManager.LevelIndex == interactionLevel)
         {
+            interactionLevel++;
             interactionManager.ChangeLevelIndex(interactionLevel);
-            SetUI(false);
         }
     }
 
@@ -70,6 +70,7 @@ public class Interactable : MonoBehaviour
     }
 }
 
+#if UNITY_EDITOR
 [CustomEditor(typeof(Interactable))]
 public class InteractableEditor : Editor
 {
@@ -117,3 +118,4 @@ public class InteractableEditor : Editor
         serializedObject.ApplyModifiedProperties();
     }
 }
+#endif
