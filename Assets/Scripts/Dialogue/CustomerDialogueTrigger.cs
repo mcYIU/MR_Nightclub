@@ -8,9 +8,13 @@ public class CustomerDialogueTrigger : MonoBehaviour
     public Image dialogueImage;
     public AudioClip dialogueAudio;
 
+    private DialogueManager dialogueManager;
+
     private void Start()
     {
         dialogueImage.enabled = true;
+
+        dialogueManager = FindObjectOfType<DialogueManager>();
     }
 
     private void OnTriggerEnter(Collider other)
