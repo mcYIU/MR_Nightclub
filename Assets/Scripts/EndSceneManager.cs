@@ -21,7 +21,7 @@ public class EndSceneManager : MonoBehaviour
     {
         yield return new WaitForSeconds(audioDelay);
 
-        DialogueManager.OverrideInstructionAudio(welcomeAudio);
+        DialogueManager.OverrideSetAudio(welcomeAudio, true);
 
     }
 }
