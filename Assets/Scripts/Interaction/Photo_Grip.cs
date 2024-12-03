@@ -13,6 +13,7 @@ public class Photo_Grip : MonoBehaviour
         if (CheckHandGrabs())
         {
             animator.SetBool("IsGripped", true);
+            SoundEffectManager.PlaySFXOnce(SFX);
 
             interactable.IncreaseInteractionLevel();
         }
