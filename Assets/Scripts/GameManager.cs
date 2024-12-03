@@ -19,8 +19,8 @@ public class GameManager : MonoBehaviour
         public float interval;
         public string noticeText;
         public TextMeshProUGUI noticeUI;
+        public AudioClip transitionMusic;
         public AudioClip guideAudio;
-        public AudioSource music;
     }
 
     [Serializable]
@@ -117,8 +117,9 @@ public class GameManager : MonoBehaviour
     private void DisplayTransitionNotice()
     {
         transitionConfig.noticeUI.text = transitionConfig.noticeText;
-        transitionConfig.music.Play();
-        DialogueManager.OverrideInstructionAudio(transitionConfig.guideAudio);
+        MusicManager.PlayMusic(transitionConfig.transitionMusic);
+
+        DialogueManager.OverrideSetAudio(transitionConfig.guideAudio, true);
     }
 
     #endregion
@@ -148,7 +149,8 @@ public class GameManager : MonoBehaviour
         if (gameSceneIndex != 0)
         {
             transitionConfig.interval++;
-            transitionConfig.music.Stop();
+
+            MusicManager.StopMusic();
         }
     }
 
