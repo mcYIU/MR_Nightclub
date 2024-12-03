@@ -8,17 +8,16 @@ using UnityEngine;
 public struct InteractionLayer
 {
     public Interactable[] interactables;
-    public Canvas[] UI;
     public string noticeText;
 }
 
 public class InteractionManager : MonoBehaviour
 {
     public InteractionLayer[] interactionLayers;
-    [SerializeField] public NoticeSystem noticeSystem;
+    public NoticeSystem noticeSystem;
     [SerializeField] private DialogueTrigger dialogueTrigger;
 
-    private int levelIndex;
+    private int levelIndex = 0;
 
     [System.Serializable]
     public class NoticeSystem
@@ -30,7 +29,7 @@ public class InteractionManager : MonoBehaviour
         public void Initialize()
         {
             interactionNotice.text = string.Empty;
-            endNotice.text = string.Empty;
+            //endNotice.text = string.Empty;
             isNoticed = false;
         }
 
@@ -50,6 +49,8 @@ public class InteractionManager : MonoBehaviour
 
             levelIndex = value;
             HandleLevelChange();
+
+            Debug.Log(LevelIndex);
         }
     }
 
@@ -62,32 +63,31 @@ public class InteractionManager : MonoBehaviour
     public void ChangeLevelIndex(int index)
     {
         LevelIndex = index;
+        Debug.Log(LevelIndex);
     }
 
     private void HandleLevelChange()
     {
-        noticeSystem.CleanNotices();
+        CleanInteraction();
         noticeSystem.isNoticed = false;
 
-        if (levelIndex < interactionLayers.Length)
+        dialogueTrigger.StartDialogue(LevelIndex);
+
+        if (LevelIndex == interactionLayers.Length)
         {
-            dialogueTrigger.StartDialogue(levelIndex);
-        }
-        else
-        {
-            dialogueTrigger.EndDialogue();
+            //dialogueTrigger.EndDialogue();
             GameManager.CheckGameState();
         }
     }
 
     public void DisplayNotice()
     {
-        if (levelIndex < interactionLayers.Length)
+        if (LevelIndex < interactionLayers.Length)
         {
-            noticeSystem.interactionNotice.text = interactionLayers[levelIndex].noticeText;
+            noticeSystem.interactionNotice.text = interactionLayers[LevelIndex].noticeText;
             noticeSystem.isNoticed = true;
 
-            foreach (var interactable in interactionLayers[levelIndex].interactables)
+            foreach (var interactable in interactionLayers[LevelIndex].interactables)
             {
                 interactable.SetUI(true);
             }
@@ -104,16 +104,15 @@ public class InteractionManager : MonoBehaviour
                 interactable.SetInteractionLevel(i);
             }
         }
-
     }
 
     public void EnableInteraction()
     {
         DisplayNotice();
 
-        if (levelIndex < interactionLayers.Length)
+        if (LevelIndex < interactionLayers.Length)
         {
-            EnableInteractables(levelIndex);
+            EnableInteractables(LevelIndex);
         }
     }
 
@@ -146,12 +145,18 @@ public class InteractionManager : MonoBehaviour
 
     public void CleanInteraction()
     {
-        noticeSystem.CleanNotices();
-
-        foreach (var interactable in interactionLayers[levelIndex--].interactables)
+        if (noticeSystem.isNoticed)
         {
-            interactable.SetUI(false);
-        }
+            noticeSystem.CleanNotices();
+
+            for (int i = 0; i < interactionLayers.Length; i++)
+            {
+                foreach (var interactable in interactionLayers[i].interactables)
+                {
+                    interactable.SetUI(false);
+                }
+            }
+        } 
 
         StopAllCoroutines();
     }
