@@ -61,27 +61,3 @@ public class Whiskey_InGlass : MonoBehaviour
         CompletePouring();
     }
 }
-
-/*    private void Update()
-    {
-        if (isPoured)
-        {         
-            currentHeight += fillSpeed * Time.deltaTime;
-            currentHeight = Mathf.Clamp(currentHeight, 0.0f, maxHeight);
-            transform.localScale = new Vector3(transform.localScale.x, currentHeight, transform.localScale.z);
-
-            sphereRenderer.enabled = true;
-
-            if(currentHeight == maxHeight)
-            {
-                if(whiskeyPour != null)
-                {
-                    whiskeyPour.ChangeLevelIndex();
-                }
-
-                audioSource.Stop();
-                isPoured = false;
-            }
-        }
-    }
-*/
