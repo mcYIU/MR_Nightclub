@@ -14,7 +14,7 @@ public class GameLevelTrigger : MonoBehaviour
     [Serializable]
     private struct AudioElements
     {
-        public AudioSource audioSource;
+        //public AudioSource audioSource;
         public AudioClip audioClip;
     }
 
@@ -71,6 +71,7 @@ public class GameLevelTrigger : MonoBehaviour
     private void HandleFirstStart()
     {
         StartFirstScene();
+        SetAudioElements(false);
         GameManager.IsStarted = true;
     }
 
@@ -82,7 +83,7 @@ public class GameLevelTrigger : MonoBehaviour
 
     private void PlayWelcomeAudio()
     {
-        SetAudioState(audioElements.audioSource, welcomeDialogue, true);
+        SetAudioState(welcomeDialogue, true);
     }
 
     #endregion
@@ -116,7 +117,7 @@ public class GameLevelTrigger : MonoBehaviour
 
     private void SetAudioElements(bool isActive)
     {
-        SetAudioState(audioElements.audioSource, audioElements.audioClip, isActive);
+        SetAudioState(audioElements.audioClip, isActive);
     }
 
     #endregion
@@ -137,19 +138,15 @@ public class GameLevelTrigger : MonoBehaviour
         }
     }
 
-    private void SetAudioState(AudioSource source, AudioClip audio, bool isActive)
+    private void SetAudioState(AudioClip audio, bool isActive)
     {
-        if (source != null && audio != null)
+        if (isActive)
         {
-            if (isActive)
-            {
-                source.clip = audio;
-                source.Play();
-            }
-            else
-            {
-                source.Stop();
-            }
+            MusicManager.PlayMusic(audio);
+        }
+        else
+        {
+            MusicManager.StopMusic();
         }
     }
 
