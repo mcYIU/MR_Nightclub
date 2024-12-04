@@ -4,7 +4,6 @@ public class Ashtray_Put : MonoBehaviour
 {
     [SerializeField] private AudioClip SFX;
     [SerializeField] Interactable interactable;
-    //[SerializeField] Interactable[] interactables;
 
     private void OnCollisionEnter(Collision collision)
     {
@@ -14,10 +13,6 @@ public class Ashtray_Put : MonoBehaviour
             SoundEffectManager.PlaySFXOnce(SFX);
 
             interactable.IncreaseInteractionLevel();
-            //foreach (var interactable in interactables)
-            //{
-            //    interactable.IncreaseInteractionLevel();
-            //}
         }
     }
 }
