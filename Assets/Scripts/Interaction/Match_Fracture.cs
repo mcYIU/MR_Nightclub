@@ -5,6 +5,7 @@ public class Match_Fracture : MonoBehaviour
 {
     [SerializeField] private GameObject fracturedMatch;
     [SerializeField] private HandGrabInteractable[] interactables;
+    [SerializeField] Interactable interactable;
 
     public void Fracture()
     {
@@ -16,6 +17,8 @@ public class Match_Fracture : MonoBehaviour
 
         if (grabCount == interactables.Length)
         {
+            interactable.SetUI(false);
+
             Instantiate(fracturedMatch, transform.position, transform.rotation);
             Destroy(gameObject);
         }
