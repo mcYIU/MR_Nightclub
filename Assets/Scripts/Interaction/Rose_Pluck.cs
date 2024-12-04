@@ -5,6 +5,7 @@ public class Rose_Pluck : MonoBehaviour
     [SerializeField] Transform detechPoint;
     [SerializeField] float detachDistance;
     [SerializeField] AudioClip SFX;
+    [SerializeField] Interactable interactable;
 
     private Rigidbody rb;
 
@@ -15,6 +16,8 @@ public class Rose_Pluck : MonoBehaviour
 
     public void Pluck()
     {
+        interactable.SetUI(false);
+
         if (Vector3.Distance(transform.position, detechPoint.position) < detachDistance)
         {
             PickOutFromParent();
