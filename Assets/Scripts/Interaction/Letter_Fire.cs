@@ -9,6 +9,7 @@ public class Letter_Fire : MonoBehaviour
     [SerializeField] private string alphaClipPropertyName = "_Cutoff";
     [SerializeField] private float targetAlphaThreshold = 1.0f;
     [SerializeField] private AudioClip SFX;
+    [SerializeField] private Interactable interactable;
 
     private Renderer objectRenderer;
     private float initialAlphaThreshold;
@@ -33,16 +34,17 @@ public class Letter_Fire : MonoBehaviour
         {
             if (matchFire.fireInstance != null && !isLighted)
             {
-                Fire(matchFire);
+                Fire();
             }
         }
     }
 
-    private void Fire(Match_Fire matchFire)
+    private void Fire()
     {
         isLighted = true;
-        matchFire.OverideInteractionUI(false);
-        StartCoroutine(Burn(matchFire));
+        interactable.SetUI(!isLighted);
+
+        StartCoroutine(Burn());
     }
 
     private IEnumerator FadeToAsh()
@@ -69,7 +71,7 @@ public class Letter_Fire : MonoBehaviour
         objectRenderer.material.SetFloat(alphaClipPropertyName, targetAlphaThreshold);
     }
 
-    private IEnumerator Burn(Match_Fire _fire)
+    private IEnumerator Burn()
     {
         fireVisual.Play();
         SoundEffectManager.PlaySFXLoop(SFX);
@@ -80,6 +82,6 @@ public class Letter_Fire : MonoBehaviour
         fireVisual.Stop();
         SoundEffectManager.StopSFXLoop();
 
-        _fire.ChangeLevelIndex();
+        interactable.IncreaseInteractionLevel();
     }
 }
