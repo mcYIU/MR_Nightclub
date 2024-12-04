@@ -58,7 +58,7 @@ public class DialogueTrigger : MonoBehaviour
         }
         else
         {
-            HandleCompletedInteraction();
+            HandleCompletedInteraction(true);
         }
 
     }
@@ -70,6 +70,10 @@ public class DialogueTrigger : MonoBehaviour
             EndDialogue();
             interactionManager.CleanInteraction();
         }
+        else
+        {
+            HandleCompletedInteraction(false);
+        }
     }
 
     private bool IsWithinInteractionLimit()
@@ -77,14 +81,14 @@ public class DialogueTrigger : MonoBehaviour
         return interactionManager.LevelIndex < interactionManager.interactionLayers.Length;
     }
 
-    private void HandleCompletedInteraction()
+    private void HandleCompletedInteraction(bool doesPlayerEnter)
     {
-        DialogueManager.OverrideSetAudio(completedLevelAudio, true);
+        DialogueManager.OverrideSetAudio(completedLevelAudio, doesPlayerEnter);
     }
 
     public void StartDialogue(int index)
     {
-        if (!IsWithinInteractionLimit()) HandleCompletedInteraction();
+        if (!IsWithinInteractionLimit()) HandleCompletedInteraction(true);
 
         if (!IsValidDialogueIndex(index)) return;
 
