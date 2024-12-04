@@ -47,6 +47,6 @@ public class Whiskey_Pour : MonoBehaviour
 
     public void ToggleBottle()
     {
-        isBottleHeld |= !isBottleHeld;
+        isBottleHeld = !isBottleHeld;
     }
 }
