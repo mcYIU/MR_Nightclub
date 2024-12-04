@@ -2468,8 +2468,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   textEffect: {fileID: 258572929}
   centerPoint: {fileID: 0}
-  minPosYOffset: 0
-  maxPosYOffset: 0
+  minPosYOffset: 0.8
+  maxPosYOffset: 0.8
   minRadius: 2
   maxRadius: 6
   minRotationSpeed: 30
@@ -5500,8 +5500,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   textEffect: {fileID: 1103812606}
   centerPoint: {fileID: 0}
-  minPosYOffset: 1.1
-  maxPosYOffset: 1.1
+  minPosYOffset: 1.6
+  maxPosYOffset: 1.6
   minRadius: 2
   maxRadius: 6
   minRotationSpeed: 10
@@ -6698,8 +6698,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   textEffect: {fileID: 1448055215}
   centerPoint: {fileID: 0}
-  minPosYOffset: 0.4
-  maxPosYOffset: 0.4
+  minPosYOffset: 1.2
+  maxPosYOffset: 1.2
   minRadius: 2
   maxRadius: 6
   minRotationSpeed: 10
@@ -6877,8 +6877,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   textEffect: {fileID: 1649085166}
   centerPoint: {fileID: 0}
-  minPosYOffset: 0.8
-  maxPosYOffset: 0.8
+  minPosYOffset: 0.3
+  maxPosYOffset: 0.3
   minRadius: 2
   maxRadius: 6
   minRotationSpeed: 30
