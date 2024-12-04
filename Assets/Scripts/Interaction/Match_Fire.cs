@@ -41,14 +41,4 @@ public class Match_Fire : MonoBehaviour
 
         return false;
     }
-
-    public void OverideInteractionUI(bool isActive)
-    {
-        interactable.SetUI(isActive);
-    }
-
-    public void ChangeLevelIndex()
-    {
-        interactable.IncreaseInteractionLevel();
-    }
 }
