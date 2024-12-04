@@ -31,6 +31,8 @@ public class Whiskey_InGlass : MonoBehaviour
     private void StartPouring()
     {
         isWhiskeyPouring = true;
+        interactable.SetUI(!isWhiskeyPouring);
+
         StartCoroutine(PourWhiskey());
     }
 
