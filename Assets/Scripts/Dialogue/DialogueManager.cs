@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using System;
+using System.Text;
 
 public class DialogueManager : MonoBehaviour
 {
@@ -58,15 +59,17 @@ public class DialogueManager : MonoBehaviour
 
     public static void OverrideSetAudio(AudioClip clip, bool isActive)
     {
-        if (isActive)
-            Instance.components.voiceOver.PlayOneShot(clip);
-        else
-            Instance.components.voiceOver.Stop();
+        Instance.SetAudio(clip, isActive);
     }
 
     public static void StartDialogue(Dialogue dialogue, Canvas canvas, InteractionManager interaction)
     {
         if (!ValidateDialogueStart(dialogue, canvas, interaction)) return;
+
+        if(interaction != null)
+        {
+            
+        }
 
         Instance.InitializeDialogue(dialogue, canvas, interaction);
     }
@@ -175,7 +178,7 @@ public class DialogueManager : MonoBehaviour
         else
         {
             components.voiceOver.Stop();
-            components.voiceOver.clip = audio;
+            components.voiceOver.clip = null;
         }
     }
 
@@ -209,6 +212,7 @@ public class DialogueManager : MonoBehaviour
     private void DisplayNextSentence()
     {
         string sentence = state.queue.Dequeue();
+
         StopAllCoroutines();
         StartCoroutine(TypeSentence(sentence));
     }
@@ -224,28 +228,35 @@ public class DialogueManager : MonoBehaviour
     {
         if (state.canvas != monologueCanvas)
         {
-            yield return TypeRegularDialogue(sentence);
+            yield return TypeDialogue(sentence);
         }
         else
         {
-            TypeFinalDialogue(sentence);
+            TypeMonologue(sentence);
         }
 
         yield return new WaitForSeconds(state.displayTime);
+
         NextSentence();
     }
 
-    private IEnumerator TypeRegularDialogue(string sentence)
+    private IEnumerator TypeDialogue(string text)
     {
         state.text = state.canvas.GetComponentInChildren<TextMeshProUGUI>();
-        state.text.text = string.Empty;
         state.canvas.enabled = true;
 
-        state.text.text = sentence;
+        StringBuilder builder = new StringBuilder();
+        foreach (char c in text)
+        {
+            if (c == '.') builder.Append('\n');
+            else builder.Append(c);
+        }
+        state.text.text = builder.ToString();
+
         yield return null;
     }
 
-    private void TypeFinalDialogue(string sentence)
+    private void TypeMonologue(string sentence)
     {
         components.screenOverlayTextMesh.text = sentence;
     }
