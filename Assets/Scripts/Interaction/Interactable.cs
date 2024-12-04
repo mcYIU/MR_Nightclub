@@ -57,6 +57,8 @@ public class Interactable : MonoBehaviour
 
     public void IncreaseInteractionLevel()
     {
+        SetUI(false);
+
         if (interactionManager.LevelIndex == interactionLevel)
         {
             interactionLevel++;
