@@ -32,7 +32,7 @@ Material:
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: 3003
+  m_CustomRenderQueue: 3000
   stringTagMap:
     MotionVector: User
   disabledShaderPasses:
@@ -75,7 +75,7 @@ Material:
     - _OcclusionStrength2: 0.7937005
     - _OuterMax: 0.83
     - _OuterMin: 0.15
-    - _QueueControl: 1
+    - _QueueControl: 0
     - _QueueOffset: 0
     - _TearDuctPosition: 0.8
     - _TearDuctWidth: 0.5
