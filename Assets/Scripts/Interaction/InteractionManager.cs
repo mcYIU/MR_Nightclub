@@ -29,6 +29,8 @@ public class InteractionManager : MonoBehaviour
 
     [Header("Voiceover")]
     public AudioSource audioSource;
+    public Dialogue[] dialogues;
+    public Canvas canvas;
     public AudioClip[] audioClips;
 
     private string[] interactablesNames_LV1;
@@ -41,6 +43,7 @@ public class InteractionManager : MonoBehaviour
     //private List<string> interactablesNames_LV2 = new List<string>();
 
     GameManager gameManager;
+    DialogueManager dialogueManager;
     DialogueTrigger dialogueTrigger;
 
     public int LevelIndex
@@ -53,6 +56,7 @@ public class InteractionManager : MonoBehaviour
                 levelIndex = value;
 
                 CleanNotice();
+                dialogueManager.isTalking = false;
                 isNoticed = false;
 
                 if (value < ineteractionLayerCount)
@@ -72,6 +76,7 @@ public class InteractionManager : MonoBehaviour
     void Start()
     {
         gameManager = FindAnyObjectByType<GameManager>();
+        dialogueManager = FindAnyObjectByType<DialogueManager>();
         dialogueTrigger = GetComponent<DialogueTrigger>();
 
         ResetInteraction();
@@ -98,7 +103,19 @@ public class InteractionManager : MonoBehaviour
 
     public void PlayAudio()
     {
-        StartCoroutine(DelayPlayAudio());
+        if (levelIndex < ineteractionLayerCount)
+        {
+            dialogueManager.StartDialogue(dialogues[LevelIndex], canvas, audioClips[LevelIndex], this);
+
+            float _playTime = audioClips[LevelIndex].length;
+            StartCoroutine(EnableInteraction(_playTime));
+        }
+        else
+        {
+            StartCoroutine(DelayPlayAudio());
+        }
+
+        //StartCoroutine(DelayPlayAudio());
     }
 
     public void DisplayNotice(string _noticeText)

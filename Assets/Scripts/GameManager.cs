@@ -56,7 +56,10 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        if (OVRInput.GetUp(OVRInput.Button.Two) && gameSceneIndex == 0) EndLevel();
+        if (OVRInput.GetUp(OVRInput.Button.Two) && gameSceneIndex == 0 && !isCompleted)
+        {
+            EndLevel();
+        }
     }
 
     public void CheckGameState()

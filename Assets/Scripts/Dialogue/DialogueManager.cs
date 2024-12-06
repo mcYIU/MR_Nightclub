@@ -17,6 +17,7 @@ public class DialogueManager : MonoBehaviour
     private Canvas dialogueCanvas;
     private TextMeshProUGUI dialogueText;
 
+    public bool isTalking = false;
     InteractionManager interactionManager;
     EndDialogueTrigger finalDialogue;
 
@@ -42,7 +43,7 @@ public class DialogueManager : MonoBehaviour
         if (_dialogue == null) return;
 
         //isPlayCompleted = false;
-        if (VO != null) VO.PlayOneShot(_audio);
+        if (VO != null && !VO.isPlaying) VO.PlayOneShot(_audio);
 
         foreach (string _sentence in _dialogue.sentences)
         {
@@ -51,6 +52,8 @@ public class DialogueManager : MonoBehaviour
         dialogueCanvas = _canvas;
         dialogueTime = _audio.length / _dialogue.sentences.Length;
         NextSentence();
+
+        isTalking = true;
     }
 
     public void StartFinalDialogue(EndDialogueTrigger _endDialogue)
@@ -168,11 +171,11 @@ public class DialogueManager : MonoBehaviour
         {
             dialogueCanvas.enabled = false;
             dialogueCanvas = null;
-            dialogueText.text = "";
+            dialogueText.text = null;
         }
         else
         {
-            finalText.text = "";
+            finalText.text = null;
         }
     }
 }

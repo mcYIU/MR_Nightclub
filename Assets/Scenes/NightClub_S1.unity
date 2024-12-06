@@ -368,8 +368,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\u80E1\u5747\u76CA"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: d670fbe434600f545a388ea41085cc0d, type: 2}
-  m_sharedMaterial: {fileID: -2021217465718214959, guid: d670fbe434600f545a388ea41085cc0d,
+  m_fontAsset: {fileID: 11400000, guid: f927ea7819bdc134a98bf7c8dffd7714, type: 2}
+  m_sharedMaterial: {fileID: -3172761626537305626, guid: f927ea7819bdc134a98bf7c8dffd7714,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -1391,8 +1391,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\u5634\u5507\u7834\u4E86\u7684\u6642\u5019\u3001\u6703\u8A08\u79D1\u4E3B\u4EFB\u628A\u4ED6\u7684\u85AA\u6C34\u9001\u4F86\u4E86\u3002"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: f927ea7819bdc134a98bf7c8dffd7714, type: 2}
-  m_sharedMaterial: {fileID: -3172761626537305626, guid: f927ea7819bdc134a98bf7c8dffd7714,
+  m_fontAsset: {fileID: 11400000, guid: e1db02c1351bc2945a3cd704f66fc565, type: 2}
+  m_sharedMaterial: {fileID: 1787496767604012463, guid: e1db02c1351bc2945a3cd704f66fc565,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -3392,8 +3392,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\u665A\u4E0A\u5979\u8DDF\u7834\u7522\u7684\u300C\u91D1\u5B50\u5927\u738B\u300D\u80E1\u5747\u76CA\u4F86\u5230\u591C\u7E3D\u6703\uFF0C\u5728\u65C1\u4EBA\u7684\u5632\u8AF7\u4E2D\u8FCE\u63A5\u81EA\u5DF1\u7684\u751F\u65E5\u3002\n"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: f927ea7819bdc134a98bf7c8dffd7714, type: 2}
-  m_sharedMaterial: {fileID: -3172761626537305626, guid: f927ea7819bdc134a98bf7c8dffd7714,
+  m_fontAsset: {fileID: 11400000, guid: e1db02c1351bc2945a3cd704f66fc565, type: 2}
+  m_sharedMaterial: {fileID: 1787496767604012463, guid: e1db02c1351bc2945a3cd704f66fc565,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -3527,16 +3527,16 @@ MonoBehaviour:
       m_Calls: []
   m_text: test
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: f927ea7819bdc134a98bf7c8dffd7714, type: 2}
-  m_sharedMaterial: {fileID: -3172761626537305626, guid: f927ea7819bdc134a98bf7c8dffd7714,
+  m_fontAsset: {fileID: 11400000, guid: d670fbe434600f545a388ea41085cc0d, type: 2}
+  m_sharedMaterial: {fileID: -2021217465718214959, guid: d670fbe434600f545a388ea41085cc0d,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278248447
-  m_fontColor: {r: 1, g: 0.88876086, b: 0, a: 1}
+    rgba: 4278213119
+  m_fontColor: {r: 1, g: 0.3479836, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -3559,7 +3559,7 @@ MonoBehaviour:
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_fontStyle: 1
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
@@ -4859,8 +4859,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278190080
-  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
+    rgba: 4278249727
+  m_fontColor: {r: 1, g: 0.9106257, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -4877,8 +4877,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 4
-  m_fontSizeBase: 4
+  m_fontSize: 3
+  m_fontSizeBase: 3
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -5219,7 +5219,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 307931577}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0.52}
+  m_LocalPosition: {x: 0, y: 0, z: -2.26}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -5228,7 +5228,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0.2, y: 3.3}
+  m_AnchoredPosition: {x: -0.98, y: 3.3}
   m_SizeDelta: {x: 10, y: 10}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &307931579
@@ -7514,8 +7514,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\u9EC3\u9EDB\u831C"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: d670fbe434600f545a388ea41085cc0d, type: 2}
-  m_sharedMaterial: {fileID: -2021217465718214959, guid: d670fbe434600f545a388ea41085cc0d,
+  m_fontAsset: {fileID: 11400000, guid: f927ea7819bdc134a98bf7c8dffd7714, type: 2}
+  m_sharedMaterial: {fileID: -3172761626537305626, guid: f927ea7819bdc134a98bf7c8dffd7714,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -8170,8 +8170,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\u5634\u5507\u788E\u4E86\u7684\u6642\u4FAF\uFF0C\u4ED6\u81EA\u5BB6\u5152\u4E5F\u8B8A\u4E86\u7159\u5F80\u4E0A\u9A30\u4E86\u3002"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: f927ea7819bdc134a98bf7c8dffd7714, type: 2}
-  m_sharedMaterial: {fileID: -3172761626537305626, guid: f927ea7819bdc134a98bf7c8dffd7714,
+  m_fontAsset: {fileID: 11400000, guid: e1db02c1351bc2945a3cd704f66fc565, type: 2}
+  m_sharedMaterial: {fileID: 1787496767604012463, guid: e1db02c1351bc2945a3cd704f66fc565,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -8762,8 +8762,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\u5B63\u6F54"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: d670fbe434600f545a388ea41085cc0d, type: 2}
-  m_sharedMaterial: {fileID: -2021217465718214959, guid: d670fbe434600f545a388ea41085cc0d,
+  m_fontAsset: {fileID: 11400000, guid: f927ea7819bdc134a98bf7c8dffd7714, type: 2}
+  m_sharedMaterial: {fileID: -3172761626537305626, guid: f927ea7819bdc134a98bf7c8dffd7714,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -9080,7 +9080,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4351fc19cf206a43a848c3ada6c616b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isPlayerOut: 1
+  isTriggered: 0
   VO_Text:
   - sentences:
     - "\u4ED6\u662F\u4E00\u500B\u6210\u529F\u7684\u5546\u4EBA\uFF0C\u9760\u6295\u6A5F\u7092\u80A1\u6210\u70BA.\u300C\u91D1\u5B50\u5927\u738B\u300D\uFF0C\u5750\u64C1\u516B\u5341\u842C\u5BB6\u7522\u3002"
@@ -9177,6 +9177,19 @@ MonoBehaviour:
   noticeDuration: 7
   isNoticed: 0
   audioSource: {fileID: 2006023464}
+  dialogues:
+  - sentences:
+    - "\u5728\u4EA4\u6613\u6240\uFF0C\u6211\u8F38\u4E86\u6240\u6709\u7684\u9322\uFF0C\u90A3\u53C8\u600E\u6A23\uFF1F"
+    - "\u8AAA\u8D77\u4F86\uFF0C\u9322\u4E5F\u5C31\u548C\u7D19\u4E00\u6A23\uFF0C"
+    - "\u98A8\u4E00\u5439\uFF0C\u4E00\u77AC\u9593\uFF0C\u4EC0\u9EBC\u90FD\u6C92\u4E86\uFF0C"
+    - "\u547C\uFF0C\u50CF\u5922\u4E00\u6A23\u3002"
+  - sentences:
+    - "\u6211\u7684\u4EBA\u751F\u5C31\u662F\u4E00\u5834\u8C6A\u8CED\uFF0C\u8F38\u4E86\u5927\u4E0D\u4E86\u5C31\u8A8D\u8F38\u3002"
+    - "\u770B\uFF0C\u9019\u88E1\u591A\u5FEB\u6A02\u554A\uFF01"
+    - "\u9152\u7CBE\u3001\u7F8E\u5973\u3001\u97F3\u6A02\u9084\u6709\u904A\u6232\uFF0C"
+    - "\u82B1\u82B1\u4E16\u754C\uFF0C\u71C8\u7D05\u9152\u7DA0\u3002"
+    - "\u4F86\uFF0C\u73A9\u4E00\u628A\uFF01"
+  canvas: {fileID: 608189813}
   audioClips:
   - {fileID: 8300000, guid: e3bd7ab652144264c8bca67e80abbf22, type: 3}
   - {fileID: 8300000, guid: 26aefa60d8ef8cf4ca997c2cdb9bc120, type: 3}
@@ -16201,8 +16214,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\u7E46\u5B97\u65E6"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: d670fbe434600f545a388ea41085cc0d, type: 2}
-  m_sharedMaterial: {fileID: -2021217465718214959, guid: d670fbe434600f545a388ea41085cc0d,
+  m_fontAsset: {fileID: 11400000, guid: f927ea7819bdc134a98bf7c8dffd7714, type: 2}
+  m_sharedMaterial: {fileID: -3172761626537305626, guid: f927ea7819bdc134a98bf7c8dffd7714,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -22464,7 +22477,7 @@ MonoBehaviour:
   sceneTransition: {fileID: 1192909192}
   triggerInterval: 3
   transitionNoticeText: "\u56DE\u53BB\u5C0B\u627E\u6A02\u968A\u9818\u73ED\u7D04\u7FF0\u751F\uFF0C\u4ED6\u70BA\u4F60\u6E96\u5099\u4E86\u5C6C\u65BC\u9019\u500B\u661F\u671F\u516D\u7684\u6A02\u66F2\u3002"
-  transitionNotice: {fileID: 1717322826}
+  transitionNotice: {fileID: 220664789}
   transitionTriggerAudio: {fileID: 8300000, guid: e5f37b91fa2e0234183cc711b1b71677,
     type: 3}
   transitionMusic: {fileID: 2120618420}
@@ -25910,6 +25923,16 @@ MonoBehaviour:
   noticeDuration: 7
   isNoticed: 0
   audioSource: {fileID: 2006023464}
+  dialogues:
+  - sentences:
+    - "\u6211\u770B\u8D77\u4F86\u50CF\u8001\u4E86\u55CE\uFF1F"
+    - "\u5728\u4F60\u7684\u773C\u88E1\uFF0C\u6211\u662F\u6C38\u9060\u7684\u5E74\u9752\u5427\uFF1F"
+    - "\u4F86\u5427\uFF0C\u6176\u795D\u6211\u7684\u751F\u65E5\uFF0C\u6176\u795D\u6211\u7684\u9752\u6625\u554A\uFF01"
+  - sentences:
+    - "\u4ECA\u5929\u6211\u662F\u4E8C\u5341\u516B\u6B72\uFF0C\u660E\u5929\u5C31\u662F\u4E8C\u5341\u516B\u6B72\u96F6\u4E00\u5929\u4E86\uFF01"
+    - "\u6211\u5F97\u8001\u4E86\u4E00\u5929\u4E86\uFF01\u6211\u662F\u4E00\u5929\u6BD4\u4E00\u5929\u8001\u7684\u3002"
+    - "\u9752\u6625\uFF0C\u5C31\u662F\u5F9E\u81EA\u5BB6\u5152\u98DB\u5230\u5225\u4EBA\u8EAB\u4E0A\u53BB\u4E86\u3002"
+  canvas: {fileID: 259092528}
   audioClips:
   - {fileID: 8300000, guid: 9c4c4d3482e5d3c4691d8c544e56abe1, type: 3}
   - {fileID: 8300000, guid: 1204b22530a44b6438baa382b327f587, type: 3}
@@ -25926,7 +25949,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4351fc19cf206a43a848c3ada6c616b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isPlayerOut: 1
+  isTriggered: 0
   VO_Text:
   - sentences:
     - "\u5979\u662F\u4E00\u4F4D\u525B\u8E0F\u5165\u4E8C\u5341\u516B\u6B72\u7684\u4EA4\u969B\u82B1\uFF0C\u7559\u6709\u4E00\u982D\u7459\u746A\u5E0C\u62C9\u5F0F\u77ED\u9AEE\uFF0C\u81C9\u4E0A\u7684\u76BA\u7D0B\u4E5F\u7528\u9670\u5F71\u906E\u4E86\u3002"
@@ -32835,6 +32858,7 @@ MonoBehaviour:
   finalText: {fileID: 1717322826}
   dialogueInterval: 4.5
   crossfade: {fileID: 1192909192}
+  isTalking: 0
 --- !u!1 &1037044118
 GameObject:
   m_ObjectHideFlags: 0
@@ -42055,6 +42079,18 @@ MonoBehaviour:
   noticeDuration: 7
   isNoticed: 0
   audioSource: {fileID: 2006023464}
+  dialogues:
+  - sentences:
+    - "\u5632\u7B11\u6211\u5427\uFF0C\u6211\u88AB\u62CB\u68C4\u4E86\u3002"
+    - "\u70BA\u4E86\u5979\uFF0C\u6211\u9023\u982D\u9AEE\u90FD\u6101\u767D\u4E86\u3002"
+    - "\u66F4\u6349\u5F04\u4EBA\u7684\u662F\uFF0C\u73FE\u5728\u5979\u9084\u5750\u5728\u5C0D\u9762\uFF0C\u548C\u90A3\u500B\u7537\u4EBA\u537F\u537F\u6211\u6211\u3002"
+  - sentences:
+    - "\u5979\u548C\u6211\u5728\u4E00\u8D77\u7684\u6642\u5019\uFF0C\u4E5F\u7B11\u5F97\u9019\u6A23\u751C\u3002"
+    - "\u73FE\u5728\u9019\u4E00\u5207\u90FD\u4E0D\u5C6C\u65BC\u6211\u4E86\uFF01"
+    - "\u4F60\u770B\uFF0C\u73FE\u5728\uFF0C\u5979\u770B\u6211\u7684\u773C\u795E\uFF0C\u5C31\u50CF\u770B\u4E00\u500B\u964C\u751F\u4EBA\u3002"
+    - "\u6211\u9084\u671F\u5F85\u8457\u5979\u770B\u5230\u6A02\u8B5C\u80FD\u60F3\u8D77\u6211\u4F86\u3002"
+    - "\u5230\u982D\u4F86\uFF0C\u6211\u6210\u4E86\u9019\u500B\u4E16\u754C\u6700\u5927\u7684\u7B11\u8A71\uFF01\u54C8\u54C8\u54C8\u54C8\uFF01"
+  canvas: {fileID: 170073378}
   audioClips:
   - {fileID: 8300000, guid: 3d4e3c5ee5bb2b94d8c402414ca2ad30, type: 3}
   - {fileID: 8300000, guid: aa7729c677a9934409d6ea4dc82877da, type: 3}
@@ -42071,7 +42107,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4351fc19cf206a43a848c3ada6c616b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isPlayerOut: 1
+  isTriggered: 0
   VO_Text:
   - sentences:
     - "\u4ED6\u662F\u4E00\u500B\u5931\u6200\u7684\u5B78\u751F\uFF0C.\u4ED6\u7684\u611B\u4EBA\u6797\u59AE\u5A1C\u548C\u9577\u817F\u6C6A\u5728\u4E00\u8D77\u4E86\u3002"
@@ -44776,6 +44812,16 @@ MonoBehaviour:
   noticeDuration: 7
   isNoticed: 0
   audioSource: {fileID: 2006023464}
+  dialogues:
+  - sentences:
+    - "\u4F60\u662F\u751A\u9EBC\uFF1F\u6211\u662F\u751A\u9EBC\uFF1F\u751A\u9EBC\u662F\u4F60\uFF1F\u751A\u9EBC\u624D\u662F\u6211\uFF1F"
+    - "\u5C0D\u4EBA\u985E\u4F86\u8AAA\uFF0C\u9078\u64C7\u751F\u5B58\uFF0C\u9084\u662F\u6B65\u5411\u6BC0\u6EC5\u6BD4\u8F03\u597D\uFF1F"
+  - sentences:
+    - "\u300C\u6709\u751F\u5373\u6709\u6B7B\uFF0C\u7D93\u904E\u5875\u4E16\u4EE5\u9054\u65BC\u6C38\u6046\u3002\u300D"
+    - "\u4EBA\u985E\u8981\u901A\u5F80\u300A\u54C8\u59C6\u96F7\u7279\u300B\u88E1\u6240\u8AAA\u7684\u6C38\u6046\uFF0C\u9700\u8981\u591A\u5C11\u6642\u9593\uFF1F"
+    - "\u4E00\u79D2\u9418\u53EF\u4EE5\u628A\u4E00\u6839\u706B\u67F4\u62D7\u6210\u5169\u6839\uFF0C\u4E00\u500B\u9418\u982D\u53EF\u62D7\u65B7\u5169\u76D2\u3002"
+    - "\u90A3\u8981\u62D7\u65B7\u591A\u5C11\u76D2\u706B\u67F4\u624D\u80FD\u901A\u5F80\u6C38\u6046\uFF1F"
+  canvas: {fileID: 1608125130}
   audioClips:
   - {fileID: 8300000, guid: e0d4352fcbe6704449baf97e264b64d3, type: 3}
   - {fileID: 8300000, guid: 83e85fae2453a5e4c85f15259655dce8, type: 3}
@@ -44792,7 +44838,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4351fc19cf206a43a848c3ada6c616b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isPlayerOut: 1
+  isTriggered: 0
   VO_Text:
   - sentences:
     - "\u4ED6\u662F\u4E00\u4F4D\u6C89\u8FF7\u65BC\u838E\u58EB\u6BD4\u4E9E\u7814\u7A76\u7684\u5B78\u8005\uFF0C\u66F8\u623F\u88E1.\u653E\u6EFF\u4E86\u300AHamlet\u300B\u7684.\u5404\u7A2E\u8B6F\u672C\u3002"
@@ -47539,10 +47585,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u5634\u5507\u788E\u4E86\u7684\u6642\u5019\uFF0C\n\u912D\u840D\u7684\u9B0D\u9AED\u53C8\u5F9E\u76AE\u8089\u88E1\u908A\u947D\u51FA\u4F86\u4E86\u3002"
+  m_text: "\u5230\u982D\u4F86\uFF0C\u6211\u6210\u4E86\u9019\u500B\u4E16\u754C\u6700\u5927\u7684\u7B11\u8A71\uFF01\u54C8\u54C8\u54C8\u54C8\uFF01"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: f927ea7819bdc134a98bf7c8dffd7714, type: 2}
-  m_sharedMaterial: {fileID: -3172761626537305626, guid: f927ea7819bdc134a98bf7c8dffd7714,
+  m_fontAsset: {fileID: 11400000, guid: e1db02c1351bc2945a3cd704f66fc565, type: 2}
+  m_sharedMaterial: {fileID: 1787496767604012463, guid: e1db02c1351bc2945a3cd704f66fc565,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -57318,8 +57364,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\u9032\u5165"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: d670fbe434600f545a388ea41085cc0d, type: 2}
-  m_sharedMaterial: {fileID: -2021217465718214959, guid: d670fbe434600f545a388ea41085cc0d,
+  m_fontAsset: {fileID: 11400000, guid: f927ea7819bdc134a98bf7c8dffd7714, type: 2}
+  m_sharedMaterial: {fileID: -3172761626537305626, guid: f927ea7819bdc134a98bf7c8dffd7714,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -58098,8 +58144,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\u5634\u5507\u788E\u4E86\u7684\u6642\u5019\uFF0C\u4E00\u9846\u5805\u5F37\u7684\u8FD1\u4EE3\u5546\u4EBA\u7684\u5FC3\u4E5F\u788E\u4E86\u3002"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: f927ea7819bdc134a98bf7c8dffd7714, type: 2}
-  m_sharedMaterial: {fileID: -3172761626537305626, guid: f927ea7819bdc134a98bf7c8dffd7714,
+  m_fontAsset: {fileID: 11400000, guid: e1db02c1351bc2945a3cd704f66fc565, type: 2}
+  m_sharedMaterial: {fileID: 1787496767604012463, guid: e1db02c1351bc2945a3cd704f66fc565,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -58748,6 +58794,15 @@ MonoBehaviour:
   noticeDuration: 7
   isNoticed: 0
   audioSource: {fileID: 2006023464}
+  dialogues:
+  - sentences:
+    - "\u6C92\u60F3\u5230\u5C31\u9019\u6A23\u4E1F\u4E86\u5DE5\u4F5C\uFF0C\u5931\u696D\u4E86\uFF0C\u5C31\u4EC0\u9EBC\u90FD\u6C92\u6709\u4E86\u3002"
+    - "\u4EC0\u9EBC\u524D\u9014\uFF0C\u4EC0\u9EBC\u751F\u6D3B\uFF0C\u90FD\u6C92\u6709\u4E86\u3002"
+    - "\u788E\u5F97\u7A00\u721B\uFF0C\u9019\u5C31\u662F\u4E16\u754C\uFF01\u662F\u7834\u4E86\u7684\u4E16\u754C\u554A\uFF01"
+  - sentences:
+    - "\u4E0B\u500B\u79AE\u62DC\uFF0C\u6211\u5C31\u81EA\u7531\u4E86\uFF0C\u7BA1\u4ED6\u5462\uFF01"
+    - "\u559D\u500B\u75DB\u5FEB\u5427\uFF01\u9019\u5F35\u7D19\u4E5F\u71D2\u4E86\u5427\u3002"
+  canvas: {fileID: 1995525544}
   audioClips:
   - {fileID: 8300000, guid: 71cdfac2053268348be2ffb9a3b12004, type: 3}
   - {fileID: 8300000, guid: 225104a24a575aa4781eb8d89d392820, type: 3}
@@ -58764,7 +58819,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4351fc19cf206a43a848c3ada6c616b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isPlayerOut: 1
+  isTriggered: 0
   VO_Text:
   - sentences:
     - "\u4ED6\u662F\u5E02\u653F\u5E9C\u4E00\u7B49\u66F8\u8A18\uFF0C.\u505A\u4E86\u4E94\u5E74\u7684\u4ED6\u5C0D\u5DE5\u4F5C\u52E4\u52E4\u61C7\u61C7\uFF0C\u4E5F\u6C92\u4EC0\u9EBC\u91CE\u5FC3\u3002"
@@ -61135,8 +61190,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\u912D\u840D"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: d670fbe434600f545a388ea41085cc0d, type: 2}
-  m_sharedMaterial: {fileID: -2021217465718214959, guid: d670fbe434600f545a388ea41085cc0d,
+  m_fontAsset: {fileID: 11400000, guid: f927ea7819bdc134a98bf7c8dffd7714, type: 2}
+  m_sharedMaterial: {fileID: -3172761626537305626, guid: f927ea7819bdc134a98bf7c8dffd7714,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}

@@ -29,20 +29,21 @@ public class EndDialogueTrigger : MonoBehaviour
         dialogueManager = FindObjectOfType<DialogueManager>();
         gameManager = FindObjectOfType<GameManager>();
 
-        sceneParticles = FindObjectsOfType<ParticleSystem>();
-        if (sceneParticles.Length > 0) foreach (ParticleSystem _particle in sceneParticles) _particle.Stop();
+        //sceneParticles = FindObjectsOfType<ParticleSystem>();
+        //if (sceneParticles.Length > 0) foreach (ParticleSystem _particle in sceneParticles) _particle.Stop();
 
-        textCanvasMask.alpha = 0f;
-        //if (TMP != null) TMP.enabled = false;
+        //textCanvasMask.alpha = 0f;
+        if (TMP != null) TMP.enabled = false;
 
         if (dialogueManager != null) Invoke(nameof(StartDialogue), startTime);
     }
 
     public void StartChangeSceneDialogue()
     {
-        if (gameManager != null) gameManager.transitionMusic.Stop();
+        gameManager.transitionMusic.Stop();
 
         StartCoroutine(Type());
+
         //if(gameManager != null) gameManager.transitionMusic.Stop();
         //if (TMP != null) TMP.enabled = true;
         //if (particle != null) particle.Play();
@@ -59,12 +60,14 @@ public class EndDialogueTrigger : MonoBehaviour
         //foreach (string _sentence in dialogue.sentences)
         //{
         //    TMP.text = _sentence;
-        //    yield return new WaitForSeconds(dialogueTime);
+        //    //yield return new WaitForSeconds(dialogueTime);
         //}
 
-        textCanvasMask.alpha = 1.0f;
+        //textCanvasMask.alpha = 1.0f;
 
-        if(sceneParticles.Length > 0) foreach (ParticleSystem _particle in sceneParticles) _particle.Play();
+        //if(sceneParticles.Length > 0) foreach (ParticleSystem _particle in sceneParticles) _particle.Play();
+
+        TMP.enabled = true;
 
         yield return new WaitForSeconds(dialogueTime);
 

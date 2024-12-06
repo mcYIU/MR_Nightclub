@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 public class DialogueTrigger : MonoBehaviour
 {
-    [HideInInspector] public bool isPlayerOut = true;
+    [HideInInspector] public bool isTriggered = false;
 
     public Dialogue[] VO_Text;
     public AudioClip[] VO_Audio;
@@ -14,6 +14,7 @@ public class DialogueTrigger : MonoBehaviour
     public Transform player;
     public InteractionManager interactionManager;
 
+    private bool isPlayerOut = true;
     DialogueManager dialogueManager;
 
     private void Start()
@@ -27,8 +28,9 @@ public class DialogueTrigger : MonoBehaviour
         if (other.gameObject.CompareTag("Player") && GameManager.isStarted && !GameManager.isCompleted)
             if (interactionManager.LevelIndex < InteractionManager.ineteractionLayerCount)
             {
-                if (isPlayerOut)
+                if (!dialogueManager.isTalking && !isTriggered)
                 {
+                    isTriggered = true;
                     isPlayerOut = false;
 
                     StartDialogue(interactionManager.LevelIndex);
@@ -45,6 +47,14 @@ public class DialogueTrigger : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player") && GameManager.isStarted && !GameManager.isCompleted)
         {
+            isPlayerOut = true;
+        }
+    }
+
+    /*private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.CompareTag("Player") && GameManager.isStarted && !GameManager.isCompleted)
+        {
             interactionManager.CleanNotice();
 
             if (interactionManager.LevelIndex < InteractionManager.ineteractionLayerCount)
@@ -57,7 +67,7 @@ public class DialogueTrigger : MonoBehaviour
                 }
             }
         }
-    }
+    }*/
 
     public void StartDialogue(int index)
     {
