@@ -61,7 +61,7 @@ public class InteractionManager : MonoBehaviour
 
                 if (value < ineteractionLayerCount)
                 {
-                    dialogueTrigger.StartDialogue(levelIndex);
+                    dialogueTrigger.StartDialogue(LevelIndex);
                 }
                 else
                 {
@@ -103,7 +103,7 @@ public class InteractionManager : MonoBehaviour
 
     public void PlayAudio()
     {
-        if (levelIndex < ineteractionLayerCount)
+        if (LevelIndex < ineteractionLayerCount)
         {
             dialogueManager.StartDialogue(dialogues[LevelIndex], canvas, audioClips[LevelIndex], this);
 
@@ -112,7 +112,7 @@ public class InteractionManager : MonoBehaviour
         }
         else
         {
-            StartCoroutine(DelayPlayAudio());
+            dialogueManager.StartDialogue(dialogues[LevelIndex], canvas, audioClips[LevelIndex], null);
         }
 
         //StartCoroutine(DelayPlayAudio());
@@ -240,9 +240,9 @@ public class InteractionManager : MonoBehaviour
     {
         yield return new WaitForSeconds(_intervalDuration);
 
-        DisplayNotice(noticeText[levelIndex]);
+        DisplayNotice(noticeText[LevelIndex]);
 
-        switch (levelIndex)
+        switch (LevelIndex)
         {
             case 0:
                 EnableGrabInteractables(grabInteractables_LV1, interactionUI_LV1);
@@ -261,9 +261,9 @@ public class InteractionManager : MonoBehaviour
     {
         yield return new WaitForSeconds(1.0f);
 
-        if (audioSource != null && !audioSource.isPlaying) audioSource.PlayOneShot(audioClips[levelIndex]);
+        if (audioSource != null && !audioSource.isPlaying) audioSource.PlayOneShot(audioClips[LevelIndex]);
 
-        if (levelIndex < ineteractionLayerCount)
+        if (LevelIndex < ineteractionLayerCount)
         {
             float _playTime = audioClips[levelIndex].length;
             StartCoroutine(EnableInteraction(_playTime));
