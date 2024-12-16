@@ -17,7 +17,7 @@ public class DialogueManager : MonoBehaviour
     private Canvas dialogueCanvas;
     private TextMeshProUGUI dialogueText;
 
-    public bool isTalking = false;
+    [HideInInspector] public bool isTalking = false;
     InteractionManager interactionManager;
     EndDialogueTrigger finalDialogue;
 
@@ -89,10 +89,11 @@ public class DialogueManager : MonoBehaviour
             //isPlayCompleted = true;
             EndDialogue();
 
-            if (interactionManager != null)
+            if (interactionManager != null && interactionManager.LevelIndex < InteractionManager.ineteractionLayerCount)
                 interactionManager.PlayAudio();
             else if (finalDialogue != null)
                 StartCoroutine(NextFinalDialogue());
+            else isTalking = false;
         }
         else
         {
