@@ -26,20 +26,19 @@ public class DialogueTrigger : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Player") && GameManager.isStarted && !GameManager.isCompleted)
-            if (interactionManager.LevelIndex < InteractionManager.ineteractionLayerCount)
+            if (!dialogueManager.isTalking && !isTriggered)
             {
-                if (!dialogueManager.isTalking && !isTriggered)
+                if (interactionManager.LevelIndex < InteractionManager.ineteractionLayerCount)
                 {
                     isTriggered = true;
                     isPlayerOut = false;
 
                     StartDialogue(interactionManager.LevelIndex);
                 }
-            }
-            else
-            {
-                interactionManager.PlayAudio();
-                //interactionManager.DisplayNotice(transitionText);
+                else
+                {
+                    interactionManager.PlayAudio();
+                }
             }
     }
 
@@ -48,6 +47,11 @@ public class DialogueTrigger : MonoBehaviour
         if (other.gameObject.CompareTag("Player") && GameManager.isStarted && !GameManager.isCompleted)
         {
             isPlayerOut = true;
+
+            if(interactionManager.LevelIndex !< InteractionManager.ineteractionLayerCount && isTriggered)
+            {
+                isTriggered = false;
+            }
         }
     }
 
@@ -71,7 +75,8 @@ public class DialogueTrigger : MonoBehaviour
 
     public void StartDialogue(int index)
     {
-        dialogueNoticeUI.enabled = false;
+        if (dialogueNoticeUI != null) dialogueNoticeUI.enabled = false;
+
         dialogueManager.StartDialogue(VO_Text[index], dialogueCanvas, VO_Audio[index], interactionManager);
     }
 
@@ -86,6 +91,8 @@ public class DialogueTrigger : MonoBehaviour
         {
             dialogueNoticeUI.enabled = false;
             dialogueManager.EndDialogue();
+
+
         }
     }
 }
