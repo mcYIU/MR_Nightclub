@@ -40,8 +40,8 @@ public class GameLevelTrigger : MonoBehaviour
         lights.SetActive(true);
 
         NPC.SetActive(true);
-        NPC.TryGetComponent<AudioSource>(out AudioSource AS_Wellcome);
-        if (AS_Wellcome != null) AS_Wellcome.Play();
+        NPC.TryGetComponent<DialogueTrigger>(out DialogueTrigger _npcTrigger);
+        if (_npcTrigger != null) _npcTrigger.StartDialogue(0);
     }
 
     public void EnableTriggerPoint()
