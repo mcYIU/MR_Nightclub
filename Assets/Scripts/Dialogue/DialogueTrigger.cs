@@ -5,7 +5,7 @@ using System;
 public class DialogueTrigger : MonoBehaviour
 {
     [Serializable]
-    private struct DialogueUIElements
+    public struct DialogueUIElements
     {
         public Image noticeUI;
         public Canvas dialogueCanvas;
@@ -13,11 +13,12 @@ public class DialogueTrigger : MonoBehaviour
 
     [Header("Dialogue")]
     public Dialogue[] dialogues;
-    [SerializeField] private AudioClip completedLevelAudio;
     [Header("Dialogue UI")]
-    [SerializeField] private DialogueUIElements uiElements;
+    public DialogueUIElements UIElements;
     [Header("Interaction Manager")]
-    [SerializeField] private InteractionManager interactionManager;
+    [SerializeField] InteractionManager interactionManager;
+
+    [HideInInspector] private bool isDialogueTriggered = false;
 
     private void Start()
     {
@@ -26,7 +27,7 @@ public class DialogueTrigger : MonoBehaviour
 
     private void InitializeDialogue()
     {
-        uiElements.dialogueCanvas.enabled = false;
+        UIElements.dialogueCanvas.enabled = false;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -47,32 +48,30 @@ public class DialogueTrigger : MonoBehaviour
     {
         return other.CompareTag("Player") &&
                GameManager.IsStarted &&
-               !GameManager.IsCompleted;
+               !GameManager.IsCompleted &&
+               !DialogueManager.isTalking;
     }
 
     private void HandleTriggerEnter()
     {
-        if (IsWithinInteractionLimit())
+        if (!isDialogueTriggered)
         {
             StartDialogue(interactionManager.LevelIndex);
-        }
-        else
-        {
-            HandleCompletedInteraction(true);
-        }
 
+            isDialogueTriggered = true;
+        }
     }
 
     private void HandleTriggerExit()
     {
-        if (IsWithinInteractionLimit())
+        if (!IsWithinInteractionLimit() && isDialogueTriggered)
         {
             EndDialogue();
             interactionManager.CleanInteraction();
-        }
-        else
-        {
-            HandleCompletedInteraction(false);
+            DialogueManager.isTalking = false;
+
+            isDialogueTriggered = false;
+            Debug.Log(isDialogueTriggered);
         }
     }
 
@@ -81,19 +80,24 @@ public class DialogueTrigger : MonoBehaviour
         return interactionManager.LevelIndex < interactionManager.interactionLayers.Length;
     }
 
-    private void HandleCompletedInteraction(bool doesPlayerEnter)
-    {
-        DialogueManager.OverrideSetAudio(completedLevelAudio, doesPlayerEnter);
-    }
-
     public void StartDialogue(int index)
     {
-        if (!IsWithinInteractionLimit()) HandleCompletedInteraction(true);
-
         if (!IsValidDialogueIndex(index)) return;
 
         SetupDialogueUI(false);
         InitiateDialogue(index);
+    }
+
+    public void EnableInteraction()
+    {
+        if (interactionManager && IsWithinInteractionLimit())
+        {
+            interactionManager.EnableInteraction();
+        }
+        else
+        {
+            DialogueManager.isTalking = false;
+        }
     }
 
     private bool IsValidDialogueIndex(int index)
@@ -105,22 +109,17 @@ public class DialogueTrigger : MonoBehaviour
     {
         if (IsWithinInteractionLimit())
         {
-            uiElements.noticeUI.enabled = isNoticeVisible;
+            UIElements.noticeUI.enabled = isNoticeVisible;
         }
         else
         {
-            uiElements.noticeUI.enabled = false;
+            UIElements.noticeUI.enabled = false;
         }
     }
 
     private void InitiateDialogue(int index)
     {
-        DialogueManager.StartDialogue
-            (
-            dialogues[index],
-            uiElements.dialogueCanvas,
-            interactionManager
-            );
+        DialogueManager.StartDialogue(dialogues[index], UIElements.dialogueCanvas, this);
     }
 
     public void EndDialogue()
