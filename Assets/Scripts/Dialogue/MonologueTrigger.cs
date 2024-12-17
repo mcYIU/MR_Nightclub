@@ -1,59 +1,64 @@
-using UnityEngine;
 using System.Collections;
+using TMPro;
+using UnityEngine;
+
+[System.Serializable]
+public struct MonologueContent
+{
+    public Dialogue diaogue;
+    public GameObject character;
+}
 
 public class MonologueTrigger : MonoBehaviour
 {
-    [System.Serializable]
-    public struct MonologueContent
-    {
-        public Dialogue diaogue;
-        public GameObject character;
-    }
+    private int monologueIndex = 0;
+    private const float startTime = 3.0f;
 
     [Header("Character Monologue")]
-    public MonologueContent[] monologueContent;
+    public MonologueContent[] monologues;
 
-    [Header("End Visual")]
-    [SerializeField] private CanvasGroup textCanvasMask;
-    [SerializeField] private ParticleSystem visual;
-    [SerializeField] private float duration;
+    [Header("End Text")]
+    [SerializeField] private TextMeshProUGUI TMP;
+    [SerializeField] private float endDuration;
 
-    [HideInInspector] public int dialogueIndex = 0;
-    private readonly float startTime = 3.0f;
-    private ParticleSystem[] sceneParticles;
+    public int MonologueIndex
+    {
+        get => monologueIndex;
+        set
+        {
+            if (monologueIndex == value) return;
+
+            monologueIndex = value;
+            StartMonologue();
+
+            Debug.Log(monologueIndex);
+        }
+    }
 
     private void Start()
     {
-        sceneParticles = FindObjectsOfType<ParticleSystem>();
-        if (sceneParticles.Length > 0) foreach (ParticleSystem _particle in sceneParticles) _particle.Stop();
+        if (TMP != null) TMP.enabled = false;
 
-        textCanvasMask.alpha = 0f;
-        //if (TMP != null) TMP.enabled = false;
-
-        Invoke(nameof(StartDialogue), startTime);
+        Invoke(nameof(StartMonologue), startTime);
     }
 
-    public void StartChangeSceneDialogue()
+    private void StartMonologue()
     {
-        StartCoroutine(Type());
-        //if(gameManager != null) gameManager.transitionMusic.Stop();
-        //if (TMP != null) TMP.enabled = true;
-        //if (particle != null) particle.Play();
-        //if (dialogueManager.VO != null) dialogueManager.VO.PlayOneShot(changeSceneAudio);
+        if (MonologueIndex == monologues.Length)
+        {
+            StartCoroutine(DisplayEndText());
+        }
+        else
+        {
+            DialogueManager.StartMonologue(monologues[MonologueIndex], this);
+        }
     }
 
-    private void StartDialogue()
+    private IEnumerator DisplayEndText()
     {
-        DialogueManager.StartMonologue(this);
-    }
+        TMP.enabled = true;
 
-    private IEnumerator Type()
-    {
-        textCanvasMask.alpha = 1.0f;
-        
-        foreach (ParticleSystem _particle in sceneParticles) _particle.Play();
-
-        yield return new WaitForSeconds(duration);
+        yield return new WaitForSeconds(endDuration);
 
         GameManager.ChangeToNextScene();
     }
