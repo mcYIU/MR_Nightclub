@@ -8,14 +8,6 @@ using System.Text;
 public class DialogueManager : MonoBehaviour
 {
     [Serializable]
-    private struct DialogueComponents
-    {
-        public AudioSource voiceOver;
-        public TextMeshProUGUI screenOverlayTextMesh;
-        public float dialogueTransitionInterval;
-    }
-
-    [Serializable]
     public class DialogueState
     {
         public Dialogue dialogue;
@@ -28,21 +20,21 @@ public class DialogueManager : MonoBehaviour
 
     private static DialogueManager instance;
     public static DialogueManager Instance => instance;
+    public static bool isTalking = false;
 
-    [SerializeField] private DialogueComponents components;
+    [Header("Components")]
+    [SerializeField] private AudioSource audioSource;
     [SerializeField] private Canvas monologueCanvas;
+    [SerializeField] private float monologueTransitionInterval;
     [HideInInspector] public DialogueState state;
-    private InteractionManager interactionManager;
-    private MonologueTrigger monologue;
+
+    private GameObject currentMonologueCharacter;
+    private DialogueTrigger dialogueTrigger;
+    private MonologueTrigger monologueTrigger;
 
     private void Awake()
     {
         InitializeSingleton();
-    }
-
-    private void Start()
-    {
-        //components.screenOverlayTextMesh.text = null;
     }
 
     private void InitializeSingleton()
@@ -57,96 +49,90 @@ public class DialogueManager : MonoBehaviour
         }
     }
 
-    public static void OverrideSetAudio(AudioClip clip, bool isActive)
+    public static void OverrideSetAudio(AudioClip clip)
     {
-        Instance.SetAudio(clip, isActive);
+        Instance.SetAudio(clip);
     }
 
-    public static void StartDialogue(Dialogue dialogue, Canvas canvas, InteractionManager interaction)
+    public static void StartDialogue(Dialogue dialogue, Canvas canvas, DialogueTrigger trigger = null)
     {
-        if (!ValidateDialogueStart(dialogue, canvas, interaction)) return;
-
-        if(interaction != null)
-        {
-            
-        }
-
-        Instance.InitializeDialogue(dialogue, canvas, interaction);
+        Instance.InitializeDialogue(dialogue, canvas, trigger);
     }
 
-    private static bool ValidateDialogueStart(Dialogue dialogue, Canvas canvas, InteractionManager interaction)
+    private void InitializeDialogue(Dialogue dialogue, Canvas canvas, DialogueTrigger trigger = null)
     {
-        if (interaction.noticeSystem.isNoticed)
+        isTalking = true;
+
+        dialogueTrigger = trigger;
+        state.dialogue = dialogue;
+        state.canvas = canvas;
+
+        if (state.dialogue.voiceOverText != null && state.dialogue.voiceOverAudio != null && !state.dialogue.isVoiceOverPlayed)
         {
-            interaction.DisplayNotice();
-            return false;
-        }
-
-        return dialogue.sentences != null &&
-            dialogue.voiceOverAudio != null &&
-            dialogue.characterAudio != null &&
-            canvas != null;
-    }
-
-    private void InitializeDialogue(Dialogue dialogue, Canvas canvas, InteractionManager interaction)
-    {
-        interactionManager = interaction;
-        state.dialogue = dialogue;     
-
-        if (dialogue.isVoiceOverEnded)
-        {
-            PlayCharacterAudio(dialogue.characterAudio);
+            StartVoiceOver();
         }
         else
         {
-            SetAudio(state.dialogue.voiceOverAudio, true);
-            state.canvas = canvas;
-            state.displayTime = dialogue.voiceOverAudio.length / dialogue.sentences.Length;
-            EnqueueSentences(dialogue.sentences);
+            StartCharacterSpeech();
         }
     }
 
-    public static void StartMonologue(MonologueTrigger monologueTrigger)
+    private void StartVoiceOver()
     {
-        Instance.monologue = Instance.monologue ?? monologueTrigger;
-
-        Instance.InitializeMonologue(Instance.monologue.dialogueIndex);
-        Instance.NextSentence();
+        LoadDialogueState(state.dialogue.voiceOverText, state.dialogue.voiceOverAudio);
     }
 
-    private void InitializeMonologue(int index)
+    private void StartCharacterSpeech()
     {
-        SetupCharacter(index);
+        state.dialogue.isVoiceOverPlayed = true;
 
-        //PlayFinalAudio(index);
-        //EnqueueSentences(monologue.VO_Text[index].sentences);
-        //state.canvas = null;
-
-        Instance.InitializeDialogue(Instance.monologue.monologueContent[index].diaogue, monologueCanvas, null);
-        //state.displayTime = CalculateDialogueTime(index);
+        LoadDialogueState(state.dialogue.characterText, state.dialogue.characterAudio);
     }
 
-    private void SetupCharacter(int index)
+    public static void StartMonologue(MonologueContent monologue, MonologueTrigger trigger)
     {
-        if (!monologue.monologueContent[index].character.activeSelf)
+        Instance.InitializeMonologue(monologue.diaogue, Instance.monologueCanvas, monologue.character, trigger);
+    }
+
+    private void InitializeMonologue(Dialogue dialogue, Canvas canvas, GameObject character, MonologueTrigger trigger)
+    {
+        if (monologueTrigger == null) monologueTrigger = trigger;
+
+        InitializeDialogue(dialogue, canvas);
+        SetupCharacter(character);
+    }
+
+    private void SetupCharacter(GameObject character)
+    {
+        if (!character.activeSelf)
         {
-            monologue.monologueContent[index].character.SetActive(true);
+            character.SetActive(true);
+            currentMonologueCharacter = character;
         }
-    }
-
-    private void PlayFinalAudio(int index)
-    {
-        if (state.dialogue.voiceOverAudio != null)
+        else
         {
-            SetAudio(state.dialogue.voiceOverAudio, true);
+            character.SetActive(false);
         }
     }
 
-    private float CalculateDialogueTime(int index)
+    private void LoadDialogueState(string[] sentences, AudioClip clip)
     {
-        return components.voiceOver.clip != null
-            ? components.voiceOver.clip.length / state.dialogue.sentences.Length
-            : DialogueState.defaultSentenceTime;
+        state.displayTime = clip.length / sentences.Length;
+        EnqueueSentences(sentences);
+        SetAudio(clip);
+    }
+
+    private void SetAudio(AudioClip audio = null)
+    {
+        if (audio != null)
+        {
+            audioSource.clip = audio;
+            audioSource.Play();
+        }
+        else
+        {
+            audioSource.Stop();
+        }
     }
 
     private void EnqueueSentences(string[] sentences)
@@ -161,27 +147,6 @@ public class DialogueManager : MonoBehaviour
         NextSentence();
     }
 
-    private void PlayCharacterAudio(AudioClip audio)
-    {
-        SetAudio(audio, true);
-        
-        StartCoroutine(EnableInteraction(audio.length));
-    }
-
-    private void SetAudio(AudioClip audio, bool isActive)
-    {
-        if (isActive)
-        {
-            components.voiceOver.clip = audio;
-            components.voiceOver.Play();
-        }
-        else
-        {
-            components.voiceOver.Stop();
-            components.voiceOver.clip = null;
-        }
-    }
-
     private void NextSentence()
     {
         if (state.queue.Count == 0)
@@ -194,21 +159,6 @@ public class DialogueManager : MonoBehaviour
         }
     }
 
-    private void HandleDialogueEnd()
-    {
-        EndDialogue();
-
-        if (monologue != null)
-        {
-            StartCoroutine(NextMonologue());
-        }
-        else
-        {
-            state.dialogue.isVoiceOverEnded = true;
-            PlayCharacterAudio(state.dialogue.characterAudio);
-        }
-    }
-
     private void DisplayNextSentence()
     {
         string sentence = state.queue.Dequeue();
@@ -217,23 +167,9 @@ public class DialogueManager : MonoBehaviour
         StartCoroutine(TypeSentence(sentence));
     }
 
-    private IEnumerator EnableInteraction(float waitTime)
-    {
-        yield return new WaitForSeconds(waitTime);
-
-        interactionManager.EnableInteraction();
-    }
-
     private IEnumerator TypeSentence(string sentence)
     {
-        if (state.canvas != monologueCanvas)
-        {
-            yield return TypeDialogue(sentence);
-        }
-        else
-        {
-            TypeMonologue(sentence);
-        }
+        yield return TypeDialogue(sentence);
 
         yield return new WaitForSeconds(state.displayTime);
 
@@ -256,67 +192,39 @@ public class DialogueManager : MonoBehaviour
         yield return null;
     }
 
-    private void TypeMonologue(string sentence)
+    private void HandleDialogueEnd()
     {
-        components.screenOverlayTextMesh.text = sentence;
-    }
+        EndDialogue();
 
-    private IEnumerator NextMonologue()
-    {
-        yield return HandleTransition();
-
-        if (monologue.dialogueIndex == monologue.monologueContent.Length)
+        if (monologueTrigger != null)
         {
-            monologue.StartChangeSceneDialogue();
+            StartCoroutine(HandleMonologueTransition());
+            return;
+        }
+
+        if (state.dialogue.isVoiceOverPlayed)
+        {
+            EnableInteraction();
         }
         else
         {
-            yield return StartNextCharacterDialogue();
+            state.dialogue.isVoiceOverPlayed = true;
+            InitializeDialogue(state.dialogue, state.canvas, dialogueTrigger);
         }
-    }
-
-    private IEnumerator HandleTransition()
-    {
-        components.screenOverlayTextMesh.text = null;
-        FaderController.FadeOut();
-        yield return new WaitForSeconds(components.dialogueTransitionInterval);
-
-        monologue.monologueContent[monologue.dialogueIndex].character.SetActive(false);
-        monologue.dialogueIndex++;
-        FaderController.FadeIn();
-    }
-
-    private IEnumerator StartNextCharacterDialogue()
-    {
-        monologue.monologueContent[monologue.dialogueIndex].character.SetActive(true);
-
-        yield return new WaitForSeconds(components.dialogueTransitionInterval);
-
-        StartMonologue(monologue);
     }
 
     public static void EndDialogue()
     {
         Instance.CleanDialogue();
 
-        Instance.SetAudio(null, false);
+        Instance.SetAudio(null);
     }
 
     private void CleanDialogue()
     {
         StopAllCoroutines();
 
-        if(!state.dialogue.isVoiceOverEnded) CleanRegularDialogue();
-
-        if (state.canvas != monologueCanvas)
-        {
-            //Instance.CleanRegularDialogue();
-        }
-        else
-        {
-            //Instance.CleanRegularDialogue();
-            //Instance.components.screenOverlayTextMesh.text = null;
-        }
+        CleanRegularDialogue();
     }
 
     private void CleanRegularDialogue()
@@ -324,7 +232,30 @@ public class DialogueManager : MonoBehaviour
         state.queue.Clear();
 
         state.canvas.enabled = false;
-        state.canvas = null;
         state.text.text = string.Empty;
+    }
+
+    private void EnableInteraction()
+    {
+        if (dialogueTrigger != null)
+        {
+            dialogueTrigger.EnableInteraction();
+        }
+        else
+        {
+            isTalking = false;
+        }
+    }
+
+    private IEnumerator HandleMonologueTransition()
+    {
+        FaderController.FadeOut();
+
+        yield return new WaitForSeconds(monologueTransitionInterval);
+
+        SetupCharacter(currentMonologueCharacter);
+        monologueTrigger.MonologueIndex++;
+
+        FaderController.FadeIn();
     }
 }
