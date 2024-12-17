@@ -1,28 +1,24 @@
-using UnityEngine;
+ using UnityEngine;
 using UnityEngine.UI;
 
 public class CustomerDialogueTrigger : MonoBehaviour
 {
-    public Dialogue dialogue;
-    public Canvas dialogueCanvas;
-    public Image dialogueImage;
-    public AudioClip dialogueAudio;
-
-    private DialogueManager dialogueManager;
+    [Header("Dialogue Components")]
+    [SerializeField] private Dialogue dialogue;
+    [SerializeField] private Canvas dialogueCanvas;
+    [SerializeField] private Image noticeUI;
 
     private void Start()
     {
-        dialogueImage.enabled = true;
-
-        dialogueManager = FindObjectOfType<DialogueManager>();
+        noticeUI.enabled = true;
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Player"))
+        if (other.gameObject.CompareTag("Player") && !DialogueManager.isTalking)
             {
-                dialogueImage.enabled = false;
-                DialogueManager.StartDialogue(dialogue, dialogueCanvas, null);
+                noticeUI.enabled = false;
+                DialogueManager.StartDialogue(dialogue, dialogueCanvas);
             }
     }
 }
