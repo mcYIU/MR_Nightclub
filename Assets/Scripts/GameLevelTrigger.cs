@@ -1,5 +1,6 @@
 using UnityEngine;
 using System;
+using TMPro;
 
 public class GameLevelTrigger : MonoBehaviour
 {
@@ -8,19 +9,35 @@ public class GameLevelTrigger : MonoBehaviour
     {
         public ParticleSystem visual;
         public GameObject UI;
-        public GameObject NPC;
     }
 
     [Serializable]
     private struct AudioElements
     {
-        //public AudioSource audioSource;
         public AudioClip audioClip;
+    }
+
+    [Serializable]
+    private struct TransitionConfig
+    {
+        public TextMeshProUGUI noticeUI;
+        public string[] noticeText;
+        public AudioClip[] noticeAudio;
+        public AudioClip transitionMusic;
+        public int transitionState { get; set; }
+    }
+
+    [Serializable]
+    private struct NPC
+    {
+        public GameObject gameObject;
+        public DialogueTrigger dialogueTrigger;
     }
 
     [SerializeField] private VisualElements visualElements;
     [SerializeField] private AudioElements audioElements;
-    [SerializeField, Header("Start Scene")] private AudioClip welcomeDialogue;
+    [SerializeField] private TransitionConfig transitionConfig;
+    [SerializeField] private NPC npc;
 
     private Collider triggerCollider;
 
@@ -46,7 +63,7 @@ public class GameLevelTrigger : MonoBehaviour
 
     private void SetInitialState()
     {
-        SetGameObjectState(visualElements.NPC, false);
+        SetGameObjectState(npc.gameObject, false);
     }
 
     #endregion
@@ -56,34 +73,45 @@ public class GameLevelTrigger : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         SetTriggerState(TriggerState.Inactive);
+        
 
-        if (GameManager.IsStarted) 
-            HandleGameStarted();
-        else 
-            HandleFirstStart();
+        if (GameManager.IsStarted)
+        {
+            HandleSceneChange();
+        }
+        else
+        {
+            HandleGameStart();
+        }
     }
 
-    private void HandleGameStarted()
+    private void HandleSceneChange()
     {
         GameManager.ChangeToNextScene();
     }
 
-    private void HandleFirstStart()
+    private void HandleGameStart()
     {
-        StartFirstScene();
+        StartInteractionLevel();
         SetAudioElements(false);
+        SetTransitionState();
+
         GameManager.IsStarted = true;
     }
 
-    private void StartFirstScene()
+    private void StartInteractionLevel()
     {
-        SetGameObjectState(visualElements.NPC, true);
-        PlayWelcomeAudio();
+        SetGameObjectState(npc.gameObject, true);
+        StartNPCDialogue();
     }
 
-    private void PlayWelcomeAudio()
+    private void StartNPCDialogue()
     {
-        SetAudioState(welcomeDialogue, true);
+        Dialogue _NPC_Dialogue = npc.dialogueTrigger.dialogues[0];
+        Canvas _NPC_Canvas = npc.dialogueTrigger.UIElements.dialogueCanvas;
+        npc.gameObject.TryGetComponent<DialogueTrigger>(out DialogueTrigger _NPC_Trigger);
+
+        DialogueManager.StartDialogue(_NPC_Dialogue, _NPC_Canvas, _NPC_Trigger);
     }
 
     #endregion
@@ -102,6 +130,7 @@ public class GameLevelTrigger : MonoBehaviour
         SetTriggerComponents(isActive);
         SetVisualElements(isActive);
         SetAudioElements(isActive);
+        SetNoticeDisplay(transitionConfig.transitionState, isActive);
     }
 
     private void SetTriggerComponents(bool isActive)
@@ -120,15 +149,6 @@ public class GameLevelTrigger : MonoBehaviour
         SetAudioState(audioElements.audioClip, isActive);
     }
 
-    #endregion
-
-    #region Helper Methods
-
-    private void SetGameObjectState(GameObject obj, bool state)
-    {
-        if (obj != null) obj.SetActive(state);
-    }
-
     private void SetParticleState(ParticleSystem particles, bool isActive)
     {
         if (particles != null)
@@ -138,16 +158,36 @@ public class GameLevelTrigger : MonoBehaviour
         }
     }
 
+    private void SetGameObjectState(GameObject obj, bool state)
+    {
+        if (obj != null) obj.SetActive(state);
+    }
+
     private void SetAudioState(AudioClip audio, bool isActive)
     {
         if (isActive)
         {
-            MusicManager.PlayMusic(audio);
+            SoundEffectManager.PlaySFXLoop(audio);
         }
         else
         {
-            MusicManager.StopMusic();
+            SoundEffectManager.StopSFXLoop();
         }
+    }
+
+    private void SetNoticeDisplay(int level, bool isActive)
+    {
+        transitionConfig.noticeUI.text = (isActive) ? transitionConfig.noticeText[level] : string.Empty;
+        
+        AudioClip _clip = (isActive) ? transitionConfig.noticeAudio[level] : null;
+        DialogueManager.OverrideSetAudio(_clip);
+
+        if (level > 0 && isActive) MusicManager.PlayMusic(transitionConfig.transitionMusic);
+    }
+
+    private void SetTransitionState()
+    {
+        transitionConfig.transitionState++;
     }
 
     #endregion
