@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System;
@@ -15,19 +14,10 @@ public class GameManager : MonoBehaviour
     [Serializable]
     private struct TransitionConfig
     {
-        public GameLevelTrigger triggerPoint;
-        public float interval;
-        public string noticeText;
-        public TextMeshProUGUI noticeUI;
-        public AudioClip transitionMusic;
-        public AudioClip guideAudio;
-    }
-
-    [Serializable]
-    private struct PassthroughConfig
-    {
+        public GameLevelTrigger levelTrigger;     
         public OVRPassthroughLayer layers;
         public float fadeDuration;
+        public float interval;
     }
 
     public static GameManager Instance { get; private set; }
@@ -37,9 +27,8 @@ public class GameManager : MonoBehaviour
     [Header("Configurations")]
     [SerializeField] private InteractionConfig interactionConfig;
     [SerializeField] private TransitionConfig transitionConfig;
-    [SerializeField] private PassthroughConfig passthroughConfig;
 
-    private int gameSceneIndex;
+    private static int gameSceneIndex;
     private const float FADE_END_VALUE = 0f;
 
     #region Initialization
@@ -69,8 +58,11 @@ public class GameManager : MonoBehaviour
 
     private void InitializeGame()
     {
-        transitionConfig.noticeUI.text = null;
         SceneManager.sceneLoaded += OnSceneLoaded;
+
+        Debug.Log(SceneManager.loadedSceneCount);
+
+        if (gameSceneIndex == SceneManager.sceneCountInBuildSettings - 1) StartCoroutine(ChangePassThroughOpacity());
     }
 
     #endregion
@@ -107,19 +99,14 @@ public class GameManager : MonoBehaviour
 
     private static void EndLevel()
     {
-        IsCompleted = true;
-        DialogueManager.EndDialogue();
+        if (gameSceneIndex == 0)
+        {
+            IsCompleted = true;
+            DialogueManager.EndDialogue();
 
-        Instance.StartCoroutine(Instance.ChangePassThroughOpacity());
-        Instance.DisplayTransitionNotice();
-    }
-
-    private void DisplayTransitionNotice()
-    {
-        transitionConfig.noticeUI.text = transitionConfig.noticeText;
-        MusicManager.PlayMusic(transitionConfig.transitionMusic);
-
-        DialogueManager.OverrideSetAudio(transitionConfig.guideAudio, true);
+            Instance.StartCoroutine(Instance.ChangePassThroughOpacity());
+            Instance.EnableLevelTrigger();
+        }
     }
 
     #endregion
@@ -139,24 +126,23 @@ public class GameManager : MonoBehaviour
     private IEnumerator PerformSceneTransition()
     {
         HandleTransitionMusic();
-        ClearTransitionNotice();
 
         yield return ExecuteSceneChange();
     }
 
     private void HandleTransitionMusic()
     {
-        if (gameSceneIndex != 0)
+        if (gameSceneIndex != 0) 
         {
-            transitionConfig.interval++;
-
             MusicManager.StopMusic();
-        }
+
+            transitionConfig.interval *= 1.5f;
+        }   
     }
 
-    private void ClearTransitionNotice()
+    private void EnableLevelTrigger()
     {
-        transitionConfig.noticeUI.text = null;
+        transitionConfig.levelTrigger.EnableTriggerPoint();
     }
 
     private IEnumerator ExecuteSceneChange()
@@ -176,46 +162,22 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator ChangePassThroughOpacity()
     {
-        if (gameSceneIndex != 0) yield break;
-
-        float startValue = passthroughConfig.layers.textureOpacity;
+        float startValue = transitionConfig.layers.textureOpacity;
         float elapsedTime = 0f;
 
-        while (elapsedTime < passthroughConfig.fadeDuration)
+        while (elapsedTime < transitionConfig.fadeDuration)
         {
-            passthroughConfig.layers.textureOpacity = Mathf.Lerp(
+            transitionConfig.layers.textureOpacity = Mathf.Lerp(
                 startValue,
                 FADE_END_VALUE,
-                elapsedTime / passthroughConfig.fadeDuration
+                elapsedTime / transitionConfig.fadeDuration
             );
 
             elapsedTime += Time.deltaTime;
             yield return null;
         }
 
-        passthroughConfig.layers.textureOpacity = FADE_END_VALUE;
-    }
-
-    private IEnumerator TypeEndNotice(string text)
-    {
-        if (transitionConfig.noticeUI.text != null)
-        {
-            transitionConfig.noticeUI.text = null;
-        }
-
-        for (int i = 0; i < text.Length; i++)
-        {
-            if (text[i] == '.')
-            {
-                transitionConfig.noticeUI.text += "\n";
-            }
-            else
-            {
-                transitionConfig.noticeUI.text += text[i];
-            }
-        }
-
-        yield return null;
+        transitionConfig.layers.textureOpacity = FADE_END_VALUE;
     }
 
     #endregion
