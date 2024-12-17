@@ -15,7 +15,7 @@ public class InteractionManager : MonoBehaviour
 {
     public InteractionLayer[] interactionLayers;
     public NoticeSystem noticeSystem;
-    [SerializeField] private DialogueTrigger dialogueTrigger;
+    [SerializeField, Header("Dialogue Trigger")] private DialogueTrigger dialogueTrigger;
 
     private int levelIndex = 0;
 
@@ -29,7 +29,6 @@ public class InteractionManager : MonoBehaviour
         public void Initialize()
         {
             interactionNotice.text = string.Empty;
-            //endNotice.text = string.Empty;
             isNoticed = false;
         }
 
@@ -75,7 +74,6 @@ public class InteractionManager : MonoBehaviour
 
         if (LevelIndex == interactionLayers.Length)
         {
-            //dialogueTrigger.EndDialogue();
             GameManager.CheckGameState();
         }
     }
@@ -108,10 +106,10 @@ public class InteractionManager : MonoBehaviour
 
     public void EnableInteraction()
     {
-        DisplayNotice();
-
         if (LevelIndex < interactionLayers.Length)
         {
+            DisplayNotice();
+
             EnableInteractables(LevelIndex);
         }
     }
@@ -121,25 +119,6 @@ public class InteractionManager : MonoBehaviour
         foreach (var interactable in interactionLayers[levelIndex].interactables)
         {
             interactable.SetInteraction(true);
-        }
-    }
-
-    private IEnumerator TypeEndNotice(string text)
-    {
-        StringBuilder builder = new StringBuilder();
-
-        foreach (char c in text)
-        {
-            if (c == '.')
-            {
-                builder.Append('\n');
-            }
-            else
-            {
-                builder.Append(c);
-            }
-            noticeSystem.endNotice.text = builder.ToString();
-            yield return null;
         }
     }
 
