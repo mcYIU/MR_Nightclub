@@ -2,14 +2,14 @@ using UnityEngine;
 
 public class FaderController : MonoBehaviour
 {
-    public static FaderController instance;
+    public static FaderController Instance;
     [SerializeField] private OVRScreenFade fader;
 
     private void Awake()
     {
-        if (instance == null)
+        if (Instance == null)
         {
-            instance = this;
+            Instance = this;
         }
         else
         {
@@ -17,8 +17,8 @@ public class FaderController : MonoBehaviour
         }
     }
 
-    public static void FadeIn() { instance.fader.FadeIn(); }
+    public static void FadeIn() { Instance.fader.FadeIn(); }
 
-    public static void FadeOut() { instance.fader.FadeOut(); }
+    public static void FadeOut() { Instance.fader.FadeOut(); }
 
 }
