@@ -32,29 +32,35 @@ public class Dice_Throw : MonoBehaviour
 
     public void GrabAllDices(Transform parentDice)
     {
-        rb.useGravity = false;
-        rb.isKinematic = true;
-        rb.interpolation = RigidbodyInterpolation.None;
-        
-        transform.SetPositionAndRotation(parentDice.position, parentDice.rotation);
-        transform.SetParent(parentDice.transform);
-        transform.localScale = Vector3.one;
+        if (interactable.isInteractionEnabled)
+        {
+            rb.useGravity = false;
+            rb.isKinematic = true;
+            rb.interpolation = RigidbodyInterpolation.None;
 
-        isGrounded = false;
+            transform.SetPositionAndRotation(parentDice.position, parentDice.rotation);
+            transform.SetParent(parentDice.transform);
+            transform.localScale = Vector3.one;
 
-        SetUI(isGrounded);
+            isGrounded = false;
+
+            SetUI(isGrounded);
+        }
     }
 
     public void ReleaseAllDices()
     {
-        transform.SetParent(null);
-        transform.localScale = Vector3.one;
+        if (interactable.isInteractionEnabled)
+        {
+            transform.SetParent(null);
+            transform.localScale = Vector3.one;
 
-        rb.isKinematic = false;
-        rb.useGravity = true;
-        rb.interpolation = RigidbodyInterpolation.Interpolate;
+            rb.isKinematic = false;
+            rb.useGravity = true;
+            rb.interpolation = RigidbodyInterpolation.Interpolate;
 
-        rb.AddForce(transform.forward * throwForce, ForceMode.Impulse);
+            rb.AddForce(transform.forward * throwForce, ForceMode.Impulse);
+        }
     }
 
     private void SetUI(bool isGrabbed)
