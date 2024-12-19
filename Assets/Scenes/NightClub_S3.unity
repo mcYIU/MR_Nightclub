@@ -4583,6 +4583,7 @@ MonoBehaviour:
   detechPoint: {fileID: 1380717631}
   detachDistance: 0.2
   SFX: {fileID: 0}
+  rose: {fileID: 0}
   interactable: {fileID: 0}
 --- !u!65 &94696871
 BoxCollider:
@@ -4882,7 +4883,7 @@ PrefabInstance:
     - target: {fileID: 8477036197162326196, guid: 49403cce7e5bd7444999d517d7a22fee,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -4.18
+      value: -1.69
       objectReference: {fileID: 0}
     - target: {fileID: 8477036197162326196, guid: 49403cce7e5bd7444999d517d7a22fee,
         type: 3}
@@ -4892,7 +4893,7 @@ PrefabInstance:
     - target: {fileID: 8477036197162326196, guid: 49403cce7e5bd7444999d517d7a22fee,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.28
+      value: -0.77
       objectReference: {fileID: 0}
     - target: {fileID: 8477036197162326196, guid: 49403cce7e5bd7444999d517d7a22fee,
         type: 3}
@@ -6586,6 +6587,7 @@ MonoBehaviour:
   detechPoint: {fileID: 1380717631}
   detachDistance: 0.2
   SFX: {fileID: 0}
+  rose: {fileID: 0}
   interactable: {fileID: 0}
 --- !u!114 &296934805
 MonoBehaviour:
@@ -7701,6 +7703,7 @@ MonoBehaviour:
   detechPoint: {fileID: 1380717631}
   detachDistance: 0.2
   SFX: {fileID: 0}
+  rose: {fileID: 0}
   interactable: {fileID: 0}
 --- !u!114 &493865955
 MonoBehaviour:
@@ -33769,15 +33772,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30de91ecdf749874886ca6def197b7ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialogue:
-    voiceOverText: []
-    voiceOverAudio: {fileID: 0}
-    characterText:
-    - "\u5403\u4E86\u98EF\u6C92\u4E8B\u505A\uFF0C"
-    - "\u4E0A\u9019\u5152\u62D7\u706B\u67F4\u4F86\uFF0C"
-    - "\u5012\u662F\u5FEB\u6A02\u4EBA\u54EA\u3002"
-    characterAudio: {fileID: 8300000, guid: 73bbc5c12b6242f418b8391f1a43b46c, type: 3}
-    isVoiceOverPlayed: 0
+  data: {fileID: 11400000, guid: 28086f4f929d1a1409634fe4086e9047, type: 2}
   dialogueCanvas: {fileID: 1753005789}
   noticeUI: {fileID: 411784796}
 --- !u!65 &699087187
@@ -33810,7 +33805,7 @@ Transform:
   m_GameObject: {fileID: 699087185}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: -0.7220622, z: 0, w: 0.69182825}
-  m_LocalPosition: {x: -1.36, y: 0, z: 1.32}
+  m_LocalPosition: {x: -1.21, y: 0, z: 1.25}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -38051,14 +38046,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30de91ecdf749874886ca6def197b7ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialogue:
-    voiceOverText: []
-    voiceOverAudio: {fileID: 0}
-    characterText:
-    - "\u90A3\u50A2\u4F19\u5012\u6709\u5473\u5152\uFF0C\u5230\u9019\u5152\u4F86\u62D7\u706B\u67F4\u3002"
-    - "\u8CB7\u4E00\u584A\u9322\u4E0D\u662F\u80FD\u5728\u5BB6\u88E1\u62D7\u4E00\u5929\u4E86\u55CE\uFF1F"
-    characterAudio: {fileID: 8300000, guid: f7c020b5046d0254fb0a068b8b5c5551, type: 3}
-    isVoiceOverPlayed: 0
+  data: {fileID: 11400000, guid: b904a985f52ffba44a1a21c172201979, type: 2}
   dialogueCanvas: {fileID: 7474752332298859769}
   noticeUI: {fileID: 894434070}
 --- !u!65 &839961316
@@ -48707,6 +48695,7 @@ MonoBehaviour:
   detechPoint: {fileID: 1380717631}
   detachDistance: 0.2
   SFX: {fileID: 0}
+  rose: {fileID: 0}
   interactable: {fileID: 0}
 --- !u!114 &1105470397
 MonoBehaviour:
@@ -48938,16 +48927,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30de91ecdf749874886ca6def197b7ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialogue:
-    voiceOverText: []
-    voiceOverAudio: {fileID: 0}
-    characterText:
-    - "\u90A3\u559D\u9189\u4E86\u7684\u50BB\u74DC\u4E0D\u6A02\u55CE\uFF1F"
-    - "\u4E00\u9032\u4F86\u5C31\u628A\u4EBA\u5BB6\u7684\u9152\u6253\u7FFB\u4E86\u3002"
-    - "\u9084\u7F75\u4EBA\u5BB6\u4EC0\u9EBC\u6771\u897F\uFF0C"
-    - "\u73FE\u5728\u53EF\u62DA\u547D\u548C\u4EBA\u5BB6\u8B1B\u8D77\u7B11\u8A71\u4F86\u54A7\u3002"
-    characterAudio: {fileID: 8300000, guid: b6635fa12266fd94691fb12cd87dd6f9, type: 3}
-    isVoiceOverPlayed: 0
+  data: {fileID: 11400000, guid: af8d1376cb0f084449e11754a46fe6f6, type: 2}
   dialogueCanvas: {fileID: 685272443}
   noticeUI: {fileID: 865866807}
 --- !u!65 &1114845146
@@ -48980,7 +48960,7 @@ Transform:
   m_GameObject: {fileID: 1114845144}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.65, y: 0, z: 1.12}
+  m_LocalPosition: {x: 4.17, y: 0, z: 1.53}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -54975,6 +54955,7 @@ MonoBehaviour:
   detechPoint: {fileID: 1380717631}
   detachDistance: 0.2
   SFX: {fileID: 0}
+  rose: {fileID: 0}
   interactable: {fileID: 0}
 --- !u!114 &1630531801
 MonoBehaviour:
@@ -55728,16 +55709,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4351fc19cf206a43a848c3ada6c616b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialogues:
-  - voiceOverText: []
-    voiceOverAudio: {fileID: 0}
-    characterText:
-    - "Ladies and Gentlemen\uFF0C\u5929\u8981\u4EAE\u4E86\uFF0C\u72C2\u6B61\u5373\u5C07\u843D\u5E55\uFF0C"
-    - "\u60A8\u53EF\u4EE5\u4E0A\u524D\u8207\u5176\u4ED6\u9867\u5BA2\u4E00\u8D77\u56DE\u5473\u9019\u5EA7\u90FD\u5E02\u7684\u7E41\u83EF\uFF0C"
-    - "\u6216\u8005\u9078\u64C7\u812B\u4E0BVR\u773C\u93E1\uFF0C\u96E2\u958B\u591C\u7E3D\u6703\u3002"
-    - "\u518D\u898B\u4E86\uFF0C\u6211\u7684\u670B\u53CB\u5011\u3002"
-    characterAudio: {fileID: 8300000, guid: 12257dfdeb83e1c439cb48388b47bd0e, type: 3}
-    isVoiceOverPlayed: 0
+  data:
+  - {fileID: 11400000, guid: 5faccff2ec5cbe64aa27266e14d78c6f, type: 2}
   UIElements:
     noticeUI: {fileID: 0}
     dialogueCanvas: {fileID: 1835844034}
@@ -57819,6 +57792,7 @@ MonoBehaviour:
   npc:
     gameObject: {fileID: 1679464307}
     dialogueTrigger: {fileID: 1679464309}
+  dialogueDelay: 3
 --- !u!4 &1927711703
 Transform:
   m_ObjectHideFlags: 0
@@ -58670,16 +58644,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30de91ecdf749874886ca6def197b7ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialogue:
-    voiceOverText: []
-    voiceOverAudio: {fileID: 0}
-    characterText:
-    - "\u9019\u6E9C\u5152\u90A3\u5E7E\u500B\u5168\u662F\u5FEB\u6A02\u4EBA\uFF01"
-    - "\u4F60\u77A7\uFF0C\u9EC3\u9EDB\u831C\u548C\u80E1\u5747\u76CA\uFF0C"
-    - "\u9084\u6709\u4ED6\u5011\u5C0D\u9762\u7684\u90A3\u5169\u500B\uFF0C"
-    - "\u8DF3\u5F97\u591A\u6709\u52C1\uFF01"
-    characterAudio: {fileID: 8300000, guid: dbb80e73b9ef2f5439d3623c94e9f127, type: 3}
-    isVoiceOverPlayed: 0
+  data: {fileID: 11400000, guid: 469cfcd0659072446b8cdcc18635a28d, type: 2}
   dialogueCanvas: {fileID: 2122863049}
   noticeUI: {fileID: 1472568674}
 --- !u!65 &2127116250
@@ -58712,7 +58677,7 @@ Transform:
   m_GameObject: {fileID: 2127116248}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0.6080689, z: 0, w: 0.79388434}
-  m_LocalPosition: {x: 2.22, y: 0, z: 0.68}
+  m_LocalPosition: {x: 1.95, y: 0, z: 0.7}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -64559,7 +64524,7 @@ PrefabInstance:
     - target: {fileID: 8477036197162326196, guid: 49403cce7e5bd7444999d517d7a22fee,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 4.41
+      value: 4.87
       objectReference: {fileID: 0}
     - target: {fileID: 8477036197162326196, guid: 49403cce7e5bd7444999d517d7a22fee,
         type: 3}
@@ -65023,6 +64988,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pouringVisual: {fileID: 0}
+  capPrefab: {fileID: 0}
   pushForce: 2
   SFX: {fileID: 0}
   interactable: {fileID: 0}
@@ -65268,7 +65234,7 @@ PrefabInstance:
     - target: {fileID: 4668697134577558900, guid: 8adc7805a3e66ea4e92780d62317923e,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 2.88
+      value: 2.99
       objectReference: {fileID: 0}
     - target: {fileID: 4668697134577558900, guid: 8adc7805a3e66ea4e92780d62317923e,
         type: 3}

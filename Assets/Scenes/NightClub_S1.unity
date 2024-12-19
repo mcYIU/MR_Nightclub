@@ -366,7 +366,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u5634\u5507\u788E\u4E86\u7684\u6642\u5019\uFF0C\n\u912D\u840D\u7684\u9B0D\u9AED\u53C8\u5F9E\u76AE\u8089\u88E1\u908A\u947D\u51FA\u4F86\u4E86\u3002"
+  m_text: "Ladies and Gentlemen\uFF0C"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: f927ea7819bdc134a98bf7c8dffd7714, type: 2}
   m_sharedMaterial: {fileID: -3172761626537305626, guid: f927ea7819bdc134a98bf7c8dffd7714,
@@ -3658,7 +3658,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 
+  m_text: 000
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: f927ea7819bdc134a98bf7c8dffd7714, type: 2}
   m_sharedMaterial: {fileID: -3172761626537305626, guid: f927ea7819bdc134a98bf7c8dffd7714,
@@ -5728,6 +5728,7 @@ MonoBehaviour:
   detechPoint: {fileID: 1380717631}
   detachDistance: 0.2
   SFX: {fileID: 8300000, guid: 78bd89e7bb56a1e4d9d62eddf91e9dde, type: 3}
+  rose: {fileID: 41811487}
   interactable: {fileID: 314203632}
 --- !u!54 &314203629
 Rigidbody:
@@ -6494,82 +6495,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 347592773}
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1 &355222381
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 355222382}
-  - component: {fileID: 355222384}
-  - component: {fileID: 355222383}
-  m_Layer: 5
-  m_Name: DialoguePanel
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!224 &355222382
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 355222381}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.01, y: 0.03, z: 0}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1434250311}
-  m_Father: {fileID: 956884514}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &355222383
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 355222381}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.78431374}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
---- !u!222 &355222384
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 355222381}
-  m_CullTransparentMesh: 1
 --- !u!1 &365789351
 GameObject:
   m_ObjectHideFlags: 0
@@ -7331,7 +7256,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1630531800}
         m_TargetAssemblyTypeName: Rose_Pluck, Assembly-CSharp
-        m_MethodName: Pick
+        m_MethodName: Pluck
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -7603,7 +7528,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 314203628}
         m_TargetAssemblyTypeName: Rose_Pluck, Assembly-CSharp
-        m_MethodName: Pick
+        m_MethodName: Pluck
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -7733,7 +7658,7 @@ MonoBehaviour:
     visual: {fileID: 603256123}
     UI: {fileID: 250061908}
   audioElements:
-    audioClip: {fileID: 8300000, guid: e9cacea3ea2aef746885d91b09ad70bd, type: 3}
+    audioClip: {fileID: 0}
   transitionConfig:
     noticeUI: {fileID: 220664789}
     noticeText:
@@ -7743,9 +7668,11 @@ MonoBehaviour:
     - {fileID: 0}
     - {fileID: 8300000, guid: e5f37b91fa2e0234183cc711b1b71677, type: 3}
     transitionMusic: {fileID: 8300000, guid: 973ce7560773c7e4aba21e3cf15492b8, type: 3}
+    TransitionState: 0
   npc:
     gameObject: {fileID: 1637774673}
     dialogueTrigger: {fileID: 1637774675}
+    invokeDelay: 1
 --- !u!65 &435156573
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -8830,7 +8757,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 968940003}
         m_TargetAssemblyTypeName: Rose_Pluck, Assembly-CSharp
-        m_MethodName: Pick
+        m_MethodName: Pluck
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -8940,36 +8867,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4351fc19cf206a43a848c3ada6c616b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialogues:
-  - voiceOverText:
-    - "\u4ED6\u662F\u4E00\u500B\u6210\u529F\u7684\u5546\u4EBA\uFF0C\u9760\u6295\u6A5F\u7092\u80A1\u6210\u70BA.\u300C\u91D1\u5B50\u5927\u738B\u300D\uFF0C\u5750\u64C1\u516B\u5341\u842C\u5BB6\u7522\u3002"
-    - "\u5728\u4E00\u4E5D\u4E09\u4E8C\u5E74\u56DB\u6708\u516D\u65E5\u7684\u661F\u671F\u516D\u4E0B\u5348\uFF0C\u4ED6\u5728\u91D1\u696D\u4EA4\u6613\u6240\u88E1\u8F38\u5149\u4E86\u6240\u6709\u3002"
-    - "\u906D\u6B64\u5DE8\u8B8A\u5F8C\uFF0C\u665A\u4E0A\u4ED6\u8DDF\u4EA4\u969B\u82B1\u9EC3\u9EDB\u831C\u8D70\u9032\u591C\u7E3D\u6703\uFF0C\u8A66\u5716\u767C\u6D29\u81EA\u5DF1\u7684\u6101\u60B6\u3002"
-    voiceOverAudio: {fileID: 8300000, guid: 2b45b3973e843254cb6dbc116a399f58, type: 3}
-    characterText:
-    - "\u5728\u4EA4\u6613\u6240\uFF0C\u6211\u8F38\u4E86\u6240\u6709\u7684\u9322\uFF0C\u90A3\u53C8\u600E\u6A23\uFF1F\u8AAA\u8D77\u4F86\uFF0C\u9322\u4E5F\u5C31\u548C\u7D19\u4E00\u6A23\uFF0C"
-    - "\u98A8\u4E00\u5439\uFF0C\u4E00\u77AC\u9593\uFF0C\u4EC0\u9EBC\u90FD\u6C92\u4E86\uFF0C\u547C\uFF0C\u50CF\u5922\u4E00\u6A23\u3002"
-    characterAudio: {fileID: 8300000, guid: e3bd7ab652144264c8bca67e80abbf22, type: 3}
-    isVoiceOverPlayed: 0
-  - voiceOverText:
-    - "\u6A19\u91D1\u7684\u8DCC\u98A8\u52A0\u901F\u5730\u5439\u8457\u3002"
-    - "\u5634\u5507\u788E\u4E86\u7684\u6642\u5019\uFF0C.\u516B\u5341\u842C\u5BB6\u7522\u4E5F\u53EB\u6A19\u91D1\u7684\u8DCC\u98A8\u5439\u7834\u4E86\u3002"
-    - "\u5634\u5507\u788E\u4E86\u7684\u6642\u5019\uFF0C.\u4E00\u9846\u5805\u5F37\u7684\u8FD1\u4EE3\u5546\u4EBA\u7684\u5FC3\u4E5F\u788E\u4E86\u3002"
-    voiceOverAudio: {fileID: 8300000, guid: 567a83b73f699b846898791f832d2a09, type: 3}
-    characterText:
-    - "\u6211\u7684\u4EBA\u751F\u5C31\u662F\u4E00\u5834\u8C6A\u8CED\uFF0C\u8F38\u4E86\u5927\u4E0D\u4E86\u5C31\u8A8D\u8F38\u3002"
-    - "\u770B\uFF0C\u9019\u88E1\u591A\u5FEB\u6A02\u554A\uFF01"
-    - "\u9152\u7CBE\u3001\u7F8E\u5973\u3001\u97F3\u6A02\u9084\u6709\u904A\u6232\uFF0C"
-    - "\u82B1\u82B1\u4E16\u754C\uFF0C\u71C8\u7D05\u9152\u7DA0\u3002"
-    - "\u4F86\uFF0C\u73A9\u4E00\u628A\uFF01"
-    characterAudio: {fileID: 8300000, guid: 26aefa60d8ef8cf4ca997c2cdb9bc120, type: 3}
-    isVoiceOverPlayed: 0
-  - voiceOverText: []
-    voiceOverAudio: {fileID: 0}
-    characterText:
-    - "\u8ACB\u4F60\u53BB\u8DDF\u53E6\u4E00\u500B\u5728\u591C\u7E3D\u6703\u88E1\u7684\u5931\u843D\u4E4B\u4EBA\u8AC7\u8AC7\u5427\uFF0C.\u8B93\u6211\u7E7C\u7E8C\u6C89\u9189\u5728\u9019\u91D1\u8272\u7684\u5922\u88E1\u3002"
-    characterAudio: {fileID: 8300000, guid: 67cffe6de1da6cf43a2585610d99e888, type: 3}
-    isVoiceOverPlayed: 0
+  data:
+  - {fileID: 11400000, guid: 6b93b9cc2936b954b93c8d0913b773da, type: 2}
+  - {fileID: 11400000, guid: 6c6e01472f0ed034e93555839f18a9d6, type: 2}
+  - {fileID: 11400000, guid: 6320eb77a045f8c4486484573f6b74cc, type: 2}
   UIElements:
     noticeUI: {fileID: 1771109149}
     dialogueCanvas: {fileID: 608189813}
@@ -9037,7 +8938,6 @@ MonoBehaviour:
     noticeText: "\u80E1\u5747\u76CA\u9080\u8ACB\u4F60\u64F2\u4E00\u628A\u9AB0\u5B50\u3002"
   noticeSystem:
     interactionNotice: {fileID: 220664789}
-    endNotice: {fileID: 365789353}
     isNoticed: 0
   dialogueTrigger: {fileID: 496085569}
 --- !u!1001 &510774186
@@ -22208,7 +22108,7 @@ MonoBehaviour:
     levelTrigger: {fileID: 435156572}
     layers: {fileID: 1398115857}
     fadeDuration: 1.5
-    interval: 2
+    interval: 1
 --- !u!1 &709869952
 GameObject:
   m_ObjectHideFlags: 0
@@ -22366,7 +22266,7 @@ PrefabInstance:
     - target: {fileID: 1812344080751771174, guid: 2ea7e31559d27fc448bcaf01077d9ac0,
         type: 3}
       propertyPath: colorMapEditorSaturation
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2134648073381476425, guid: 2ea7e31559d27fc448bcaf01077d9ac0,
         type: 3}
@@ -22446,7 +22346,7 @@ PrefabInstance:
     - target: {fileID: 3520062402765466662, guid: 2ea7e31559d27fc448bcaf01077d9ac0,
         type: 3}
       propertyPath: _trackingOriginType
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3520062402765466662, guid: 2ea7e31559d27fc448bcaf01077d9ac0,
         type: 3}
@@ -22819,46 +22719,10 @@ MonoBehaviour:
   _whenHover:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 727691489}
-        m_TargetAssemblyTypeName: UnityEngine.Animator, UnityEngine
-        m_MethodName: SetTrigger
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: Open
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 727691483}
         m_TargetAssemblyTypeName: Book_Read, Assembly-CSharp
         m_MethodName: ReadText
         m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 727691484}
-        m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
-        m_MethodName: set_enabled
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 727691490}
-        m_TargetAssemblyTypeName: Interactable, Assembly-CSharp
-        m_MethodName: SetUI
-        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -24927,7 +24791,6 @@ MonoBehaviour:
     noticeText: "\u9EC3\u9EDB\u831C\u9080\u8ACB\u4F60\u628A\u7D05\u73AB\u7470\u7684\u82B1\u74E3\u62D4\u4E0B\u4F86\u3002"
   noticeSystem:
     interactionNotice: {fileID: 220664789}
-    endNotice: {fileID: 365789353}
     isNoticed: 0
   dialogueTrigger: {fileID: 932082935}
 --- !u!114 &932082935
@@ -24942,36 +24805,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4351fc19cf206a43a848c3ada6c616b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialogues:
-  - voiceOverText:
-    - "\u5979\u662F\u4E00\u4F4D\u525B\u8E0F\u5165\u4E8C\u5341\u516B\u6B72\u7684\u4EA4\u969B\u82B1\uFF0C\u7559\u6709\u4E00\u982D\u7459\u746A\u5E0C\u62C9\u5F0F\u77ED\u9AEE\uFF0C\u81C9\u4E0A\u7684\u76BA\u7D0B\u4E5F\u7528\u9670\u5F71\u906E\u4E86\u3002"
-    - "\u5728\u4E00\u4E5D\u4E09\u4E8C\u5E74\u56DB\u6708\u516D\u65E5\u7684\u661F\u671F\u516D\u4E0B\u5348\uFF0C\u5979\u5230\u4E86\u971E\u98DB\u8DEF\u8CE3\u88DD\u98FE\u54C1\u7684\u6CD5\u570B\u92EA\u5B50\u3002"
-    - "\u665A\u4E0A\u5979\u8DDF\u7834\u7522\u7684.\u300C\u91D1\u5B50\u5927\u738B\u300D\u80E1\u5747\u76CA\u4F86\u5230\u591C\u7E3D\u6703\uFF0C\u5728\u65C1\u4EBA\u7684\u5632\u8AF7\u4E2D\u8FCE\u63A5\u81EA\u5DF1\u7684\u751F\u65E5\u3002"
-    voiceOverAudio: {fileID: 8300000, guid: 7388023acc438dc4ab3d3bf472fe8f59, type: 3}
-    characterText:
-    - "\u6211\u770B\u8D77\u4F86\u50CF\u8001\u4E86\u55CE\uFF1F"
-    - "\u5728\u4F60\u7684\u773C\u88E1\uFF0C\u6211\u662F\u6C38\u9060\u7684\u5E74\u9752\u5427\uFF1F"
-    - "\u4F86\u5427\uFF0C\u6176\u795D\u6211\u7684\u751F\u65E5\uFF0C\u6176\u795D\u6211\u7684\u9752\u6625\u554A\uFF01"
-    characterAudio: {fileID: 8300000, guid: 9c4c4d3482e5d3c4691d8c544e56abe1, type: 3}
-    isVoiceOverPlayed: 0
-  - voiceOverText:
-    - "\u300C\u5973\u4EBA\u662F\u904E\u4E0D\u5F97\u4E94\u5E74\u7684\uFF01\u300D"
-    - "\u4FBF\u628A\u4E0A\u9762\u7684\u7259\u9F52\u54AC\u7DCA\u4E86\u4E0B.\u5634\u5507\uFF1A\u2014"
-    - "\u5634\u5507\u788E\u4E86\u7684\u6642\u5019\uFF0C.\u5FC3\u7D66\u90A3\u86C7\u541E\u4E86\u3002"
-    - "\u5634\u5507\u788E\u4E86\u7684\u6642\u5019\uFF0C\u5979\u53C8\u8DD1\u9032\u8CB7\u88DD\u98FE\u54C1\u7684\u6CD5\u570B\u92EA\u5B50\u88E1.\u53BB\u4E86\u3002"
-    voiceOverAudio: {fileID: 8300000, guid: aca7901002fd9004cb55c651086a9642, type: 3}
-    characterText:
-    - "\u4ECA\u5929\u6211\u662F\u4E8C\u5341\u516B\u6B72\uFF0C\u660E\u5929\u5C31\u662F\u4E8C\u5341\u516B\u6B72\u96F6\u4E00\u5929\u4E86\uFF01"
-    - "\u6211\u5F97\u8001\u4E86\u4E00\u5929\u4E86\uFF01\u6211\u662F\u4E00\u5929\u6BD4\u4E00\u5929\u8001\u7684\u3002"
-    - "\u9752\u6625\uFF0C\u5C31\u662F\u5F9E\u81EA\u5BB6\u5152\u98DB\u5230\u5225\u4EBA\u8EAB\u4E0A\u53BB\u4E86\u3002"
-    characterAudio: {fileID: 8300000, guid: 1204b22530a44b6438baa382b327f587, type: 3}
-    isVoiceOverPlayed: 0
-  - voiceOverText: []
-    voiceOverAudio: {fileID: 0}
-    characterText:
-    - "\u8ACB\u4F60\u53BB\u8DDF\u53E6\u4E00\u500B\u5728\u591C\u7E3D\u6703\u88E1\u7684\u5931\u843D\u4E4B\u4EBA\u8AC7\u8AC7\u5427\uFF0C.\u8B93\u6211\u7E7C\u7E8C\u54C0\u60BC\u90A3\u901D\u53BB\u7684\u9752\u6625\u3002 "
-    characterAudio: {fileID: 8300000, guid: 0348bff04132609409ea7c648fef15eb, type: 3}
-    isVoiceOverPlayed: 0
+  data:
+  - {fileID: 11400000, guid: f0824bc0d4e3e1f4fa4a2b4e99ff0e12, type: 2}
+  - {fileID: 11400000, guid: cb419c6353ffb86468806ec628916904, type: 2}
+  - {fileID: 11400000, guid: c553fe436abf358488bfeafcb8ca93a1, type: 2}
   UIElements:
     noticeUI: {fileID: 1192736197}
     dialogueCanvas: {fileID: 259092528}
@@ -25383,7 +25220,6 @@ RectTransform:
   m_LocalScale: {x: 0.0225, y: 0.022499999, z: 0.0225}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 355222382}
   - {fileID: 5718528}
   m_Father: {fileID: 1637774674}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -25704,6 +25540,7 @@ MonoBehaviour:
   detechPoint: {fileID: 1380717631}
   detachDistance: 0.2
   SFX: {fileID: 8300000, guid: 78bd89e7bb56a1e4d9d62eddf91e9dde, type: 3}
+  rose: {fileID: 41811487}
   interactable: {fileID: 968940007}
 --- !u!54 &968940004
 Rigidbody:
@@ -32057,14 +31894,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   audioSource: {fileID: 2006023464}
   monologueCanvas: {fileID: 2097076254}
-  monologueTransitionInterval: 4.5
+  monologueTransitionInterval: 4
   state:
-    dialogue:
-      voiceOverText: []
-      voiceOverAudio: {fileID: 0}
-      characterText: []
-      characterAudio: {fileID: 0}
-      isVoiceOverPlayed: 0
+    dialogue: {fileID: 0}
     canvas: {fileID: 0}
     text: {fileID: 0}
     displayTime: 0
@@ -32201,7 +32033,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 314203628}
         m_TargetAssemblyTypeName: Rose_Pluck, Assembly-CSharp
-        m_MethodName: Pick
+        m_MethodName: Pluck
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -34744,7 +34576,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1630531800}
         m_TargetAssemblyTypeName: Rose_Pluck, Assembly-CSharp
-        m_MethodName: Pick
+        m_MethodName: Pluck
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -40306,81 +40138,6 @@ MonoBehaviour:
   isInteractionEnabled: 0
   grabbables: []
   pokeInteractables: []
---- !u!1 &1434250310
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1434250311}
-  - component: {fileID: 1434250313}
-  - component: {fileID: 1434250312}
-  m_Layer: 5
-  m_Name: Image
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &1434250311
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1434250310}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 0}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 355222382}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 5100, y: 770}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1434250312
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1434250310}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: f3a3b538db0043a44b149f78fe4017c9, type: 3}
-  m_Type: 0
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
---- !u!222 &1434250313
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1434250310}
-  m_CullTransparentMesh: 1
 --- !u!1 &1443209213
 GameObject:
   m_ObjectHideFlags: 0
@@ -40422,7 +40179,6 @@ MonoBehaviour:
     noticeText: "\u912D\u840D\u9080\u8ACB\u4F60\u628A\u9152\u5012\u6EFF\u5728\u676F\u5B50\u5167\u3002"
   noticeSystem:
     interactionNotice: {fileID: 220664789}
-    endNotice: {fileID: 365789353}
     isNoticed: 0
   dialogueTrigger: {fileID: 1443209215}
 --- !u!114 &1443209215
@@ -40437,35 +40193,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4351fc19cf206a43a848c3ada6c616b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialogues:
-  - voiceOverText:
-    - "\u4ED6\u662F\u4E00\u500B\u5931\u6200\u7684\u5B78\u751F\uFF0C.\u4ED6\u7684\u611B\u4EBA\u6797\u59AE\u5A1C\u548C\u9577\u817F\u6C6A\u5728\u4E00\u8D77\u4E86\u3002"
-    - "\u5728\u4E00\u4E5D\u4E09\u4E8C\u5E74\u56DB\u6708\u516D\u65E5\u7684\u661F\u671F\u516D\u665A\u4E0A\uFF0C\u4ED6\u5931\u795E\u843D\u9B44\u5730\u8D70\u9032\u591C\u7E3D\u6703\u3002"
-    - "\u672C\u4F86\u60F3\u9EBB\u9189\u81EA\u5DF1\uFF0C\u4ED6\u537B\u770B\u5230\u6797\u59AE\u5A1C\u7684\u624B\u7DCA\u6263\u8457\u9577\u817F\u6C6A\u7684\u80F3\u818A\u4E0A\u3002"
-    voiceOverAudio: {fileID: 8300000, guid: c679c7d68232fc648ab9299bb042d323, type: 3}
-    characterText:
-    - "\u5632\u7B11\u6211\u5427\uFF0C\u6211\u88AB\u62CB\u68C4\u4E86\u3002"
-    - "\u70BA\u4E86\u5979\uFF0C\u6211\u9023\u982D\u9AEE\u90FD\u6101\u767D\u4E86\u3002"
-    - "\u66F4\u6349\u5F04\u4EBA\u7684\u662F\uFF0C\u73FE\u5728\u5979\u9084\u5750\u5728\u5C0D\u9762\uFF0C\u548C\u90A3\u500B\u7537\u4EBA\u537F\u537F\u6211\u6211\u3002"
-    characterAudio: {fileID: 8300000, guid: 3d4e3c5ee5bb2b94d8c402414ca2ad30, type: 3}
-    isVoiceOverPlayed: 0
-  - voiceOverText:
-    - "\u5634\u5507\u788E\u4E86\u7684\u6642\u5019\uFF0C.\u912D\u840D\u7684\u982D\u9AEE\u53C8\u767D\u4E86\u3002"
-    - "\u5634\u5507\u788E\u4E86\u7684\u6642\u5019\uFF0C.\u912D\u840D\u7684\u9B0D\u9AED\u53C8\u5F9E\u76AE\u8089\u88E1\u908A\u947D\u51FA\u4F86\u4E86\u3002"
-    voiceOverAudio: {fileID: 8300000, guid: 60c1a4f6d1000804e9990f0d76ea9faf, type: 3}
-    characterText:
-    - "\u5979\u548C\u6211\u5728\u4E00\u8D77\u7684\u6642\u5019\uFF0C\u4E5F\u7B11\u5F97\u9019\u6A23\u751C\u3002\u73FE\u5728\u9019\u4E00\u5207\u90FD\u4E0D\u5C6C\u65BC\u6211\u4E86\uFF01 "
-    - "\u4F60\u770B\uFF0C\u73FE\u5728\uFF0C\u5979\u770B\u6211\u7684\u773C\u795E\uFF0C\u5C31\u50CF\u770B\u4E00\u500B\u964C\u751F\u4EBA\u3002"
-    - "\u6211\u9084\u671F\u5F85\u8457\u5979\u770B\u5230\u6A02\u8B5C\u80FD\u60F3\u8D77\u6211\u4F86\u3002"
-    - "\u5230\u982D\u4F86\uFF0C\u6211\u6210\u4E86\u9019\u500B\u4E16\u754C\u6700\u5927\u7684\u7B11\u8A71\uFF01\u54C8\u54C8\u54C8\u54C8\uFF01"
-    characterAudio: {fileID: 8300000, guid: aa7729c677a9934409d6ea4dc82877da, type: 3}
-    isVoiceOverPlayed: 0
-  - voiceOverText: []
-    voiceOverAudio: {fileID: 0}
-    characterText:
-    - "\u8ACB\u4F60\u53BB\u8DDF\u53E6\u4E00\u500B\u5728\u591C\u7E3D\u6703\u88E1\u7684\u5931\u843D\u4E4B\u4EBA\u8AC7\u8AC7\u5427\uFF0C\u8B93\u6211\u7E7C\u7E8C\u6C89\u9189\u5728\u904E\u53BB\u7684\u751C\u871C\u88E1\u3002"
-    characterAudio: {fileID: 8300000, guid: ebba99b2e8218314bbbbad71ccf3caa8, type: 3}
-    isVoiceOverPlayed: 0
+  data:
+  - {fileID: 11400000, guid: 51b6d814d0283b148a58500b95c79340, type: 2}
+  - {fileID: 11400000, guid: 4e431b0496fa8e343a9558636564accc, type: 2}
+  - {fileID: 11400000, guid: 9205df376945383418aa528423a8f6fd, type: 2}
   UIElements:
     noticeUI: {fileID: 966481744}
     dialogueCanvas: {fileID: 170073378}
@@ -41983,7 +41714,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 968940003}
         m_TargetAssemblyTypeName: Rose_Pluck, Assembly-CSharp
-        m_MethodName: Pick
+        m_MethodName: Pluck
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -42880,7 +42611,6 @@ MonoBehaviour:
     noticeText: "\u5B63\u6F54\u9080\u8ACB\u4F60\u62D7\u65B7\u706B\u67F4\uFF0C\u653E\u5728\u7159\u7070\u7F38\u88E1\u3002"
   noticeSystem:
     interactionNotice: {fileID: 220664789}
-    endNotice: {fileID: 365789353}
     isNoticed: 0
   dialogueTrigger: {fileID: 1563504383}
 --- !u!114 &1563504383
@@ -42895,34 +42625,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4351fc19cf206a43a848c3ada6c616b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialogues:
-  - voiceOverText:
-    - "\u4ED6\u662F\u4E00\u4F4D\u6C89\u8FF7\u65BC\u838E\u58EB\u6BD4\u4E9E\u7814\u7A76\u7684\u5B78\u8005\uFF0C\u66F8\u623F\u88E1.\u653E\u6EFF\u4E86\u300AHamlet\u300B\u7684.\u5404\u7A2E\u8B6F\u672C\u3002"
-    - "\u5728\u4E00\u4E5D\u4E09\u4E8C\u5E74\u56DB\u6708\u516D\u65E5\u7684\u661F\u671F\u516D\u4E0B\u5348\uFF0C\u4ED6\u5728\u623F\u88E1\u4E0D\u65B7\u7CFE\u7D50\u300C\u4F60\u662F\u751A\u9EBC\uFF1F\u751A\u9EBC\u662F\u6211\uFF1F\u300D"
-    - "\u5230\u4E86\u665A\u4E0A\uFF0C\u5728\u6B61\u8072\u7B11\u8A9E\u7684\u591C\u7E3D\u6703\u88E1\uFF0C\u53EA\u6709\u4ED6\u7368\u81EA\u4E0D\u7B11\uFF0C\u4EE5\u89E3\u5256\u5200\u4F3C\u7684\u76EE\u5149\u89C0\u671B\u8457\u5927\u5BB6\u2026\u2026"
-    voiceOverAudio: {fileID: 8300000, guid: f92a2592438f3424b8ce5372290a4f00, type: 3}
-    characterText:
-    - "\u4F60\u662F\u751A\u9EBC\uFF1F\u6211\u662F\u751A\u9EBC\uFF1F\u751A\u9EBC\u662F\u4F60\uFF1F\u751A\u9EBC\u624D\u662F\u6211\uFF1F"
-    - "\u4F60\u662F\u751A\u9EBC\uFF1F\u6211\u662F\u751A\u9EBC\uFF1F\u751A\u9EBC\u662F\u4F60\uFF1F\u751A\u9EBC\u624D\u662F\u6211\uFF1F"
-    characterAudio: {fileID: 8300000, guid: e0d4352fcbe6704449baf97e264b64d3, type: 3}
-    isVoiceOverPlayed: 0
-  - voiceOverText:
-    - "\u5634\u5507\u788E\u4E86\u7684\u6642\u4FAF\uFF0C.\u5404\u7A2E\u7248\u672C\u7684\u300AHamlet\u300B\u7B11\u4E86\u3002"
-    - "\u5634\u5507\u788E\u4E86\u7684\u6642\u4FAF\uFF0C\u4ED6\u81EA\u5BB6\u5152\u4E5F\u8B8A\u4E86\u7159\u5F80\u4E0A\u9A30\u4E86\u3002"
-    voiceOverAudio: {fileID: 8300000, guid: 5516a35b1df5f054a9bc8f7f7f5506d5, type: 3}
-    characterText:
-    - "\u300C\u6709\u751F\u5373\u6709\u6B7B\uFF0C\u7D93\u904E\u5875\u4E16\u4EE5\u9054\u65BC\u6C38\u6046\u3002\u300D"
-    - "\u4EBA\u985E\u8981\u901A\u5F80\u300A\u54C8\u59C6\u96F7\u7279\u300B\u88E1\u6240\u8AAA\u7684\u6C38\u6046\uFF0C\u9700\u8981\u591A\u5C11\u6642\u9593\uFF1F"
-    - "\u4E00\u79D2\u9418\u53EF\u4EE5\u628A\u4E00\u6839\u706B\u67F4\u62D7\u6210\u5169\u6839\uFF0C\u4E00\u500B\u9418\u982D\u53EF\u62D7\u65B7\u5169\u76D2\u3002"
-    - "\u90A3\u8981\u62D7\u65B7\u591A\u5C11\u76D2\u706B\u67F4\u624D\u80FD\u901A\u5F80\u6C38\u6046\uFF1F"
-    characterAudio: {fileID: 8300000, guid: 83e85fae2453a5e4c85f15259655dce8, type: 3}
-    isVoiceOverPlayed: 0
-  - voiceOverText: []
-    voiceOverAudio: {fileID: 0}
-    characterText:
-    - "\u8ACB\u4F60\u53BB\u8DDF\u53E6\u4E00\u500B\u5728\u591C\u7E3D\u6703\u88E1\u7684\u5931\u843D\u4E4B\u4EBA\u8AC7\u8AC7\u5427\uFF0C.\u8B93\u6211\u7E7C\u7E8C\u8EB2\u5728\u54C8\u59C6\u96F7\u7279\u7684\u4E16\u754C\u88E1\u3002"
-    characterAudio: {fileID: 8300000, guid: dcf34c2a1b925ab449b43266ad0fec1a, type: 3}
-    isVoiceOverPlayed: 0
+  data:
+  - {fileID: 11400000, guid: 5e380ce477fa8c3479820221a8337c92, type: 2}
+  - {fileID: 11400000, guid: a6698ac85d92d054395cd9636892e9aa, type: 2}
+  - {fileID: 11400000, guid: d77204f40b42cd446afde1c1afc6a2a7, type: 2}
   UIElements:
     noticeUI: {fileID: 374429516}
     dialogueCanvas: {fileID: 530013334}
@@ -44020,6 +43726,7 @@ MonoBehaviour:
   detechPoint: {fileID: 1380717631}
   detachDistance: 0.2
   SFX: {fileID: 8300000, guid: 78bd89e7bb56a1e4d9d62eddf91e9dde, type: 3}
+  rose: {fileID: 41811487}
   interactable: {fileID: 1630531814}
 --- !u!114 &1630531801
 MonoBehaviour:
@@ -44158,16 +43865,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4351fc19cf206a43a848c3ada6c616b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialogues:
-  - voiceOverText: []
-    voiceOverAudio: {fileID: 0}
-    characterText:
-    - "\u6B61\u8FCE\u4F86\u5230\u4E00\u4E5D\u4E09\u4E8C\u5E74\u7684\u7687\u540E\u591C\u7E3D\u6703\u3002"
-    - "\u6211\u662F\u9019\u88E1\u7684\u97F3\u6A02\u9818\u73ED\u7D04\u7FF0\u751F\u3002 "
-    - "\u5728\u9019\u88E1\uFF0C\u6BCF\u500B\u4EBA\u90FD\u96B1\u85CF\u8457\u5404\u81EA\u7684\u5931\u843D\u6545\u4E8B\u3002"
-    - "\u73FE\u5728\u8ACB\u4F60\u96A8\u610F\u53BB\u63A2\u7D22\u5427\uFF01"
-    characterAudio: {fileID: 8300000, guid: fbc28794948f16246b42defbe4d85d48, type: 3}
-    isVoiceOverPlayed: 0
+  data:
+  - {fileID: 11400000, guid: b5764312ff57c4e4e819d032dfc0970f, type: 2}
   UIElements:
     noticeUI: {fileID: 0}
     dialogueCanvas: {fileID: 956884518}
@@ -45771,7 +45470,7 @@ BoxCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Size: {x: 0.1458184, y: 0.042526707, z: 0.18602213}
   m_Center: {x: 0.0046437755, y: 0.0000000018626451, z: 0.00000021994512}
@@ -55190,10 +54889,10 @@ MonoBehaviour:
   - interactables:
     - {fileID: 584246955}
     - {fileID: 81756167}
+    - {fileID: 732000412}
     noticeText: "\u7E46\u5B97\u65E6\u9080\u8ACB\u4F60\u4E00\u8D77\u9EDE\u71C3\u64A4\u8077\u4FE1\u3002"
   noticeSystem:
     interactionNotice: {fileID: 220664789}
-    endNotice: {fileID: 365789353}
     isNoticed: 0
   dialogueTrigger: {fileID: 2075342477}
 --- !u!114 &2075342477
@@ -55208,34 +54907,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4351fc19cf206a43a848c3ada6c616b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialogues:
-  - voiceOverText:
-    - "\u4ED6\u662F\u5E02\u653F\u5E9C\u4E00\u7B49\u66F8\u8A18\uFF0C.\u505A\u4E86\u4E94\u5E74\u7684\u4ED6\u5C0D\u5DE5\u4F5C\u52E4\u52E4\u61C7\u61C7\uFF0C\u4E5F\u6C92\u4EC0\u9EBC\u91CE\u5FC3\u3002"
-    - "\u5728\u4E00\u4E5D\u4E09\u4E8C\u5E74\u56DB\u6708\u516D\u65E5\u7684\u661F\u671F\u516D\u4E0B\u5348\uFF0C\u4ED6\u7B2C\u4E00\u6B21\u63A5\u5230\u5E02\u9577\u7684\u624B\u66F8\uFF0C\u537B\u662F\u4E00\u5C01\u64A4\u8077\u4FE1\u3002"
-    - "\u4ED6\u60F3\u4E0D\u901A\u70BA\u4EC0\u9EBC\uFF0C\u65BC\u662F\u5728\u665A\u4E0A\u8D70\u9032\u591C\u7E3D\u6703\uFF0C\u60F3\u8981\u6392\u89E3\u5931\u696D\u7684\u6101\u82E6\u3002"
-    voiceOverAudio: {fileID: 8300000, guid: e5e256553b7d8e44182ac69afa58c7f1, type: 3}
-    characterText:
-    - "\u6C92\u60F3\u5230\u5C31\u9019\u6A23\u4E1F\u4E86\u5DE5\u4F5C\uFF0C\u5931\u696D\u4E86\uFF0C\u5C31\u4EC0\u9EBC\u90FD\u6C92\u6709\u4E86\u3002"
-    - "\u4EC0\u9EBC\u524D\u9014\uFF0C\u4EC0\u9EBC\u751F\u6D3B\uFF0C\u90FD\u6C92\u6709\u4E86\u3002"
-    - "\u788E\u5F97\u7A00\u721B\uFF0C\u9019\u5C31\u662F\u4E16\u754C\uFF01\u662F\u7834\u4E86\u7684\u4E16\u754C\u554A\uFF01"
-    characterAudio: {fileID: 8300000, guid: 71cdfac2053268348be2ffb9a3b12004, type: 3}
-    isVoiceOverPlayed: 0
-  - voiceOverText:
-    - "\u518D\u770B\u4E86\u5169\u904D\uFF0C\u64A4\u8077\u66F8\u9084\u662F\u64A4\u8077\u66F8\u3002"
-    - "\u5634\u5507\u7834\u4E86\u7684\u6642\u5019\uFF0C\u58A8\u6C34\u5323\u88E1\u7684\u58A8\u4ED6\u4E0D\u7528\u518D\u78E8\u4E86\u3002"
-    - "\u5634\u5507\u7834\u4E86\u7684\u6642\u5019\u3001\u6703\u8A08\u79D1\u4E3B\u4EFB\u628A\u4ED6\u7684\u85AA\u6C34\u9001\u4F86\u4E86\u3002"
-    voiceOverAudio: {fileID: 8300000, guid: 460f825abea69714e91a79e118cb782e, type: 3}
-    characterText:
-    - "\u4E0B\u500B\u79AE\u62DC\uFF0C\u6211\u5C31\u81EA\u7531\u4E86\uFF0C\u7BA1\u4ED6\u5462\uFF01"
-    - "\u559D\u500B\u75DB\u5FEB\u5427\uFF01\u9019\u5F35\u7D19\u4E5F\u71D2\u4E86\u5427\u3002"
-    characterAudio: {fileID: 8300000, guid: 225104a24a575aa4781eb8d89d392820, type: 3}
-    isVoiceOverPlayed: 0
-  - voiceOverText: []
-    voiceOverAudio: {fileID: 0}
-    characterText:
-    - "\u8ACB\u4F60\u53BB\u8DDF\u53E6\u4E00\u500B\u5728\u591C\u7E3D\u6703\u88E1\u7684\u5931\u843D\u4E4B\u4EBA\u8AC7\u8AC7\u5427\uFF0C.\u8B93\u6211\u7E7C\u7E8C\u5FD8\u537B\u90A3\u6C92\u6709\u85AA\u6C34\u7684\u660E\u5929\u3002"
-    characterAudio: {fileID: 8300000, guid: 5e5b6b30abeb0d7449e468df4b848a78, type: 3}
-    isVoiceOverPlayed: 0
+  data:
+  - {fileID: 11400000, guid: cae4b85a1b68038419243bc9f38692c9, type: 2}
+  - {fileID: 11400000, guid: a16f9a27be1b6c241b6f088c6a151e8e, type: 2}
+  - {fileID: 11400000, guid: fbd172c7f3b513447a430d66e86803ae, type: 2}
   UIElements:
     noticeUI: {fileID: 1192546333}
     dialogueCanvas: {fileID: 1995525544}
@@ -58015,6 +57690,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: cap
       objectReference: {fileID: 0}
+    - target: {fileID: 2073027655730724563, guid: 0f916e86c7ec9814d80427b61438913f,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4326597309903846507, guid: 0f916e86c7ec9814d80427b61438913f,
         type: 3}
       propertyPath: m_Name
@@ -58094,6 +57774,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Champagne
+      objectReference: {fileID: 0}
+    - target: {fileID: 8632203755827661083, guid: 0f916e86c7ec9814d80427b61438913f,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -58275,6 +57960,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pouringVisual: {fileID: 764830005}
+  capPrefab: {fileID: 0}
   pushForce: 1.2
   SFX: {fileID: 8300000, guid: 2ddb85f9221019042ae52af5c7faf8cb, type: 3}
   interactable: {fileID: 6911669996629699770}
@@ -58421,18 +58107,6 @@ MonoBehaviour:
         m_TargetAssemblyTypeName: Champagne_Splash, Assembly-CSharp
         m_MethodName: Pouring
         m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 6911669996629699770}
-        m_TargetAssemblyTypeName: Interactable, Assembly-CSharp
-        m_MethodName: SetUI
-        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
