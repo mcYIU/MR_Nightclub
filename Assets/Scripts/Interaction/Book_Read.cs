@@ -14,6 +14,8 @@ public class Book_Read : MonoBehaviour
     [SerializeField] private TextMeshProUGUI noticeText;
     [SerializeField] private Interactable interactable;
 
+    private bool isRead = false;
+
     private void Start()
     {
         bookText.text = string.Empty;
@@ -21,10 +23,15 @@ public class Book_Read : MonoBehaviour
 
     public void ReadText()
     {
-        noticeText.text = string.Empty;
-        interactable.SetUI(false);
+        if (interactable.isInteractionEnabled && !isRead)
+        {
+            isRead = true;
 
-        StartCoroutine(Type());
+            noticeText.text = string.Empty;
+            interactable.SetUI(false);
+
+            StartCoroutine(Type());
+        }
     }
 
     private IEnumerator Type()
@@ -35,6 +42,9 @@ public class Book_Read : MonoBehaviour
 
         for (int i = 0; i < sentences.Length; i++)
         {
+            int _i = Random.Range(0, SFX.Length);
+            SoundEffectManager.PlaySFXOnce(SFX[_i]);
+
             string textBuffer = null;
             foreach (char c in sentences[i])
             {
@@ -49,9 +59,6 @@ public class Book_Read : MonoBehaviour
             }
 
             yield return new WaitForSeconds(readingDuration);
-
-            int _i = Random.Range(0, SFX.Length);
-            SoundEffectManager.PlaySFXOnce(SFX[_i]);
 
             textBuffer = string.Empty;
             bookText.text = string.Empty;
