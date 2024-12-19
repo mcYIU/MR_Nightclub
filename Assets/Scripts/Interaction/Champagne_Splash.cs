@@ -3,36 +3,54 @@ using UnityEngine;
 public class Champagne_Splash : MonoBehaviour
 {
     [SerializeField] private ParticleSystem pouringVisual;
+    [SerializeField] private GameObject capPrefab;
     [SerializeField] private float pushForce;
     [SerializeField] private AudioClip SFX; 
     [SerializeField] private Interactable interactable;
-    private Rigidbody rb;
+    private MeshRenderer mesh;
+    private Rigidbody cap_rb;
+
     private bool isBottleOpened = false;
 
     void Start()
     {
-        rb = GetComponent<Rigidbody>();
+        mesh = GetComponent<MeshRenderer>();
     }
 
     void FixedUpdate()
     {
-        if(isBottleOpened && transform.parent != null)
+        if(isBottleOpened)
         {
-            transform.SetParent(null);
-            rb.isKinematic = false;
-            rb.useGravity = true;
-
-            rb.AddForce(gameObject.transform.up * pushForce, ForceMode.Impulse);
+            MoveCap(cap_rb);
         }
     }
 
     public void Pouring()
     {
-        isBottleOpened = true;
+        if (interactable.isInteractionEnabled)
+        {
+            pouringVisual.Play();
+            SoundEffectManager.PlaySFXOnce(SFX);
 
-        pouringVisual.Play();
-        SoundEffectManager.PlaySFXOnce(SFX);
-        interactable.IncreaseInteractionLevel();
+            interactable.SetInteraction(false);
+            interactable.IncreaseInteractionLevel();
+
+            ReleaseCap();
+        }
     }
 
+    private void ReleaseCap()
+    {
+        mesh.enabled = false;
+
+        Instantiate(capPrefab, transform.position, transform.rotation);
+        cap_rb = capPrefab.GetComponent<Rigidbody>();
+
+        isBottleOpened = true;
+    }
+
+    private void MoveCap(Rigidbody _rb)
+    {
+        _rb.AddForce(gameObject.transform.up * pushForce, ForceMode.Impulse);
+    }
 }
