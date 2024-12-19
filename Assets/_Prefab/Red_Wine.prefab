@@ -95,7 +95,7 @@ GameObject:
   - component: {fileID: 6206821419621086787}
   - component: {fileID: 8632203755827661083}
   m_Layer: 0
-  m_Name: pCylinder5
+  m_Name: cap
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
