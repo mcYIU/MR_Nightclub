@@ -1,9 +1,7 @@
 using Oculus.Interaction;
 using UnityEditor;
 using UnityEngine;
-using System;
 
-[Serializable]
 public class Interactable : MonoBehaviour
 {
     public enum InteractableType
@@ -61,8 +59,8 @@ public class Interactable : MonoBehaviour
 
         if (interactionManager.LevelIndex == interactionLevel)
         {
-            interactionLevel++;
-            interactionManager.ChangeLevelIndex(interactionLevel);
+            int _i = interactionLevel + 1;
+            interactionManager.ChangeLevelIndex(_i);
         }
     }
 
