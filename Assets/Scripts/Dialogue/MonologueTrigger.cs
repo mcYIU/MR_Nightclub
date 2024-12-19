@@ -5,7 +5,8 @@ using UnityEngine;
 [System.Serializable]
 public struct MonologueContent
 {
-    public Dialogue diaogue;
+    public string[] sentences;
+    public AudioClip audioClip;
     public GameObject character;
 }
 
@@ -31,7 +32,7 @@ public class MonologueTrigger : MonoBehaviour
             monologueIndex = value;
             StartMonologue();
 
-            Debug.Log(monologueIndex);
+            Debug.Log(MonologueIndex);
         }
     }
 
@@ -50,7 +51,7 @@ public class MonologueTrigger : MonoBehaviour
         }
         else
         {
-            DialogueManager.StartMonologue(monologues[MonologueIndex], this);
+            DialogueManager.StartMonologue(monologues[monologueIndex], this);
         }
     }
 

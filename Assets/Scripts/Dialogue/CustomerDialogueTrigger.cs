@@ -4,7 +4,7 @@ using UnityEngine.UI;
 public class CustomerDialogueTrigger : MonoBehaviour
 {
     [Header("Dialogue Components")]
-    [SerializeField] private Dialogue dialogue;
+    [SerializeField] private DialogueData data;
     [SerializeField] private Canvas dialogueCanvas;
     [SerializeField] private Image noticeUI;
 
@@ -18,7 +18,7 @@ public class CustomerDialogueTrigger : MonoBehaviour
         if (other.gameObject.CompareTag("Player") && !DialogueManager.isTalking)
             {
                 noticeUI.enabled = false;
-                DialogueManager.StartDialogue(dialogue, dialogueCanvas);
+                DialogueManager.StartDialogue(data, dialogueCanvas);
             }
     }
 }
