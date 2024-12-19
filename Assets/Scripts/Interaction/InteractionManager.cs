@@ -1,15 +1,6 @@
 using System;
-using System.Collections;
-using System.Text;
 using TMPro;
 using UnityEngine;
-
-[Serializable]
-public struct InteractionLayer
-{
-    public Interactable[] interactables;
-    public string noticeText;
-}
 
 public class InteractionManager : MonoBehaviour
 {
@@ -19,23 +10,23 @@ public class InteractionManager : MonoBehaviour
 
     private int levelIndex = 0;
 
-    [System.Serializable]
+    [Serializable]
+    public struct InteractionLayer
+    {
+        public Interactable[] interactables;
+        public string noticeText;
+    }
+
+    [Serializable]
     public class NoticeSystem
     {
         public TextMeshProUGUI interactionNotice;
-        public TextMeshProUGUI endNotice;
         [HideInInspector] public bool isNoticed;
 
         public void Initialize()
         {
             interactionNotice.text = string.Empty;
             isNoticed = false;
-        }
-
-        public void CleanNotices()
-        {
-            interactionNotice.text = string.Empty;
-            endNotice.text = string.Empty;
         }
     }
 
@@ -78,10 +69,11 @@ public class InteractionManager : MonoBehaviour
         }
     }
 
-    public void DisplayNotice()
+    private void DisplayNotice()
     {
         if (LevelIndex < interactionLayers.Length)
         {
+            noticeSystem.interactionNotice.enabled = true;
             noticeSystem.interactionNotice.text = interactionLayers[LevelIndex].noticeText;
             noticeSystem.isNoticed = true;
 
@@ -126,7 +118,7 @@ public class InteractionManager : MonoBehaviour
     {
         if (noticeSystem.isNoticed)
         {
-            noticeSystem.CleanNotices();
+            noticeSystem.Initialize();
 
             for (int i = 0; i < interactionLayers.Length; i++)
             {
