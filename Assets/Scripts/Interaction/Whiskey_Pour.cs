@@ -17,7 +17,7 @@ public class Whiskey_Pour : MonoBehaviour
 
     private void Update()
     {
-        if (isBottleHeld)
+        if (isBottleHeld && interactable.isInteractionEnabled)
         {
             bool pourCheck = CalculatePourAngle() > pouringAngle;
             if (isPouring != pourCheck)
