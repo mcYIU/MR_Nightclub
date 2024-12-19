@@ -184,7 +184,7 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        if (OVRInput.GetUp(OVRInput.Button.Two) && gameSceneIndex == 0)
+        if (OVRInput.GetUp(OVRInput.Button.Two) && gameSceneIndex == 0 && !GameManager.IsCompleted)
         {
             EndLevel();
         }
