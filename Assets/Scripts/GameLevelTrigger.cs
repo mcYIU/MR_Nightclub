@@ -24,7 +24,7 @@ public class GameLevelTrigger : MonoBehaviour
         public string[] noticeText;
         public AudioClip[] noticeAudio;
         public AudioClip transitionMusic;
-        public int transitionState { get; set; }
+        public int TransitionState;
     }
 
     [Serializable]
@@ -32,6 +32,7 @@ public class GameLevelTrigger : MonoBehaviour
     {
         public GameObject gameObject;
         public DialogueTrigger dialogueTrigger;
+        public float invokeDelay;
     }
 
     [SerializeField] private VisualElements visualElements;
@@ -92,26 +93,22 @@ public class GameLevelTrigger : MonoBehaviour
 
     private void HandleGameStart()
     {
+        GameManager.IsStarted = true;
+
         StartInteractionLevel();
         SetAudioElements(false);
         SetTransitionState();
-
-        GameManager.IsStarted = true;
     }
 
     private void StartInteractionLevel()
     {
         SetGameObjectState(npc.gameObject, true);
-        StartNPCDialogue();
+        Invoke(nameof(StartNPCDialogue), npc.invokeDelay);
     }
 
     private void StartNPCDialogue()
     {
-        Dialogue _NPC_Dialogue = npc.dialogueTrigger.dialogues[0];
-        Canvas _NPC_Canvas = npc.dialogueTrigger.UIElements.dialogueCanvas;
-        npc.gameObject.TryGetComponent<DialogueTrigger>(out DialogueTrigger _NPC_Trigger);
-
-        DialogueManager.StartDialogue(_NPC_Dialogue, _NPC_Canvas, _NPC_Trigger);
+        npc.dialogueTrigger.StartDialogue();
     }
 
     #endregion
@@ -130,7 +127,7 @@ public class GameLevelTrigger : MonoBehaviour
         SetTriggerComponents(isActive);
         SetVisualElements(isActive);
         SetAudioElements(isActive);
-        SetNoticeDisplay(transitionConfig.transitionState, isActive);
+        SetNoticeDisplay(transitionConfig.TransitionState, isActive);
     }
 
     private void SetTriggerComponents(bool isActive)
@@ -178,7 +175,8 @@ public class GameLevelTrigger : MonoBehaviour
     private void SetNoticeDisplay(int level, bool isActive)
     {
         transitionConfig.noticeUI.text = (isActive) ? transitionConfig.noticeText[level] : string.Empty;
-        
+        transitionConfig.noticeUI.enabled = isActive;
+
         AudioClip _clip = (isActive) ? transitionConfig.noticeAudio[level] : null;
         DialogueManager.OverrideSetAudio(_clip);
 
@@ -187,7 +185,7 @@ public class GameLevelTrigger : MonoBehaviour
 
     private void SetTransitionState()
     {
-        transitionConfig.transitionState++;
+        transitionConfig.TransitionState++;
     }
 
     #endregion
