@@ -10,7 +10,7 @@ public class DialogueManager : MonoBehaviour
     [Serializable]
     public class DialogueState
     {
-        public Dialogue dialogue;
+        public DialogueData dialogue;
         public Queue<string> queue = new Queue<string>();
         public Canvas canvas;
         public TextMeshProUGUI text;
@@ -54,12 +54,12 @@ public class DialogueManager : MonoBehaviour
         Instance.SetAudio(clip);
     }
 
-    public static void StartDialogue(Dialogue dialogue, Canvas canvas, DialogueTrigger trigger = null)
+    public static void StartDialogue(DialogueData dialogue, Canvas canvas, DialogueTrigger trigger = null)
     {
         Instance.InitializeDialogue(dialogue, canvas, trigger);
     }
 
-    private void InitializeDialogue(Dialogue dialogue, Canvas canvas, DialogueTrigger trigger = null)
+    private void InitializeDialogue(DialogueData dialogue, Canvas canvas, DialogueTrigger trigger = null)
     {
         isTalking = true;
 
@@ -67,7 +67,7 @@ public class DialogueManager : MonoBehaviour
         state.dialogue = dialogue;
         state.canvas = canvas;
 
-        if (state.dialogue.voiceOverText != null && state.dialogue.voiceOverAudio != null && !state.dialogue.isVoiceOverPlayed)
+        if (CanVoiceOverPlay())
         {
             StartVoiceOver();
         }
@@ -77,6 +77,13 @@ public class DialogueManager : MonoBehaviour
         }
     }
 
+    private bool CanVoiceOverPlay()
+    {
+        return state.dialogue.voiceOverText.Length > 0
+            && state.dialogue.voiceOverAudio != null
+            && !state.dialogue.isVoiceOverPlayed;
+    }
+
     private void StartVoiceOver()
     {
         LoadDialogueState(state.dialogue.voiceOverText, state.dialogue.voiceOverAudio);
@@ -84,21 +91,25 @@ public class DialogueManager : MonoBehaviour
 
     private void StartCharacterSpeech()
     {
-        state.dialogue.isVoiceOverPlayed = true;
-
         LoadDialogueState(state.dialogue.characterText, state.dialogue.characterAudio);
+
+        state.dialogue.isVoiceOverPlayed = true;
     }
 
     public static void StartMonologue(MonologueContent monologue, MonologueTrigger trigger)
     {
-        Instance.InitializeMonologue(monologue.diaogue, Instance.monologueCanvas, monologue.character, trigger);
+        Instance.InitializeMonologue(monologue.sentences, monologue.audioClip, monologue.character, trigger);
     }
 
-    private void InitializeMonologue(Dialogue dialogue, Canvas canvas, GameObject character, MonologueTrigger trigger)
+    private void InitializeMonologue(string[] sentences, AudioClip clip, GameObject character, MonologueTrigger trigger)
     {
-        if (monologueTrigger == null) monologueTrigger = trigger;
+        if (monologueTrigger == null)
+        {
+            state.canvas = monologueCanvas;
+            monologueTrigger = trigger;
+        }
 
-        InitializeDialogue(dialogue, canvas);
+        LoadDialogueState(sentences, clip);
         SetupCharacter(character);
     }
 
@@ -119,6 +130,7 @@ public class DialogueManager : MonoBehaviour
     {
         state.displayTime = clip.length / sentences.Length;
         EnqueueSentences(sentences);
+
         SetAudio(clip);
     }
 
@@ -137,7 +149,7 @@ public class DialogueManager : MonoBehaviour
 
     private void EnqueueSentences(string[] sentences)
     {
-        state.queue.Clear();
+        if (state.queue.Count > 0) state.queue.Clear();
 
         foreach (string sentence in sentences)
         {
@@ -202,14 +214,14 @@ public class DialogueManager : MonoBehaviour
             return;
         }
 
-        if (state.dialogue.isVoiceOverPlayed)
-        {
-            EnableInteraction();
-        }
-        else
+        if (CanVoiceOverPlay())
         {
             state.dialogue.isVoiceOverPlayed = true;
             InitializeDialogue(state.dialogue, state.canvas, dialogueTrigger);
+        }
+        else
+        {
+            EnableInteraction();
         }
     }
 
