@@ -19,13 +19,14 @@ public class Match_Fire : MonoBehaviour
                 if (fireInstance == null)
                 {
                     SoundEffectManager.PlaySFXOnce(SFX);
-                    fireInstance = Instantiate(firePrefab, transform.position, Quaternion.identity);
-                }
-                else
-                {
-                    fireInstance.transform.position = transform.position;
+                    fireInstance = Instantiate(firePrefab, firePoint.transform.position, Quaternion.identity);
                 }
             }
+        }
+
+        if (fireInstance != null)
+        {
+            fireInstance.transform.position = firePoint.transform.position;
         }
     }
 
