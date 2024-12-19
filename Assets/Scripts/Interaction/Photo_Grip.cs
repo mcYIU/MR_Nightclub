@@ -10,7 +10,7 @@ public class Photo_Grip : MonoBehaviour
 
     public void Grip()
     {
-        if (CheckHandGrabs())
+        if (CheckHandGrabs() && interactable.isInteractionEnabled)
         {
             animator.SetBool("IsGripped", true);
             SoundEffectManager.PlaySFXOnce(SFX);
