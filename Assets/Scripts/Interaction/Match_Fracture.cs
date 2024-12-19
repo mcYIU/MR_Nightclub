@@ -9,18 +9,21 @@ public class Match_Fracture : MonoBehaviour
 
     public void Fracture()
     {
-        int grabCount = 0;
-
-        for (int i = 0; i < interactables.Length; i++)
-            if (interactables[i].Interactors.Count > 0)
-                grabCount++;
-
-        if (grabCount == interactables.Length)
+        if (interactable.isInteractionEnabled)
         {
-            interactable.SetUI(false);
+            int grabCount = 0;
 
-            Instantiate(fracturedMatch, transform.position, transform.rotation);
-            Destroy(gameObject);
+            for (int i = 0; i < interactables.Length; i++)
+                if (interactables[i].Interactors.Count > 0)
+                    grabCount++;
+
+            if (grabCount == interactables.Length)
+            {
+                interactable.SetUI(false);
+
+                Instantiate(fracturedMatch, transform.position, transform.rotation);
+                Destroy(gameObject);
+            }
         }
     }
 }
