@@ -9,11 +9,14 @@ public class Balloon_Pop : MonoBehaviour
 
     public void Poke()
     {
-        Instantiate(explosionVisual);
-        SoundEffectManager.PlaySFXOnce(SFX);
+        if (interactable.isInteractionEnabled) 
+        {
+            Instantiate(explosionVisual, transform.position, transform.rotation);
+            SoundEffectManager.PlaySFXOnce(SFX);
 
-        interactable.IncreaseInteractionLevel();
+            interactable.IncreaseInteractionLevel();
 
-        Destroy(gameObject);
+            Destroy(gameObject);
+        }
     }
 }
