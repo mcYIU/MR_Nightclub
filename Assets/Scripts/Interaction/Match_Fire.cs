@@ -2,29 +2,31 @@ using UnityEngine;
 
 public class Match_Fire : MonoBehaviour
 {
-    public GameObject matchBox;
-    public GameObject firePrefab;
-    public AudioSource AS_Scratch;
-    public InteractionManager interactionManager;
-    [HideInInspector] public bool isFired = false;
+    [SerializeField] private GameObject firePoint;
+    [SerializeField] private GameObject matchBox;
+    [SerializeField] private GameObject firePrefab;
+    [SerializeField] private AudioClip SFX;
+    [SerializeField] private Interactable interactable;
 
-    private GameObject fireInstance;
+    [HideInInspector] public GameObject fireInstance;
 
     private void Update()
     {
-        if (CheckCollision(gameObject, matchBox))
+        if (interactable.isInteractionEnabled)
         {
-            if (!isFired)
+            if (CheckCollision(firePoint, matchBox))
             {
-                AS_Scratch.Play();
-                fireInstance = Instantiate(firePrefab, transform.position, Quaternion.identity);
-                isFired = true;
+                if (fireInstance == null)
+                {
+                    SoundEffectManager.PlaySFXOnce(SFX);
+                    fireInstance = Instantiate(firePrefab, firePoint.transform.position, Quaternion.identity);
+                }
             }
         }
 
         if (fireInstance != null)
         {
-            fireInstance.transform.position = transform.position;
+            fireInstance.transform.position = firePoint.transform.position;
         }
     }
 
@@ -40,21 +42,4 @@ public class Match_Fire : MonoBehaviour
 
         return false;
     }
-
-    public void ChangeLevelIndex()
-    {
-        interactionManager.ChangeLevelIndex(transform.parent.name);
-    }
-
-    /*private void Fire()
-{
-    if (!isFired)
-    {
-        AS_Scratch.Play();
-        fireInstance = Instantiate(firePrefab, transform.position, Quaternion.identity);
-        isFired = true;
-
-        ChangeLevelIndex();
-    }
-}*/
 }

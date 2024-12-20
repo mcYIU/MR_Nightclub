@@ -1,131 +1,138 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using System;
 
 public class DialogueTrigger : MonoBehaviour
 {
-    [HideInInspector] public bool isTriggered = false;
+    [Serializable]
+    public struct DialogueUIElements
+    {
+        public Image noticeUI;
+        public Canvas dialogueCanvas;
+    }
 
-    public Dialogue[] VO_Text;
-    public AudioClip[] VO_Audio;
-    public string transitionText;
+    [Header("Dialogue")]
+    public DialogueData[] data;
+    [Header("Dialogue UI")]
+    public DialogueUIElements UIElements;
+    [Header("Interaction Manager")]
+    [SerializeField] InteractionManager interactionManager;
 
-    public Image dialogueNoticeUI;
-    public Canvas dialogueCanvas;
-    public Transform player;
-    public InteractionManager interactionManager;
-
-    private bool isPlayerOut = true;
-    DialogueManager dialogueManager;
+    [HideInInspector] private bool isDialogueTriggered = false;
 
     private void Start()
     {
-        dialogueManager = FindAnyObjectByType<DialogueManager>();
-        dialogueCanvas.enabled = false;
+        InitializeDialogue();
+    }
+
+    private void InitializeDialogue()
+    {
+        UIElements.dialogueCanvas.enabled = false;
+
+        ResetDialogueData();
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Player") && GameManager.isStarted && !GameManager.isCompleted)
-            if (!dialogueManager.isTalking && !isTriggered)
-            {
-                if (interactionManager.LevelIndex < InteractionManager.ineteractionLayerCount)
-                {
-                    isTriggered = true;
-                    isPlayerOut = false;
+        if (!IsValidTrigger(other)) return;
 
-                    StartDialogue(interactionManager.LevelIndex);
-                }
-                else
-                {
-                    interactionManager.PlayAudio();
-                }
-            }
+        HandleTriggerEnter();
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.CompareTag("Player") && GameManager.isStarted && !GameManager.isCompleted)
-        {
-            isPlayerOut = true;
+        if (!IsValidTrigger(other)) return;
 
-            if(interactionManager.LevelIndex !< InteractionManager.ineteractionLayerCount && isTriggered)
-            {
-                isTriggered = false;
-            }
+        HandleTriggerExit();
+    }
+
+    private bool IsValidTrigger(Collider other)
+    {
+        return other.CompareTag("Player") &&
+               GameManager.IsStarted &&
+               !GameManager.IsCompleted &&
+               !DialogueManager.isTalking;
+    }
+
+    private void HandleTriggerEnter()
+    {
+        if (!isDialogueTriggered)
+        {
+            StartDialogue(interactionManager.LevelIndex);
+
+            isDialogueTriggered = true;
         }
     }
 
-    /*private void OnTriggerExit(Collider other)
+    private void HandleTriggerExit()
     {
-        if (other.gameObject.CompareTag("Player") && GameManager.isStarted && !GameManager.isCompleted)
+        if (!IsWithinInteractionLimit() && isDialogueTriggered)
         {
-            interactionManager.CleanNotice();
+            EndDialogue();
+            interactionManager.CleanInteraction();
+            DialogueManager.isTalking = false;
 
-            if (interactionManager.LevelIndex < InteractionManager.ineteractionLayerCount)
-            {
-                if (!isPlayerOut)
-                {
-                    EndDialogue();
-
-                    isPlayerOut = true;
-                }
-            }
+            isDialogueTriggered = false;
         }
-    }*/
+    }
 
-    public void StartDialogue(int index)
+    private bool IsWithinInteractionLimit()
     {
-        if (dialogueNoticeUI != null) dialogueNoticeUI.enabled = false;
+        if (interactionManager == null) return false;
 
-        dialogueManager.StartDialogue(VO_Text[index], dialogueCanvas, VO_Audio[index], interactionManager);
+        return interactionManager.LevelIndex < interactionManager.interactionLayers.Length;
+    }
+
+    public void StartDialogue(int index = 0)
+    {
+        if (!IsValidDialogueIndex(index)) return;
+
+        InitiateDialogue(index);
+        SetupDialogueUI(false);
+    }
+
+    public void EnableInteraction()
+    {
+        if (interactionManager != null && IsWithinInteractionLimit())
+        {
+            interactionManager.EnableInteraction();
+        }
+        else
+        {
+            DialogueManager.isTalking = false;
+        }
+    }
+
+    private void ResetDialogueData()
+    {
+       foreach(var _data in data)
+        {
+            _data.Reset();
+        }
+    }
+
+    private bool IsValidDialogueIndex(int index)
+    {
+        return index >= 0 && index < data.Length;
+    }
+
+    private void SetupDialogueUI(bool isNoticeVisible)
+    {
+        if (UIElements.noticeUI != null)
+        {
+            UIElements.noticeUI.enabled = isNoticeVisible;
+        }
+    }
+
+    private void InitiateDialogue(int index)
+    {
+        DialogueManager.StartDialogue(data[index], UIElements.dialogueCanvas, this);
     }
 
     public void EndDialogue()
     {
-        if (interactionManager.LevelIndex < InteractionManager.ineteractionLayerCount)
-        {
-            dialogueNoticeUI.enabled = true;
-            dialogueManager.EndDialogue();
-        }
-        else
-        {
-            dialogueNoticeUI.enabled = false;
-            dialogueManager.EndDialogue();
+        SetupDialogueUI(false);
 
-
-        }
+        DialogueManager.EndDialogue();
     }
 }
-
-//BackUp//
-/*private void Update()
-{
- if (interactionManager.LevelIndex < interactionManager.ineteractionLayerCount)
- {
-     float distance = Vector3.Distance(player.position, gameObject.transform.position);
-     if (distance < triggerDistance)
-     {
-         if (!isPlayerStaying)
-         {
-             isPlayerStaying = true;
-
-             lightingManager.LightSwitch_Enter(gameObject.name);
-             StartDialogue(interactionManager.LevelIndex);
-         }
-     }
-     else
-     {
-         if (isPlayerStaying)
-         {
-             EndDialogue();
-
-             lightingManager.LightSwitch_Exit(gameObject.name);
-             interactionManager.CleanNotice();
-
-             isPlayerStaying = false;
-         }
-     }
- }         
-}*/
-
-

@@ -1,39 +1,53 @@
 ﻿using System.Collections;
-using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System;
 
 public class GameManager : MonoBehaviour
 {
-    public static bool isStarted = false;
-    public static bool isCompleted = false;
+    [Serializable]
+    private struct InteractionConfig
+    {
+        public InteractionManager[] managers;
+    }
 
-    public InteractionManager[] interactionManagers;
-    public DialogueManager dialogueManager;
+    [Serializable]
+    private struct TransitionConfig
+    {
+        public GameLevelTrigger levelTrigger;     
+        public OVRPassthroughLayer layers;
+        public float fadeDuration;
+        public float interval;
+    }
 
-    [Header("SceneTransition")]
-    public GameLevelTrigger triggerPoint;
-    public Animator sceneTransition;
-    public float triggerInterval;
-    public string transitionNoticeText;
-    public TextMeshProUGUI transitionNotice;
-    public AudioClip transitionTriggerAudio;
-    public AudioSource transitionMusic;
+    public static GameManager Instance { get; private set; }
+    public static bool IsStarted { get; set; }
+    public static bool IsCompleted { get; private set; }
 
-    [Header("Passthrough")]
-    public OVRPassthroughLayer passthroughLayers;
-    public float passThroughFadeDuration;
+    [Header("Configurations")]
+    [SerializeField] private InteractionConfig interactionConfig;
+    [SerializeField] private TransitionConfig transitionConfig;
 
-    private static GameManager instance;
+    private static int gameSceneIndex;
+    private const float FADE_END_VALUE = 0f;
 
-    private int completedLevelCount = 0;
-    private int gameSceneIndex;
+    #region Initialization
 
     private void Awake()
     {
-        if (instance == null)
+        InitializeSingleton();
+    }
+
+    private void Start()
+    {
+        InitializeGame();
+    }
+
+    private void InitializeSingleton()
+    {
+        if (Instance == null)
         {
-            instance = this;
+            Instance = this;
             DontDestroyOnLoad(gameObject);
         }
         else
@@ -42,114 +56,137 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void Start()
+    private void InitializeGame()
     {
-        transitionNotice.text = null;
-
         SceneManager.sceneLoaded += OnSceneLoaded;
+
+        Debug.Log(SceneManager.loadedSceneCount);
+
+        if (gameSceneIndex == SceneManager.sceneCountInBuildSettings - 1) StartCoroutine(ChangePassThroughOpacity());
     }
 
-    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    #endregion
+
+    #region Game State Management
+
+    public static void CheckGameState()
+    {
+        if (!HasInteractionManagers()) return;
+
+        if (AreAllInteractionsCompleted())
+        {
+            EndLevel();
+        }
+    }
+
+    private static bool HasInteractionManagers()
+    {
+        return Instance.interactionConfig.managers.Length > 0;
+    }
+
+    private static bool AreAllInteractionsCompleted()
+    {
+        int completedCount = 0;
+        foreach (var manager in Instance.interactionConfig.managers)
+        {
+            if (manager.LevelIndex == manager.interactionLayers.Length)
+            {
+                completedCount++;
+            }
+        }
+        return completedCount == Instance.interactionConfig.managers.Length;
+    }
+
+    private static void EndLevel()
+    {
+        if (gameSceneIndex == 0)
+        {
+            IsCompleted = true;
+            DialogueManager.EndDialogue();
+
+            Instance.StartCoroutine(Instance.ChangePassThroughOpacity());
+            Instance.EnableLevelTrigger();
+        }
+    }
+
+    #endregion
+
+    #region Scene Management
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         gameSceneIndex = scene.buildIndex;
     }
 
-    private void Update()
+    public static void ChangeToNextScene()
     {
-        if (OVRInput.GetUp(OVRInput.Button.Two) && gameSceneIndex == 0 && !isCompleted)
+        Instance.StartCoroutine(Instance.PerformSceneTransition());
+    }
+
+    private IEnumerator PerformSceneTransition()
+    {
+        HandleTransitionMusic();
+
+        yield return ExecuteSceneChange();
+    }
+
+    private void HandleTransitionMusic()
+    {
+        if (gameSceneIndex != 0) 
         {
-            EndLevel();
-        }
+            MusicManager.StopMusic();
+
+            transitionConfig.interval += 2.0f;
+        }   
     }
 
-    public void CheckGameState()
+    private void EnableLevelTrigger()
     {
-        completedLevelCount = 0;
-
-        if (interactionManagers.Length > 0)
-            for (int i = 0; i < interactionManagers.Length; i++)
-                // if all the character's interactions are completed
-                if (interactionManagers[i].LevelIndex == InteractionManager.ineteractionLayerCount)
-                {
-                    completedLevelCount++;
-                }
-
-        if (completedLevelCount == interactionManagers.Length)
-            EndLevel();
+        transitionConfig.levelTrigger.EnableTriggerPoint();
     }
 
-    public void ChangeToNextScene()
+    private IEnumerator ExecuteSceneChange()
     {
-        StartCoroutine(ChangeScene());
+        FaderController.FadeOut();
+        yield return new WaitForSeconds(transitionConfig.interval);
+
+        SceneManager.LoadScene(gameSceneIndex + 1);
+        yield return new WaitForSeconds(transitionConfig.interval);
+
+        FaderController.FadeIn();
     }
 
-    private void EndLevel()
-    {
-        isCompleted = true;
+    #endregion
 
-        dialogueManager.EndDialogue();
-        triggerPoint.EnableTriggerPoint();
-
-        StartCoroutine(ChangePassThroughOpacity());
-
-        transitionNotice.text = transitionNoticeText;
-        transitionMusic.Play();
-        if (dialogueManager.VO != null) dialogueManager.VO.PlayOneShot(transitionTriggerAudio);
-        //StartCoroutine(TypeEndNotice(endNoticeText));
-    }
-
-    private IEnumerator TypeEndNotice(string _text)
-    {
-        if (transitionNotice.text != null) transitionNotice.text = null;
-        int currentIndex = 0;
-
-        while (currentIndex < _text.Length)
-        {
-            char currentChar = _text[currentIndex];
-            if (currentChar == '.')
-                transitionNotice.text += "\n";
-            else
-                transitionNotice.text += currentChar;
-            currentIndex++;
-        }
-
-        yield return null;
-    }
+    #region Visual Effects
 
     private IEnumerator ChangePassThroughOpacity()
     {
-        if (gameSceneIndex == 0)
+        float startValue = transitionConfig.layers.textureOpacity;
+        float elapsedTime = 0f;
+
+        while (elapsedTime < transitionConfig.fadeDuration)
         {
-            float _startValue = passthroughLayers.textureOpacity;
-            float _endValue = 0f;
+            transitionConfig.layers.textureOpacity = Mathf.Lerp(
+                startValue,
+                FADE_END_VALUE,
+                elapsedTime / transitionConfig.fadeDuration
+            );
 
-            float _elapsedTime = 0f;
-            while (_elapsedTime < passThroughFadeDuration)
-            {
-                passthroughLayers.textureOpacity = Mathf.Lerp(_startValue, _endValue, _elapsedTime / passThroughFadeDuration);
-
-                _elapsedTime += Time.deltaTime;
-                yield return null;
-            }
-
-            passthroughLayers.textureOpacity = _endValue;
+            elapsedTime += Time.deltaTime;
+            yield return null;
         }
+
+        transitionConfig.layers.textureOpacity = FADE_END_VALUE;
     }
 
-    private IEnumerator ChangeScene()
+    #endregion
+
+    private void Update()
     {
-        if (gameSceneIndex != 0) triggerInterval++; 
-
-        transitionNotice.text = null;
-
-        sceneTransition.SetBool("IsEyeClosed", true);
-
-        yield return new WaitForSeconds(triggerInterval);
-
-        SceneManager.LoadScene(gameSceneIndex + 1);
-
-        yield return new WaitForSeconds(triggerInterval);
-
-        sceneTransition.SetBool("IsEyeClosed", false);
+        if (OVRInput.GetUp(OVRInput.Button.Two) && gameSceneIndex == 0 && !GameManager.IsCompleted)
+        {
+            EndLevel();
+        }
     }
 }

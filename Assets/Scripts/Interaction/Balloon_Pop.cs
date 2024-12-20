@@ -2,13 +2,21 @@ using UnityEngine;
 
 public class Balloon_Pop : MonoBehaviour
 {
-    public InteractionManager interactionManager;
+    [SerializeField] ParticleSystem explosionVisual;
+    [SerializeField] AudioClip SFX;
+    [SerializeField] private Interactable interactable;
+
 
     public void Poke()
     {
-        Destroy(gameObject);
+        if (interactable.isInteractionEnabled) 
+        {
+            Instantiate(explosionVisual, transform.position, transform.rotation);
+            SoundEffectManager.PlaySFXOnce(SFX);
 
-        if(interactionManager != null && interactionManager.LevelIndex == 0)
-            interactionManager.ChangeLevelIndex(gameObject.name);
+            interactable.IncreaseInteractionLevel();
+
+            Destroy(gameObject);
+        }
     }
 }

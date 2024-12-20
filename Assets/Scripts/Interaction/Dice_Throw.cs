@@ -1,58 +1,70 @@
-using Oculus.Interaction.HandGrab;
 using UnityEngine;
 
 public class Dice_Throw : MonoBehaviour
 {
-    public InteractionManager interactionManager;
-    public AudioClip[] diceSound;
-    public float throwForce;
+    public static bool isGrounded = true;
+    [SerializeField] private Interactable interactable;
+    [SerializeField] private AudioClip[] SFX;
+    [SerializeField] private float throwForce;
 
-    private bool isGrabbed = false;
-    private HandGrabInteractable grab;
     private Rigidbody rb;
-    private AudioSource audioSource;
 
     private void Start()
     {
-        grab = GetComponent<HandGrabInteractable>();
         rb = GetComponent<Rigidbody>();
-
-        audioSource = GetComponentInChildren<AudioSource>();
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.collider.gameObject.CompareTag("Environment") && isGrabbed)
+        if (collision.collider.gameObject.CompareTag("Environment") && !isGrounded)
         {
-            int soundIndex = Random.Range(0, diceSound.Length);
-            audioSource.PlayOneShot(diceSound[soundIndex]);
-
-            interactionManager.ChangeLevelIndex(gameObject.name);
+            ThrowOnTable();
         }
     }
 
-    public void GrabAllDice(Transform parentDice)
+    private void ThrowOnTable()
     {
-        rb.useGravity = false;
-        rb.isKinematic = true;
-        rb.interpolation = RigidbodyInterpolation.None;
+        int soundIndex = Random.Range(0, SFX.Length);
+        SoundEffectManager.PlaySFXOnce(SFX[soundIndex]);
 
-        transform.position = parentDice.position;
-        transform.rotation = parentDice.rotation;
-        transform.SetParent(parentDice.transform);
-        transform.localScale = Vector3.one;
-
-        isGrabbed = true;
+        interactable.IncreaseInteractionLevel();
     }
 
-    public void ReleaseAllDice()
+    public void GrabAllDices(Transform parentDice)
     {
-        transform.SetParent(null);
-        transform.localScale = Vector3.one;
+        if (interactable.isInteractionEnabled)
+        {
+            rb.useGravity = false;
+            rb.isKinematic = true;
+            rb.interpolation = RigidbodyInterpolation.None;
 
-        rb.isKinematic = false;
-        rb.useGravity = true;
-        rb.interpolation = RigidbodyInterpolation.Interpolate;
-        rb.AddForce(transform.forward * throwForce, ForceMode.Impulse);
+            transform.SetPositionAndRotation(parentDice.position, parentDice.rotation);
+            transform.SetParent(parentDice.transform);
+            transform.localScale = Vector3.one;
+
+            isGrounded = false;
+
+            SetUI(isGrounded);
+        }
+    }
+
+    public void ReleaseAllDices()
+    {
+        if (interactable.isInteractionEnabled)
+        {
+            transform.SetParent(null);
+            transform.localScale = Vector3.one;
+
+            rb.isKinematic = false;
+            rb.useGravity = true;
+            rb.interpolation = RigidbodyInterpolation.Interpolate;
+
+            rb.AddForce(transform.forward * throwForce, ForceMode.Impulse);
+        }
+    }
+
+    private void SetUI(bool isGrabbed)
+    {
+        interactable.SetUI(isGrabbed);
     }
 }

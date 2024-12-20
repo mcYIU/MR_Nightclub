@@ -2,12 +2,11 @@ using UnityEngine;
 
 public class FaceTo : MonoBehaviour
 {
-    public Transform playerPos;
+    [SerializeField] Transform playerPos;
 
     private void Start()
     {
-        if(playerPos == null)
-            playerPos = FindObjectOfType<Camera>().transform;
+        if(!playerPos) playerPos = FindObjectOfType<Camera>().transform;
     }
 
     private void Update()

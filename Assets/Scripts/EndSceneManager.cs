@@ -1,32 +1,32 @@
-using System.Collections;
+using System;
 using UnityEngine;
 
 public class EndSceneManager : MonoBehaviour
 {
-    public AudioClip welcomeAudio;
-    public GameObject welcomeCharacter;
-    public float audioDelay = 3.0f;
+    [Serializable]
+    private struct NPC
+    {
+        public GameObject gameObject;
+        public DialogueTrigger dialogueTrigger;
+    }
 
-    DialogueManager dialogueManager;
-    OVRPassthroughLayer layer;
+    [SerializeField] private NPC npc;
+    [SerializeField] private float dialogueDelay;
+    private OVRPassthroughLayer layer;
 
     void Start()
     {
         layer = FindObjectOfType<OVRPassthroughLayer>();
         if (layer.textureOpacity == 0f) layer.textureOpacity = 1.0f;
 
-        dialogueManager = FindObjectOfType<DialogueManager>();
-        StartCoroutine(PlayWelcomeAudio());
+        Invoke(nameof(StartNPCDialogue), dialogueDelay);
     }
 
-    private IEnumerator PlayWelcomeAudio()
+    private void StartNPCDialogue()
     {
-        yield return new WaitForSeconds(audioDelay); 
-
-        if (dialogueManager.VO != null) dialogueManager.VO.PlayOneShot(welcomeAudio);
-
-        //yield return new WaitForSeconds(welcomeAudio.length);
-
-        //welcomeCharacter.SetActive(false);
+        npc.gameObject.TryGetComponent<DialogueTrigger>(out DialogueTrigger _NPC_Trigger);
+        _NPC_Trigger.StartDialogue();
     }
+
+
 }

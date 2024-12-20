@@ -1,29 +1,32 @@
-using Oculus.Interaction.HandGrab;
 using UnityEngine;
 
 public class Candle_Blow : MonoBehaviour
 {
-    public SkinnedMeshRenderer face;
-    public int blendshapeIndex;
-    public float triggerFloat;
-    public AudioSource audioSource;
-    public Canvas interactionUI;
-    public InteractionManager interactionManager;
+    [SerializeField] private SkinnedMeshRenderer face;
+    [SerializeField] private int blendshapeIndex;
+    [SerializeField] private float triggerFloat;
+    [SerializeField] private AudioClip SFX;
+    [SerializeField] Interactable interactable;
 
     private void OnTriggerStay(Collider other)
     {
-        if
-        (transform.parent.TryGetComponent<HandGrabInteractable>(out HandGrabInteractable handGrabInteractable)
-        && handGrabInteractable.enabled)
+        if (interactable.isInteractionEnabled)
         {
             float weightIndex = face.GetBlendShapeWeight(blendshapeIndex);
+
             if (weightIndex > triggerFloat)
             {
-                audioSource.Play();
-                interactionUI.enabled = false;
-                interactionManager.ChangeLevelIndex(transform.parent.name);
-                gameObject.SetActive(false);
+                Blow();
             }
         }
+    }
+
+    private void Blow()
+    {
+        SoundEffectManager.PlaySFXOnce(SFX);
+
+        interactable.IncreaseInteractionLevel();
+
+        Destroy(gameObject);
     }
 }

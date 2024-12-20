@@ -2,29 +2,43 @@ using UnityEngine;
 
 public class Rose_Pluck : MonoBehaviour
 {
-    public Transform detechPoint;
-    public float detachDistance;
-    public AudioSource audioSource;
+    [SerializeField] Transform detechPoint;
+    [SerializeField] float detachDistance;
+    [SerializeField] AudioClip SFX;
+    [SerializeField] Rose rose;
+    [SerializeField] Interactable interactable;
 
-    private Rose rose;
+    private Rigidbody rb;
 
     private void Start()
     {
-        rose = GetComponentInParent<Rose>();
+        rb = GetComponent<Rigidbody>();
     }
 
-    public void Pick()
+    public void Pluck()
     {
-        if (Vector3.Distance(transform.position, detechPoint.position) < detachDistance)
+        interactable.SetUI(false);
+
+        if (IsPlucked() && interactable.isInteractionEnabled)
         {
-            audioSource.Play();
-            transform.parent = null;
-
-            Rigidbody rb = GetComponent<Rigidbody>();
-            rb.isKinematic = false;
-            rb.useGravity = true;
-
-            rose.AddIndex();
+            PickOutFromParent();
         }
+    }
+
+    private bool IsPlucked()
+    {
+        return Vector3.Distance(transform.position, detechPoint.position) < detachDistance;
+    }
+
+    private void PickOutFromParent()
+    {
+        SoundEffectManager.PlaySFXOnce(SFX);
+
+        transform.SetParent(null);
+
+        rb.isKinematic = false;
+        rb.useGravity = true;
+
+        rose.Pluck();
     }
 }
