@@ -2,20 +2,45 @@ using UnityEngine;
 
 public class Rose : MonoBehaviour
 {
-    public MeshRenderer mesh;
-    public InteractionManager interactionManager;
-    public int maxInteractionIndex;
+    [SerializeField] private Rose_Pluck[] rosePieces;
+    [SerializeField] private Interactable interactable;
 
-    private int interactionIndex = 0;
+    private int availablePluck;
+    private MeshRenderer mesh;
 
-    public void AddIndex()
+    private void Start()
     {
-        interactionIndex++;
-        if (interactionIndex == maxInteractionIndex)
+        mesh = GetComponent<MeshRenderer>();
+        availablePluck = rosePieces.Length;
+
+        SetRosePiece(false);
+    }
+
+    public void Pluck()
+    {
+        availablePluck--;
+
+        if (availablePluck == 0)
         {
             if (mesh != null) mesh.enabled = false;
 
-            interactionManager.ChangeLevelIndex(gameObject.name);
+            interactable.IncreaseInteractionLevel();
+        }
+    }
+
+    public void SetRoseInteraction(bool isActive)
+    {
+        if (interactable.isInteractionEnabled)
+        {
+            SetRosePiece(isActive);
+        }
+    }
+
+    private void SetRosePiece(bool isActive)
+    {
+        foreach (var _piece in rosePieces)
+        {
+            _piece.gameObject.SetActive(isActive);
         }
     }
 }

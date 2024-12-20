@@ -1,45 +1,38 @@
-using Oculus.Interaction.HandGrab;
+using System.Collections;
 using UnityEngine;
 
 public class Champagne_Splash : MonoBehaviour
 {
-    public GameObject attachPoint;
-    public ParticleSystem pouringVFX;
-    public float pushForce;
-    public float pouringThreadhold = 6f;
-    public AudioSource openCapSound;
-    public InteractionManager interactionManager;
+    [SerializeField] private ParticleSystem pouringVisual;
+    [SerializeField] private GameObject capPrefab;
+    [SerializeField] private float prefabLifeTime;
+    [SerializeField] private AudioClip SFX; 
+    [SerializeField] private Interactable interactable;
 
-    private Rigidbody rb;
-    private HandGrabInteractable handGrab;
-    private bool isOpened = false;
-
-    void Start()
-    {
-        rb = GetComponent<Rigidbody>();
-        handGrab = GetComponent<HandGrabInteractable>();
-    }
-
-    void FixedUpdate()
-    {
-        if(isOpened)
-        {
-            transform.SetParent(null);
-            rb.isKinematic = false;
-            rb.useGravity = true;
-            handGrab.enabled = false;
-
-            rb.AddForce(gameObject.transform.up * pushForce, ForceMode.Impulse);
-        }
-    }
+    private GameObject capInstance;
 
     public void Pouring()
     {
-        isOpened = true;
+        if (interactable.isInteractionEnabled)
+        {
+            pouringVisual.Play();
+            SoundEffectManager.PlaySFXOnce(SFX);
 
-        openCapSound.Play();
-        pouringVFX.Play();
-        interactionManager.ChangeLevelIndex(gameObject.name);
+            interactable.SetInteraction(false);
+            interactable.IncreaseInteractionLevel();
+
+            StartCoroutine(ReleaseCap());
+        }
     }
 
+    private IEnumerator ReleaseCap()
+    {
+        capInstance = Instantiate(capPrefab);
+
+        Destroy(gameObject);
+
+        yield return new WaitForSeconds(prefabLifeTime);
+
+        Destroy(capInstance);
+    }
 }

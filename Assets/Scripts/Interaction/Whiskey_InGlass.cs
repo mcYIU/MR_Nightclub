@@ -1,57 +1,65 @@
+using System.Collections;
 using UnityEngine;
 
 public class Whiskey_InGlass : MonoBehaviour
 {
-    public float fillSpeed;
-    public Whiskey_Pour whiskeyPour;
-    public AudioSource audioSource;
-    public Canvas interactionUI;
+    [SerializeField] private float fillSpeed;
+    [SerializeField] private AudioClip SFX;
+    [SerializeField] private Interactable interactable;
 
     private Renderer sphereRenderer;
     private float maxHeight;
     private float currentHeight = 0f;
-    private bool isPoured = false;
+
+    private bool isWhiskeyPouring = false;
 
     private void Start()
     {
         maxHeight = transform.localScale.y;
         sphereRenderer = GetComponent<Renderer>();
         sphereRenderer.enabled = false;
-
-        interactionUI.enabled = false;
     }
 
     private void OnParticleCollision(GameObject other)
     {
-        if(!isPoured && currentHeight != maxHeight)
+        if(other.CompareTag("Whiskey") && !isWhiskeyPouring && currentHeight != maxHeight)
         {
-            audioSource.Play();
-            interactionUI.enabled = false;
-            isPoured = true;
+            StartPouring();
         }
     }
 
-    private void Update()
+    private void StartPouring()
     {
-        if (isPoured)
-        {         
+        isWhiskeyPouring = true;
+        interactable.SetUI(!isWhiskeyPouring);
+
+        StartCoroutine(PourWhiskey());
+    }
+
+    private void CompletePouring()
+    {
+        isWhiskeyPouring = false;
+        StopAllCoroutines();
+
+        interactable.IncreaseInteractionLevel();
+    }
+
+    private IEnumerator PourWhiskey()
+    {
+        SoundEffectManager.PlaySFXLoop(SFX);
+
+        while (currentHeight < maxHeight)
+        {
             currentHeight += fillSpeed * Time.deltaTime;
             currentHeight = Mathf.Clamp(currentHeight, 0.0f, maxHeight);
             transform.localScale = new Vector3(transform.localScale.x, currentHeight, transform.localScale.z);
 
             sphereRenderer.enabled = true;
 
-            if(currentHeight == maxHeight)
-            {
-                if(whiskeyPour != null)
-                {
-                    whiskeyPour.ChangeLevelIndex();
-                }
-
-                audioSource.Stop();
-                isPoured = false;
-            }
+            yield return null;
         }
-    }
 
+        SoundEffectManager.StopSFXLoop();
+        CompletePouring();
+    }
 }
