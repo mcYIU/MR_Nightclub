@@ -37,14 +37,12 @@ public class Book_Read : MonoBehaviour
     private IEnumerator Type()
     {
         animator.SetTrigger("Open");
+        PlaySFX();
 
         yield return new WaitForSeconds(animationDurationOffset);
 
         for (int i = 0; i < sentences.Length; i++)
         {
-            int _i = Random.Range(0, SFX.Length);
-            SoundEffectManager.PlaySFXOnce(SFX[_i]);
-
             string textBuffer = null;
             foreach (char c in sentences[i])
             {
@@ -65,7 +63,14 @@ public class Book_Read : MonoBehaviour
         }
 
         animator.SetTrigger("Close");
+        PlaySFX();
 
         interactable.IncreaseInteractionLevel();
+    }
+
+    private void PlaySFX()
+    {
+        int _i = Random.Range(0, SFX.Length);
+        SoundEffectManager.PlaySFXOnce(SFX[_i]);
     }
 }
