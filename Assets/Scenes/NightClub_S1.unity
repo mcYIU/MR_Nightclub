@@ -3512,8 +3512,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 20
-  m_fontSizeBase: 20
+  m_fontSize: 28
+  m_fontSizeBase: 28
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -16492,17 +16492,17 @@ PrefabInstance:
     - target: {fileID: 3479544258467996905, guid: 2ea7e31559d27fc448bcaf01077d9ac0,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3479544258467996905, guid: 2ea7e31559d27fc448bcaf01077d9ac0,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3479544258467996905, guid: 2ea7e31559d27fc448bcaf01077d9ac0,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3479544258467996905, guid: 2ea7e31559d27fc448bcaf01077d9ac0,
         type: 3}
@@ -16593,6 +16593,31 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalPosition.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3520062402775270882, guid: 2ea7e31559d27fc448bcaf01077d9ac0,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3520062402775270882, guid: 2ea7e31559d27fc448bcaf01077d9ac0,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3520062402775270882, guid: 2ea7e31559d27fc448bcaf01077d9ac0,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3520062402775270882, guid: 2ea7e31559d27fc448bcaf01077d9ac0,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3520062402775270882, guid: 2ea7e31559d27fc448bcaf01077d9ac0,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 180
       objectReference: {fileID: 0}
     - target: {fileID: 3520062402776910398, guid: 2ea7e31559d27fc448bcaf01077d9ac0,
         type: 3}
@@ -52067,6 +52092,10 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: b817224b4620fa94db513833e04ff826,
         type: 3}
       insertIndex: -1
+      addedObject: {fileID: 2108368384}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: b817224b4620fa94db513833e04ff826,
+        type: 3}
+      insertIndex: -1
       addedObject: {fileID: 2108368381}
   m_SourcePrefab: {fileID: 100100000, guid: b817224b4620fa94db513833e04ff826, type: 3}
 --- !u!4 &2108368380 stripped
@@ -52094,6 +52123,28 @@ MonoBehaviour:
   isInteractionEnabled: 0
   grabbables: []
   pokeInteractables: []
+--- !u!64 &2108368384
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1145151101}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -5076798556035486163, guid: b817224b4620fa94db513833e04ff826, type: 3}
 --- !u!1001 &2134111516
 PrefabInstance:
   m_ObjectHideFlags: 0
