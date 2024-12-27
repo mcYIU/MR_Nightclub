@@ -22,5 +22,5 @@ MonoBehaviour:
   - "\u70BA\u4E86\u5979\uFF0C\u6211\u9023\u982D\u9AEE\u90FD.\u6101\u767D\u4E86\u3002"
   - "\u66F4\u6349\u5F04\u4EBA\u7684\u662F\uFF0C\u73FE\u5728\u5979\u9084\u5750\u5728\u5C0D\u9762\uFF0C"
   - "\u548C\u90A3\u500B\u7537\u4EBA\u537F\u537F\u6211\u6211\u3002"
-  characterAudio: {fileID: 8300000, guid: 3d4e3c5ee5bb2b94d8c402414ca2ad30, type: 3}
+  characterAudio: {fileID: 8300000, guid: 0694f96d3fb312343aa2479900f2eff1, type: 3}
   isVoiceOverPlayed: 0
