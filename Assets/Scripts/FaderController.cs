@@ -3,7 +3,7 @@ using UnityEngine;
 public class FaderController : MonoBehaviour
 {
     public static FaderController Instance;
-    [SerializeField] private OVRScreenFade fader;
+    [SerializeField] private OVRScreenFade[] faders;
 
     private void Awake()
     {
@@ -17,8 +17,8 @@ public class FaderController : MonoBehaviour
         }
     }
 
-    public static void FadeIn() { Instance.fader.FadeIn(); }
+    public static void FadeIn() { foreach (var _f in Instance.faders) _f.FadeIn(); }
 
-    public static void FadeOut() { Instance.fader.FadeOut(); }
+    public static void FadeOut() { foreach (var _f in Instance.faders) _f.FadeOut(); }
 
 }
