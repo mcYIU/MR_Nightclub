@@ -27,9 +27,10 @@ public class Champagne_Splash : MonoBehaviour
 
     private IEnumerator ReleaseCap()
     {
-        capInstance = Instantiate(capPrefab);
+        MeshRenderer _mesh = GetComponent<MeshRenderer>();
+        _mesh.enabled = false;
 
-        Destroy(gameObject);
+        capInstance = Instantiate(capPrefab);
 
         yield return new WaitForSeconds(prefabLifeTime);
 
