@@ -9,12 +9,13 @@ public class Match_Fire : MonoBehaviour
     [SerializeField] private Interactable interactable;
 
     [HideInInspector] public GameObject fireInstance;
+    [HideInInspector] public bool isPicked = false;
 
     private void Update()
     {
         if (interactable.isInteractionEnabled)
         {
-            if (CheckCollision(firePoint, matchBox))
+            if (CheckCollision(firePoint, matchBox) && isPicked)
             {
                 if (fireInstance == null)
                 {
@@ -41,5 +42,11 @@ public class Match_Fire : MonoBehaviour
         }
 
         return false;
+    }
+
+    public void SetPickUp()
+    {
+        if (!isPicked) isPicked = true;
+        else isPicked = false;
     }
 }
