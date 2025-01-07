@@ -16581,6 +16581,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3520062402765466662, guid: 2ea7e31559d27fc448bcaf01077d9ac0,
         type: 3}
+      propertyPath: requestScenePermissionOnStartup
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3520062402765466662, guid: 2ea7e31559d27fc448bcaf01077d9ac0,
+        type: 3}
       propertyPath: requestEyeTrackingPermissionOnStartup
       value: 0
       objectReference: {fileID: 0}
@@ -16622,7 +16627,7 @@ PrefabInstance:
     - target: {fileID: 3520062402775270882, guid: 2ea7e31559d27fc448bcaf01077d9ac0,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3520062402775270882, guid: 2ea7e31559d27fc448bcaf01077d9ac0,
         type: 3}
@@ -16632,7 +16637,7 @@ PrefabInstance:
     - target: {fileID: 3520062402775270882, guid: 2ea7e31559d27fc448bcaf01077d9ac0,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3520062402775270882, guid: 2ea7e31559d27fc448bcaf01077d9ac0,
         type: 3}
@@ -16642,7 +16647,7 @@ PrefabInstance:
     - target: {fileID: 3520062402775270882, guid: 2ea7e31559d27fc448bcaf01077d9ac0,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 180
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3520062402776910398, guid: 2ea7e31559d27fc448bcaf01077d9ac0,
         type: 3}
@@ -16652,7 +16657,7 @@ PrefabInstance:
     - target: {fileID: 3520062402776910398, guid: 2ea7e31559d27fc448bcaf01077d9ac0,
         type: 3}
       propertyPath: m_ForceIntoRT
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7793610641736904934, guid: 2ea7e31559d27fc448bcaf01077d9ac0,
         type: 3}
@@ -44400,7 +44405,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1903515288}
-  - component: {fileID: 1903515291}
   - component: {fileID: 1903515290}
   - component: {fileID: 1903515289}
   m_Layer: 0
@@ -44480,14 +44484,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!33 &1903515291
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1903515287}
-  m_Mesh: {fileID: 0}
 --- !u!1001 &1905071470
 PrefabInstance:
   m_ObjectHideFlags: 0
