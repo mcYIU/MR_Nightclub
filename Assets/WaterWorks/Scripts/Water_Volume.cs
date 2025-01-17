@@ -10,8 +10,12 @@ public class Water_Volume : ScriptableRendererFeature
 
         private Material _material;
 
+#pragma warning disable CS0618 // Type or member is obsolete
         private RenderTargetHandle tempRenderTarget;
+#pragma warning restore CS0618 // Type or member is obsolete
+#pragma warning disable CS0618 // Type or member is obsolete
         private RenderTargetHandle tempRenderTarget2;
+#pragma warning restore CS0618 // Type or member is obsolete
 
         public CustomRenderPass(Material mat)
         {
@@ -42,8 +46,12 @@ public class Water_Volume : ScriptableRendererFeature
                 CommandBuffer commandBuffer = CommandBufferPool.Get();
 
                 commandBuffer.GetTemporaryRT(tempRenderTarget.id, renderingData.cameraData.cameraTargetDescriptor);
+#pragma warning disable CS0618 // Type or member is obsolete
                 Blit(commandBuffer, source, tempRenderTarget.Identifier(), _material);
+#pragma warning restore CS0618 // Type or member is obsolete
+#pragma warning disable CS0618 // Type or member is obsolete
                 Blit(commandBuffer, tempRenderTarget.Identifier(), source);
+#pragma warning restore CS0618 // Type or member is obsolete
 
                 context.ExecuteCommandBuffer(commandBuffer);
                 CommandBufferPool.Release(commandBuffer);
@@ -85,8 +93,10 @@ public class Water_Volume : ScriptableRendererFeature
     // Here you can inject one or multiple render passes in the renderer.
     // This method is called when setting up the renderer once per-camera.
     public override void AddRenderPasses(ScriptableRenderer renderer, ref RenderingData renderingData)
-    {       
+    {
+#pragma warning disable CS0618 // Type or member is obsolete
         m_ScriptablePass.source = renderer.cameraColorTarget;
+#pragma warning restore CS0618 // Type or member is obsolete
         renderer.EnqueuePass(m_ScriptablePass);
     }
 }
