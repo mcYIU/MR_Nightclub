@@ -31,8 +31,6 @@ public class MonologueTrigger : MonoBehaviour
 
             monologueIndex = value;
             StartMonologue();
-
-            Debug.Log(MonologueIndex);
         }
     }
 

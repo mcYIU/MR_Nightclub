@@ -39,8 +39,6 @@ public class InteractionManager : MonoBehaviour
 
             levelIndex = value;
             HandleLevelChange();
-
-            Debug.Log(LevelIndex);
         }
     }
 
@@ -53,7 +51,6 @@ public class InteractionManager : MonoBehaviour
     public void ChangeLevelIndex(int index)
     {
         LevelIndex = index;
-        Debug.Log(LevelIndex);
     }
 
     private void HandleLevelChange()

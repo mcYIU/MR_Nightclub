@@ -60,8 +60,6 @@ public class GameManager : MonoBehaviour
     {
         SceneManager.sceneLoaded += OnSceneLoaded;
 
-        Debug.Log(SceneManager.loadedSceneCount);
-
         if (gameSceneIndex == SceneManager.sceneCountInBuildSettings - 1) StartCoroutine(ChangePassThroughOpacity());
     }
 
