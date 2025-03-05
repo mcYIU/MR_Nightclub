@@ -18,7 +18,7 @@ public class Champagne_Splash : MonoBehaviour
             pouringVisual.Play();
             SoundEffectManager.PlaySFXOnce(SFX);
 
-            interactable.SetInteraction(false);
+            //interactable.SetInteraction(false);
             interactable.IncreaseInteractionLevel();
 
             StartCoroutine(ReleaseCap());
