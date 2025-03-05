@@ -32,7 +32,7 @@ public class DialogueTrigger : MonoBehaviour
         ResetDialogueData();
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
         if (!IsValidTrigger(other)) return;
 
