@@ -60,7 +60,8 @@ public class GameManager : MonoBehaviour
     {
         SceneManager.sceneLoaded += OnSceneLoaded;
 
-        if (gameSceneIndex == SceneManager.sceneCountInBuildSettings - 1) StartCoroutine(ChangePassThroughOpacity());
+        if (gameSceneIndex == SceneManager.sceneCountInBuildSettings - 1 && transitionConfig.layers.textureOpacity > 0)
+            StartCoroutine(ChangePassThroughOpacity());
     }
 
     #endregion
@@ -116,16 +117,16 @@ public class GameManager : MonoBehaviour
         gameSceneIndex = scene.buildIndex;
     }
 
-    public static void ChangeToNextScene()
+    public static void ChangeToNextScene(int sceneIncrement = 1)
     {
-        Instance.StartCoroutine(Instance.PerformSceneTransition());
+        Instance.StartCoroutine(Instance.PerformSceneTransition(sceneIncrement));
     }
 
-    private IEnumerator PerformSceneTransition()
+    private IEnumerator PerformSceneTransition(int sceneIncrement = 1)
     {
         HandleTransitionMusic();
 
-        yield return ExecuteSceneChange();
+        yield return ExecuteSceneChange(sceneIncrement);
     }
 
     private void HandleTransitionMusic()
@@ -143,12 +144,12 @@ public class GameManager : MonoBehaviour
         transitionConfig.levelTrigger.EnableTriggerPoint();
     }
 
-    private IEnumerator ExecuteSceneChange()
+    private IEnumerator ExecuteSceneChange(int sceneIncrement = 1)
     {
         FaderController.FadeOut();
         yield return new WaitForSeconds(transitionConfig.interval);
 
-        SceneManager.LoadScene(gameSceneIndex + 1);
+        SceneManager.LoadScene(gameSceneIndex + sceneIncrement);
         yield return new WaitForSeconds(transitionConfig.interval);
 
         FaderController.FadeIn();
@@ -182,9 +183,11 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        if (OVRInput.GetUp(OVRInput.Button.Two) && gameSceneIndex == 0 && !GameManager.IsCompleted)
+        if (gameSceneIndex == 0 && !GameManager.IsCompleted)
         {
-            EndLevel();
+            if (OVRInput.GetUp(OVRInput.Button.One)) EndLevel();  
+
+            if (OVRInput.GetUp(OVRInput.Button.Two)) GameManager.ChangeToNextScene(2);
         }
     }
 }
