@@ -16,10 +16,16 @@ public class EndSceneManager : MonoBehaviour
 
     void Start()
     {
-        layer = FindObjectOfType<OVRPassthroughLayer>();
-        if (layer.textureOpacity == 0f) layer.textureOpacity = 1.0f;
+        CheckOVROpacity();
 
         Invoke(nameof(StartNPCDialogue), dialogueDelay);
+    }
+
+    private void CheckOVROpacity()
+    {
+        layer = FindObjectOfType<OVRPassthroughLayer>();
+
+        if (layer.textureOpacity == 0f) layer.textureOpacity = 1.0f;
     }
 
     private void StartNPCDialogue()
