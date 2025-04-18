@@ -13,14 +13,12 @@ public class CustomerDialogueTrigger : MonoBehaviour
         noticeUI.enabled = true;
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.CompareTag("Player") && !DialogueManager.isTalking) Talk();
-    }
-
     public void Talk()
     {
-        noticeUI.enabled = false;
-        DialogueManager.StartDialogue(data, dialogueCanvas);
+        if (!DialogueManager.isTalking)
+        {
+            noticeUI.enabled = false;
+            DialogueManager.StartDialogue(data, dialogueCanvas);
+        }
     }
 }
