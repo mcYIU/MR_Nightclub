@@ -141,7 +141,7 @@ public class GameManager : MonoBehaviour
 
     private void EnableLevelTrigger()
     {
-        transitionConfig.levelTrigger.EnableTriggerPoint();
+        if(transitionConfig.levelTrigger) transitionConfig.levelTrigger.EnableTriggerPoint();
     }
 
     private IEnumerator ExecuteSceneChange(int sceneIncrement = 1)
@@ -185,9 +185,9 @@ public class GameManager : MonoBehaviour
     {
         if (gameSceneIndex == 0 && !GameManager.IsCompleted)
         {
-            if (OVRInput.GetUp(OVRInput.Button.One)) EndLevel();  
+            if (OVRInput.GetDown(OVRInput.RawButton.B)) EndLevel();  
 
-            if (OVRInput.GetUp(OVRInput.Button.Two)) GameManager.ChangeToNextScene(2);
+            if (OVRInput.GetDown(OVRInput.RawButton.Y)) GameManager.ChangeToNextScene(2);
         }
     }
 }
