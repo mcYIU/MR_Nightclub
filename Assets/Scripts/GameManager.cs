@@ -60,8 +60,8 @@ public class GameManager : MonoBehaviour
     {
         SceneManager.sceneLoaded += OnSceneLoaded;
 
-        if (gameSceneIndex == SceneManager.sceneCountInBuildSettings - 1 && transitionConfig.layers.textureOpacity > 0)
-            StartCoroutine(ChangePassThroughOpacity());
+        //if (gameSceneIndex == SceneManager.sceneCountInBuildSettings - 1 && transitionConfig.layers.textureOpacity > 0)
+            //StartCoroutine(ChangePassThroughOpacity());
     }
 
     #endregion
