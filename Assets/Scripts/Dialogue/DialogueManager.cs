@@ -103,11 +103,16 @@ public class DialogueManager : MonoBehaviour
 
     private void InitializeMonologue(string[] sentences, AudioClip clip, GameObject character, MonologueTrigger trigger)
     {
-        if (monologueTrigger == null)
+        if (!monologueTrigger) monologueTrigger = trigger;
+        
+        if (monologueCanvas) state.canvas = monologueCanvas;
+        else
         {
-            state.canvas = monologueCanvas;
-            monologueTrigger = trigger;
+            var cameraCanvas = GameObject.FindGameObjectWithTag("CameraCanvas");
+            state.canvas = (cameraCanvas.TryGetComponent(out Canvas canvas))? canvas : null;
         }
+
+       
 
         LoadDialogueState(sentences, clip);
         SetupCharacter(character);
@@ -243,8 +248,11 @@ public class DialogueManager : MonoBehaviour
     {
         state.queue.Clear();
 
-        state.canvas.enabled = false;
-        state.text.text = string.Empty;
+        if (state.canvas)
+        {
+            state.canvas.enabled = false;
+            state.text.text = string.Empty;
+        }
     }
 
     private void EnableInteraction()
