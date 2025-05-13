@@ -10,6 +10,7 @@ TagManager:
   - Fire
   - Fracture
   - Whiskey
+  - CameraCanvas
   layers:
   - Default
   - TransparentFX
