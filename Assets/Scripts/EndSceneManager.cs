@@ -16,7 +16,7 @@ public class EndSceneManager : MonoBehaviour
 
     void Start()
     {
-        CheckOVROpacity();
+        //CheckOVROpacity();
 
         Invoke(nameof(StartNPCDialogue), dialogueDelay);
     }
